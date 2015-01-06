@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public class GlassfishSSOManagerClient implements GlassfishSSOManagerRemote {
+public class GlassfishSSOManagerClient implements GlassfishSSOManager {
 
   private WebTarget WEB_TARGET;
 

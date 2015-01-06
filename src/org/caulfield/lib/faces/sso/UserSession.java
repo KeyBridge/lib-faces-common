@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.caulfield.lib.faces.sso.client.GlassfishSSO;
 import org.caulfield.lib.faces.sso.client.GlassfishSSOManagerClient;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManagerRemote;
+import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
 import org.caulfield.lib.faces.sso.client.SSOUtil;
 import org.caulfield.lib.faces.util.FacesUtil;
 
@@ -151,7 +151,7 @@ public class UserSession {
         /**
          * Instantiate a GlassFish SSO Manager REST Client.
          */
-        GlassfishSSOManagerRemote ssoManager = new GlassfishSSOManagerClient();
+        GlassfishSSOManager ssoManager = new GlassfishSSOManagerClient();
         /**
          * Try to get the SSO Session from the ephemeral GlassfishSSOManager
          * user cache and use the session information to log the user in.
@@ -223,7 +223,7 @@ public class UserSession {
          * in. Instantiate a Glassfish SSO Manager REST Client. Touch the
          * Glassfish User record. Ignore all errors.
          */
-        GlassfishSSOManagerRemote ssoManager = new GlassfishSSOManagerClient();
+        GlassfishSSOManager ssoManager = new GlassfishSSOManagerClient();
         ssoManager.updateLastSeen(userName);
         /**
          * Set a SSO cookie if the user has checked "Remember me". The cookie is

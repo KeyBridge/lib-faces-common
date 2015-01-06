@@ -25,7 +25,7 @@ import javax.ejb.Remote;
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 @Remote
-public interface GlassfishSSOManagerRemote {
+public interface GlassfishSSOManager {
 
   /**
    * Add a user SSO Session Cookie to the current SSO Manager state. Returns a
