@@ -15,13 +15,15 @@
 package org.caulfield.lib.faces.sso.oauth;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.caulfield.lib.faces.sso.client.GlassfishSSO;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManagerClient;
+import org.caulfield.lib.faces.sso.client.SOAPService;
+import org.caulfield.lib.faces.sso.client.SSO;
+import org.caulfield.lib.faces.sso.client.SSOCookie;
 
 /**
  * Extend this class and add WebFilter annotation to implement a complete web
@@ -60,7 +62,7 @@ public abstract class AUserSessionFilter implements Filter {
    * and (optionally) an injection target for it. It can be used to inject both
    * service and proxy instances.
    */
-  private GlassfishSSOManager ssoManager;
+  private SSO sso;
 
   /**
    * Constructor setting the required ROLE for the content in this filter.
@@ -95,9 +97,14 @@ public abstract class AUserSessionFilter implements Filter {
      * Developer note: Only use REST client. The EJB is typically not available,
      * and trying to link when it is causes EJB / JSF lifecycle timing issues.
      */
-    if (ssoManager == null) {
-      this.ssoManager = new GlassfishSSOManagerClient();
-      System.err.println("DEBUG AUserSessionFilter initialize Glassfish SSO Manager REST client.");
+    if (sso == null) {
+      try {
+        this.sso = SOAPService.getSSOInstance();
+      } catch (Exception ex) {
+        throw new ServletException(ex.getMessage());
+//        Logger.getLogger(AUserSessionFilter.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      Logger.getLogger(AUserSessionFilter.class.getName()).log(Level.INFO, "AUserSessionFilter initialize Glassfish SSO SOAP client");
     }
   }
 
@@ -170,21 +177,21 @@ public abstract class AUserSessionFilter implements Filter {
        * The user is not logged in. Look for a Cookie. If the cookie exists then
        * use it to try validating the session.
        */
-      Cookie cookie = findCookieByName(GlassfishSSO.COOKIE_NAME, httpServletRequest.getCookies());
+      Cookie cookie = findCookieByName(SSOCookie.COOKIE_NAME, httpServletRequest.getCookies());
       if (cookie != null) {
         /**
          * Try to get the SSO Session from the ephemeral GlassfishSSOManager
          * user cache and use the session information to log the user in.
          */
-        GlassfishSSO sso = ssoManager.findUser(cookie.getValue());
-        if (sso != null) {
+        SSOCookie ssoCookie = sso.findCookieUser(cookie.getValue());
+        if (ssoCookie != null) {
           try {
             /**
              * Try to log in the user. If successful then update the user date
              * last seen.
              */
-            httpServletRequest.login(sso.getUserName(), sso.getPassword());
-            ssoManager.updateLastSeen(sso.getUserName());
+            httpServletRequest.login(ssoCookie.getUserName(), ssoCookie.getPassword());
+            sso.updateLastSeen(ssoCookie.getUserName());
             /**
              * Confirm that the user has valid ROLE privileges to view this
              * resource. If the user is not in the required role then invalidate

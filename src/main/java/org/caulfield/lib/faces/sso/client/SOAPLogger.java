@@ -16,18 +16,21 @@
  */
 package org.caulfield.lib.faces.sso.client;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
-import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 /**
+ * A simple SOAP message logger. This writes SOAP messages to the Logger.
+ * <p>
  * The SOAPHandler class extends Handler to provide type safety for the message
  * context parameter and add a method to obtain access to the headers that may
  * be processed by the handler.
@@ -40,13 +43,40 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
  * SOAPHandler</a>
  * @see <a
  * href="https://metro.java.net/nonav/1.2/guide/Logging.html">Logging</a>
- * @author jesse
+ * @author Jesse Caulfield
  */
-public class SoapClientLogger implements SOAPHandler<SOAPMessageContext> {
+public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
+
+  private static final Logger logger = Logger.getLogger(SOAPLogger.class.getName());
+  /**
+   * Pretty Print = TRUE logs pretty-print XML.
+   */
+  private boolean pretty = true;
+
+  public SOAPLogger() {
+  }
+
+  /**
+   * Pretty Print = TRUE logs pretty-print XML.
+   * <p>
+   * @param prettyPrint pretty-print XML
+   */
+  public SOAPLogger(boolean prettyPrint) {
+    this.pretty = prettyPrint;
+  }
 
   @Override
   public Set<QName> getHeaders() {
     return null;
+  }
+
+  /**
+   * Pretty Print = TRUE logs pretty-print XML.
+   * <p>
+   * @param pretty pretty-print XML
+   */
+  public void setPretty(boolean pretty) {
+    this.pretty = pretty;
   }
 
   /**
@@ -57,36 +87,61 @@ public class SoapClientLogger implements SOAPHandler<SOAPMessageContext> {
    * @param context the message context
    * @return An indication of whether handler processing should continue for the
    *         current message. <ul> <li> TRUE to continue processing.</li> <li>
-   *         FALSE to block processing.</li></ul>
+   * FALSE to block processing.</li></ul>
    */
   @Override
   public boolean handleMessage(SOAPMessageContext context) {
     SOAPMessage soapMessage = context.getMessage();
     /**
-     * Identify if this is an in or outbound message.
-     */
-    if ((Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
-      System.out.println("MESSAGE OUTBOUND");
-    } else {
-      System.out.println("MESSAGE INBOUND");
-    }
-    /**
-     * Try to dump the message to the console.
+     * Try to dump the message to the logger.
      */
     try {
-      soapMessage.writeTo(System.out);
-    } catch (SOAPException | IOException ex) {
-      Logger.getLogger(SoapClientLogger.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.INFO,
+                 ((Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY))
+        ? "MESSAGE OUT {0}"
+        : "MESSAGE IN {0}",
+                 getSOAPMessageAsString(soapMessage));
+
+    } catch (Exception ex) {
+      logger.log(Level.SEVERE, null, ex);
     }
-    /**
-     * Add a new line after the message.
-     */
-    System.out.println("");
     /**
      * Always return TRUE. This must return TRUE for message handler chaining to
      * work.
      */
     return true;
+  }
+
+  /**
+   * Pretty printing SOAP messages If your dealing with SAAJ API or you want to
+   * create a Debug Message Handler that prints the SOAP Message then you can
+   * call SOAPmessage.writeTo(System.out), but this method writes the full SOAP
+   * message in one line and which can be little hard to read this is sample
+   * output
+   * <p>
+   * @param soapMessage a SOAP message instance
+   * @return pretty print xml
+   * @throws Exception
+   * @see <a
+   * href="http://wpcertification.blogspot.com/2011/10/pretty-printing-soap-messages.html">Sunil's
+   * Notes</a>
+   */
+  private String getSOAPMessageAsString(SOAPMessage soapMessage) throws Exception {
+    if (pretty) {
+      Transformer tf = TransformerFactory.newInstance().newTransformer();
+      // Set XML formatting
+      tf.setOutputProperty(OutputKeys.INDENT, "yes");
+      tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+      Source sc = soapMessage.getSOAPPart().getContent();
+      ByteArrayOutputStream streamOut = new ByteArrayOutputStream();
+      StreamResult result = new StreamResult(streamOut);
+      tf.transform(sc, result);
+      return streamOut.toString();
+    } else {
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      soapMessage.writeTo(outputStream);
+      return outputStream.toString();
+    }
   }
 
   /**
@@ -97,7 +152,7 @@ public class SoapClientLogger implements SOAPHandler<SOAPMessageContext> {
    * @param context the message context
    * @return An indication of whether handler processing should continue for the
    *         current message. <ul> <li> TRUE to continue processing.</li> <li>
-   *         FALSE to block processing.</li></ul>
+   * FALSE to block processing.</li></ul>
    */
   @Override
   public boolean handleFault(SOAPMessageContext context) {

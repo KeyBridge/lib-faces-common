@@ -26,7 +26,7 @@ import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.core.Response;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
+import org.caulfield.lib.faces.sso.client.SSO;
 
 /**
  * A DynamicFilter that assigns the OAuthContainerFilter to all REST methods not
@@ -96,7 +96,7 @@ import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
 public abstract class AOAuthDynamicFeature implements DynamicFeature {
 
   @SuppressWarnings("ProtectedField")
-  protected GlassfishSSOManager ssoManager;
+  protected SSO sso;
 
   @Override
   @SuppressWarnings("unchecked")
@@ -122,7 +122,7 @@ public abstract class AOAuthDynamicFeature implements DynamicFeature {
      * RolesAllowed on the method takes precedence over PermitAll on the class.
      */
     if (rolesAllowed != null) {
-      featureContext.register(new OAuthContainerFilter(ssoManager, rolesAllowed.value()));
+      featureContext.register(new OAuthContainerFilter(sso, rolesAllowed.value()));
       return;
     }
 
@@ -145,7 +145,7 @@ public abstract class AOAuthDynamicFeature implements DynamicFeature {
      */
     rolesAllowed = resourceInfo.getResourceClass().getAnnotation(RolesAllowed.class);
     if (rolesAllowed != null) {
-      featureContext.register(new OAuthContainerFilter(ssoManager, rolesAllowed.value()));
+      featureContext.register(new OAuthContainerFilter(sso, rolesAllowed.value()));
     }
     /**
      * PermitAll on the class. NOOP.

@@ -14,6 +14,8 @@
  */
 package org.caulfield.lib.faces.sso;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,10 +24,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.caulfield.lib.faces.sso.client.GlassfishSSO;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManagerClient;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
-import org.caulfield.lib.faces.sso.client.SSOUtil;
+import org.caulfield.lib.faces.sso.client.SOAPService;
+import org.caulfield.lib.faces.sso.client.SSO;
+import org.caulfield.lib.faces.sso.client.SSOCookie;
 import org.caulfield.lib.faces.util.FacesUtil;
 
 /**
@@ -51,12 +52,15 @@ public class UserSession {
    */
   private static final String ROLE_COMMUNITY = "COMMUNITY";
   /**
+   * The Glassfish Group required to access resources available from auto-login.
+   */
+  private static final String ROLE_PORTAL = "PORTAL";
+  /**
    * The Glassfish Group required to access resources available from auto-login
    * for ENTERPRISE.
    */
   private static final String ROLE_ENTERPRISE = "ENTERPRISE";
 
-//  @Inject  private PropertiesBean propertiesBean;
   /**
    * The findUser email address.
    */
@@ -121,7 +125,7 @@ public class UserSession {
    * role.
    */
   public void autoRun() {
-    autoRun(ROLE_COMMUNITY);
+    autoRun(ROLE_PORTAL);
   }
 
   /**
@@ -146,25 +150,25 @@ public class UserSession {
        * The user is not logged in. Look for a Cookie. If the cookie exists then
        * use it to try validating the session.
        */
-      Cookie cookie = FacesUtil.getCookie(GlassfishSSO.COOKIE_NAME);
+      Cookie cookie = FacesUtil.getCookie(SSOCookie.COOKIE_NAME);
       if (cookie != null) {
         /**
-         * Instantiate a GlassFish SSO Manager REST Client.
+         * Instantiate a GlassFish SSO Manager SOAP Client.
          */
-        GlassfishSSOManager ssoManager = new GlassfishSSOManagerClient();
-        /**
-         * Try to get the SSO Session from the ephemeral GlassfishSSOManager
-         * user cache and use the session information to log the user in.
-         */
-        GlassfishSSO sso = ssoManager.findUser(cookie.getValue());
-        if (sso != null) {
-          try {
+        try {
+          SSO sso = SOAPService.getSSOInstance();
+          /**
+           * Try to get the SSO Session from the ephemeral GlassfishSSOManager
+           * user cache and use the session information to log the user in.
+           */
+          SSOCookie ssoCookie = sso.findCookieUser(cookie.getValue());
+          if (ssoCookie != null) {
             /**
              * Try to log in the user. If successful then update the user date
              * last seen.
              */
-            httpServletRequest.login(sso.getUserName(), sso.getPassword());
-            ssoManager.updateLastSeen(sso.getUserName());
+            httpServletRequest.login(ssoCookie.getUserName(), ssoCookie.getPassword());
+            sso.updateLastSeen(ssoCookie.getUserName());
             /**
              * Confirm that the user has valid ROLE privileges to view this
              * resource. If the user is not in the required role then invalidate
@@ -173,7 +177,7 @@ public class UserSession {
              * If no role was declared then at minimum require the PORTAL role.
              */
             if (role == null || role.isEmpty()) {
-              role = ROLE_COMMUNITY;
+              role = ROLE_PORTAL;
             }
             if (!httpServletRequest.isUserInRole(role)) {
               httpServletRequest.logout();
@@ -182,11 +186,12 @@ public class UserSession {
                * At this point the user is signed in and a member of the
                * required role. Post a welcome message.
                */
-              FacesUtil.postMessage(FacesMessage.SEVERITY_INFO, "Welcome back", sso.getUserName());
+              FacesUtil.postMessage(FacesMessage.SEVERITY_INFO, "Welcome back", ssoCookie.getUserName());
             }
-          } catch (ServletException servletException) {
-            System.err.println("ERROR UserSession autoRun login error: " + servletException.getMessage());
+
           }
+        } catch (Exception ex) {
+          Logger.getLogger(UserSession.class.getName()).log(Level.WARNING, "UserSession autoRun login error {0}", ex.getMessage());
         }
       }
     }
@@ -199,7 +204,7 @@ public class UserSession {
    */
   public void signIn() {
     /**
-     * Developer note: NO NOT attempt to validate the session if the user is not
+     * Developer note: DO NOT attempt to validate the session if the user is not
      * already logged in. If the user is already signed in an Error will be
      * thrown "SEVERE: Attempt to re-login while the user identity already
      * exists".
@@ -223,15 +228,15 @@ public class UserSession {
          * in. Instantiate a Glassfish SSO Manager REST Client. Touch the
          * Glassfish User record. Ignore all errors.
          */
-        GlassfishSSOManager ssoManager = new GlassfishSSOManagerClient();
-        ssoManager.updateLastSeen(userName);
+        SSO sso = SOAPService.getSSOInstance();
+        sso.updateLastSeen(userName);
         /**
          * Set a SSO cookie if the user has checked "Remember me". The cookie is
          * automatically recorded in the Glassfish SSO Manager.
          */
         if (remember) {
-          String ssoUuid = ssoManager.add(userName, password);
-          FacesUtil.addCookie(SSOUtil.getCookie(ssoUuid));
+          String ssoUuid = sso.addCookie(userName, password);
+          FacesUtil.addCookie(SSOCookie.buildCookie(ssoUuid));
         }
         /**
          * If the user got here from a page then redirect them back to that
@@ -272,6 +277,8 @@ public class UserSession {
         FacesUtil.postMessage(FacesMessage.SEVERITY_ERROR,
                               "Sign in error",
                               "Either the email address was not recognized or the password did not match. Please try again.");
+      } catch (Exception ex) {
+        Logger.getLogger(UserSession.class.getName()).log(Level.SEVERE, null, ex);
       }
     } else {
       /**
@@ -293,9 +300,12 @@ public class UserSession {
     /**
      * Clear the SSO cookie if it is set.
      */
-    Cookie cookie = FacesUtil.getCookie(GlassfishSSO.COOKIE_NAME);
+    Cookie cookie = FacesUtil.getCookie(SSOCookie.COOKIE_NAME);
     if (cookie != null) {
-      new GlassfishSSOManagerClient().clear(cookie.getValue());
+      try {
+        SOAPService.getSSOInstance().clearCookie(cookie.getValue());
+      } catch (Exception exception) {
+      }
       cookie.setMaxAge(0);
       FacesUtil.addCookie(cookie);
     }

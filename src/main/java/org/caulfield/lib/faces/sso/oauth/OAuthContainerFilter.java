@@ -22,8 +22,8 @@ import javax.annotation.Priority;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.*;
-import org.caulfield.lib.faces.sso.client.GlassfishSSO;
-import org.caulfield.lib.faces.sso.client.GlassfishSSOManager;
+import org.caulfield.lib.faces.sso.client.SSO;
+import org.caulfield.lib.faces.sso.client.SSOCookie;
 
 /**
  * A ContainerRequestFilter instance providing OAuth Web Service Validation.
@@ -63,7 +63,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * A GlassfishSSOManager client instance. Depending upon the server
    * configuration this may be an EJB or a REST client.
    */
-  private final GlassfishSSOManager ssoManager;
+  private final SSO sso;
 
   /**
    * An injectable class to access the resource class and resource method
@@ -81,14 +81,14 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * the GlassfishSSOManager Service from the sso.properties file. See
    * {@link #postContruct()} for details.
    * <p>
-   * @param ssoManager   a GlassfishSSOManager instance - this may be either an
-   *                     EJB or REST client, depending upon the server
+   * @param sso          a Glassfish SSO Manager instance - this may be either
+   *                     an EJB, REST or SOAP client, depending upon the server
    *                     configuration.
    * @param rolesAllowed a non-null list containing one or more roles configured
    *                     in the RolesAllowed annotation.
    */
-  public OAuthContainerFilter(GlassfishSSOManager ssoManager, String[] rolesAllowed) {
-    this.ssoManager = ssoManager;
+  public OAuthContainerFilter(SSO sso, String[] rolesAllowed) {
+    this.sso = sso;
     this.rolesAllowed = rolesAllowed != null ? Arrays.asList(rolesAllowed) : new ArrayList<String>();
   }
 
@@ -104,7 +104,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
      * If the GlassfishSSOManager is not available then there is an error on the
      * Key Bridge system. Allow the request but log an error.
      */
-    if (ssoManager == null) {
+    if (sso == null) {
       System.err.println("OAuthContainerFilter ERROR: SSO is not available. ");
       return;
     }
@@ -118,9 +118,10 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
      * Session.
      */
     if (requestContext.getHeaderString("authorization") != null) {
-      GlassfishSSO session = ssoManager.findOauth(oauthMap(requestContext.getHeaderString("authorization")).get("oauth_consumer_key"));
-      if (session != null) {
-        requestContext.setSecurityContext(new OAuthSecurityContext(session, requestContext.getSecurityContext().isSecure()));
+      SSOCookie ssoCookie = sso.findCookieOauth(oauthMap(requestContext.getHeaderString("authorization")).get("oauth_consumer_key"));
+      if (ssoCookie != null) {
+        requestContext.setSecurityContext(new OAuthSecurityContext(ssoCookie,
+                                                                   requestContext.getSecurityContext().isSecure()));
       }
     }
     /**

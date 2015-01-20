@@ -17,7 +17,7 @@ package org.caulfield.lib.faces.sso.oauth;
 import java.security.Principal;
 import javax.ws.rs.core.SecurityContext;
 import static javax.ws.rs.core.SecurityContext.CLIENT_CERT_AUTH;
-import org.caulfield.lib.faces.sso.client.GlassfishSSO;
+import org.caulfield.lib.faces.sso.client.SSOCookie;
 
 /**
  * Security Context Implementation to support OAuth that provides access to
@@ -33,7 +33,7 @@ public class OAuthSecurityContext implements SecurityContext {
   /**
    * The current OAuth SSO Session.
    */
-  private final GlassfishSSO sso;
+  private final SSOCookie ssoCookie;
 
   /**
    * Boolean indicating whether this request was made using a secure channel,
@@ -41,8 +41,8 @@ public class OAuthSecurityContext implements SecurityContext {
    */
   private final boolean secure;
 
-  public OAuthSecurityContext(GlassfishSSO session, boolean secure) {
-    this.sso = session;
+  public OAuthSecurityContext(SSOCookie session, boolean secure) {
+    this.ssoCookie = session;
     this.secure = secure;
   }
 
@@ -58,7 +58,7 @@ public class OAuthSecurityContext implements SecurityContext {
     return new Principal() {
       @Override
       public String getName() {
-        return sso.getUserName();
+        return ssoCookie.getUserName();
       }
     };
   }
@@ -74,7 +74,7 @@ public class OAuthSecurityContext implements SecurityContext {
    */
   @Override
   public boolean isUserInRole(String securityRole) {
-    return sso.isInRole(securityRole);
+    return ssoCookie.isInRole(securityRole);
   }
 
   /**
