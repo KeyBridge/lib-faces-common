@@ -9,7 +9,7 @@
 
   <name>lib-faces-utility</name>
   <description>A set of common JSF utilities to simplify and streamline JSF page and backing bean 
-development.</description>
+    development.</description>
   <organization>
     <name>Key Bridge Global LLC</name>
     <url>http://keybridgeglobal.com</url>
@@ -38,6 +38,12 @@ development.</description>
       <artifactId>javaee-api</artifactId>
       <version>7.0</version>
       <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.omnifaces</groupId>
+      <artifactId>omnifaces</artifactId>
+      <version>2.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
