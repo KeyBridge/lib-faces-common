@@ -41,8 +41,8 @@ public class OAuthSecurityContext implements SecurityContext {
    */
   private final boolean secure;
 
-  public OAuthSecurityContext(SSOCookie session, boolean secure) {
-    this.ssoCookie = session;
+  public OAuthSecurityContext(SSOCookie ssoCookie, boolean secure) {
+    this.ssoCookie = ssoCookie;
     this.secure = secure;
   }
 

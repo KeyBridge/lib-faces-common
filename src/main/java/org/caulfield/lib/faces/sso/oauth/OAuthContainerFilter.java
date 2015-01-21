@@ -69,7 +69,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * An injectable class to access the resource class and resource method
    * matched by the current request.
    */
-  private final List<String> rolesAllowed;
+  private final Set<String> rolesAllowed;
 
   /**
    * Construct a new OAuthContainerFilter. This ContainerRequestFilter
@@ -84,12 +84,33 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * @param sso          a Glassfish SSO Manager instance - this may be either
    *                     an EJB, REST or SOAP client, depending upon the server
    *                     configuration.
-   * @param rolesAllowed a non-null list containing one or more roles configured
-   *                     in the RolesAllowed annotation.
+   * @param rolesAllowed a non-null array containing one or more roles
+   *                     configured in the RolesAllowed annotation.
+   */
+  public OAuthContainerFilter(SSO sso, Collection<String> rolesAllowed) {
+    this.sso = sso;
+    this.rolesAllowed = rolesAllowed != null ? new HashSet<>(rolesAllowed) : new HashSet<String>();
+  }
+
+  /**
+   * Construct a new OAuthContainerFilter. This ContainerRequestFilter
+   * implementation is dynamically registered by the DynamicFeatureFilter based
+   * upon the REST method annotation. Any REST method not having the PermitAll
+   * annotation are registered as requiring OAUTH.
+   * <p>
+   * The constructor tries to load the host (and optionally port number) running
+   * the GlassfishSSOManager Service from the sso.properties file. See
+   * {@link #postContruct()} for details.
+   * <p>
+   * @param sso          a Glassfish SSO Manager instance - this may be either
+   *                     an EJB, REST or SOAP client, depending upon the server
+   *                     configuration.
+   * @param rolesAllowed a non-null array containing one or more roles
+   *                     configured in the RolesAllowed annotation.
    */
   public OAuthContainerFilter(SSO sso, String[] rolesAllowed) {
     this.sso = sso;
-    this.rolesAllowed = rolesAllowed != null ? Arrays.asList(rolesAllowed) : new ArrayList<String>();
+    this.rolesAllowed = rolesAllowed != null ? new HashSet<>(Arrays.asList(rolesAllowed)) : new HashSet<String>();
   }
 
   /**

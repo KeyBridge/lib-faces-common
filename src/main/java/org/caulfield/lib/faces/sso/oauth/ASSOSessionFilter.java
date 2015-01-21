@@ -29,33 +29,27 @@ import org.caulfield.lib.faces.sso.client.SSOCookie;
  * Extend this class and add WebFilter annotation to implement a complete web
  * filter. e.g.
  * <p>
- * @WebFilter({"/index.xhtml", "/new_api_key.xhtml"})
+ * <code>@WebFilter({"/index.xhtml", "/new_api_key.xhtml"})</code>
  * <p>
- * In your class constructor you must set the REQUIRED_ROLE field.
+ * or <code>@WebFilter(filterName = "SSOSessionFilter",
+ * urlPatterns = {"/*"},
+ * initParams = {\@WebInitParam(name = "role", value = "PORTAL")})</code>
  * <p>
- * Abstract Container filter that looks for the presence of a logged-in user or
- * a JSESSIONSSO cookie in the HTTP request and attempts to automatically log
- * the user in.
+ * This is an Abstract Container filter that looks for the presence of a
+ * logged-in user or a JSESSIONSSO cookie in the HTTP request and attempts to
+ * automatically log the user in.
  * <p>
- * Usage: This is a REST client to the Key Bridge Access Manager. The
- * portal.properties file must identify the SSO host.
+ * Usage: This employs a SOAP client to query the Key Bridge Access Manager. The
+ * portal.properties file must identify the SSO host WSDL.
  * <p>
  * This filter is processed by the container at deployment time, and is applied
  * to the specified URL patterns, servlets, and dispatcher types.
  * <p>
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public abstract class AUserSessionFilter implements Filter {
+public abstract class ASSOSessionFilter implements Filter {
 
-  /**
-   * The required role to access the above mentioned pages.
-   */
-  private final String requiredRole;
-
-  /**
-   * The sign in page.
-   */
-  protected static final String SIGN_IN_PAGE = "sign-in.xhtml";
+  private static final Logger logger = Logger.getLogger(ASSOSessionFilter.class.getName());
 
   /**
    * The WebServiceRef annotation is used to define a reference to a web service
@@ -63,15 +57,6 @@ public abstract class AUserSessionFilter implements Filter {
    * service and proxy instances.
    */
   private SSO sso;
-
-  /**
-   * Constructor setting the required ROLE for the content in this filter.
-   * <p>
-   * @param requiredRole the required ROLE (e.g. PORTAL, API, ETC)
-   */
-  public AUserSessionFilter(String requiredRole) {
-    this.requiredRole = requiredRole;
-  }
 
   /**
    * Called by the web container to indicate to a filter that it is being placed
@@ -102,9 +87,8 @@ public abstract class AUserSessionFilter implements Filter {
         this.sso = SOAPService.getSSOInstance();
       } catch (Exception ex) {
         throw new ServletException(ex.getMessage());
-//        Logger.getLogger(AUserSessionFilter.class.getName()).log(Level.SEVERE, null, ex);
       }
-      Logger.getLogger(AUserSessionFilter.class.getName()).log(Level.INFO, "AUserSessionFilter initialize Glassfish SSO SOAP client");
+      logger.log(Level.INFO, "ASSOSessionFilter initialize SOAP client");
     }
   }
 
@@ -193,57 +177,24 @@ public abstract class AUserSessionFilter implements Filter {
             httpServletRequest.login(ssoCookie.getUserName(), ssoCookie.getPassword());
             sso.updateLastSeen(ssoCookie.getUserName());
             /**
-             * Confirm that the user has valid ROLE privileges to view this
-             * resource. If the user is not in the required role then invalidate
-             * the session.
+             * At this point the user is signed in.
+             * <p>
+             * Note that this has no bearing regarding sufficient privileges to
+             * view the resource.
              */
-            if (!httpServletRequest.isUserInRole(requiredRole)) {
-              httpServletRequest.logout();
-              /**
-               * Status code (403) indicating the server understood the request
-               * but refused to fulfill it.
-               */
-              httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
-              return;
-            }
-            /**
-             * At this point the user is signed in and has sufficient privileges
-             * to view the resource. No additional work is needed.
-             */
+            logger.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoCookie.getUserName());
           } catch (ServletException servletException) {
             /**
-             * Has the user changed their password?
+             * Login failed. Has the user changed their password?
              */
           }
         }
       }
-    } else if (requiredRole != null && !httpServletRequest.isUserInRole(requiredRole)) {
-      /**
-       * Confirm that the user has valid ROLE privileges to view this resource.
-       * If the user is not in the required role then send status code (403).
-       */
-      httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
-      return;
     }
     /**
-     * At this point if the user was not signed in and has no SSO cookie then
-     * forward them to the sign in page. Add the requested page as a "referer"
-     * query parameter. This will be picked up by the UserSession sign in method
-     * (via a hidden field in sign-in.xhtml) and the user will be forwarded to
-     * their desired page after sign in.
+     * Keep the FilterChain party going.
      */
-    if (httpServletRequest.getRemoteUser() == null) {
-      httpServletResponse.sendRedirect((httpServletRequest.getContextPath().isEmpty() ? "/" : httpServletRequest.getContextPath() + "/") + SIGN_IN_PAGE + "?referer=" + httpServletRequest.getRequestURI());
-    } else {
-      /**
-       * Developer note: Only continue the filter chain if the response has not
-       * been committed. If at this point the user has either been forwarded to
-       * their desired page or bounced to the sign-in page then trying to
-       * continue will throw "IllegalStateException: Cannot create a session
-       * after the response has been committed."
-       */
-      chain.doFilter(request, response);
-    }
+    chain.doFilter(request, response);
   }
 
   /**
