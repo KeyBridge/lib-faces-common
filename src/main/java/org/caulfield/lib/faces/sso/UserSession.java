@@ -14,6 +14,7 @@
  */
 package org.caulfield.lib.faces.sso;
 
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -25,6 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.caulfield.lib.faces.sso.client.SOAPService;
+import static org.caulfield.lib.faces.sso.client.SOAPService.BUNDLE;
 import org.caulfield.lib.faces.sso.client.SSO;
 import org.caulfield.lib.faces.sso.client.SSOCookie;
 import org.caulfield.lib.faces.util.FacesUtil;
@@ -47,19 +49,6 @@ public class UserSession {
    * browser should be bounced to the context-root.
    */
   private static final String PAGE_SIGN_IN = "sign-in.xhtml";
-  /**
-   * The Glassfish Group required to access resources available from auto-login.
-   */
-  private static final String ROLE_COMMUNITY = "COMMUNITY";
-  /**
-   * The Glassfish Group required to access resources available from auto-login.
-   */
-  private static final String ROLE_PORTAL = "PORTAL";
-  /**
-   * The Glassfish Group required to access resources available from auto-login
-   * for ENTERPRISE.
-   */
-  private static final String ROLE_ENTERPRISE = "ENTERPRISE";
 
   /**
    * The findUser email address.
@@ -115,89 +104,6 @@ public class UserSession {
   }//</editor-fold>
 
   /**
-   * AJAX method to automatically log in a findUser after the page loads based
-   * upon the presence of an SSO cookie.
-   * <p>
-   * This method runs with the 'PORTAL' role.
-   * <p>
-   * Developer note: To use this method the web.xml must be configured to
-   * recognize the required role. At minimum, web.xml must recognize the PORTAL
-   * role.
-   */
-  public void autoRun() {
-    autoRun(ROLE_PORTAL);
-  }
-
-  /**
-   * AJAX method to automatically log in a findUser after the page loads based
-   * upon the presence of an SSO cookie.
-   * <p>
-   * Developer note: To use this method the web.xml must be configured to
-   * recognize the required role. At minimum, web.xml must recognize the PORTAL
-   * role.
-   * <p>
-   * @param role the required user role for this resource. Defaults to 'PORTAL'
-   *             if null or empty.
-   */
-  @SuppressWarnings("AssignmentToMethodParameter")
-  public void autoRun(String role) {
-    HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-    /**
-     * Try to validate the session using an SSO cookie.S
-     */
-    if (httpServletRequest.getRemoteUser() == null) {
-      /**
-       * The user is not logged in. Look for a Cookie. If the cookie exists then
-       * use it to try validating the session.
-       */
-      Cookie cookie = FacesUtil.getCookie(SSOCookie.COOKIE_NAME);
-      if (cookie != null) {
-        /**
-         * Instantiate a GlassFish SSO Manager SOAP Client.
-         */
-        try {
-          SSO sso = SOAPService.getSSOInstance();
-          /**
-           * Try to get the SSO Session from the ephemeral GlassfishSSOManager
-           * user cache and use the session information to log the user in.
-           */
-          SSOCookie ssoCookie = sso.findCookieUser(cookie.getValue());
-          if (ssoCookie != null) {
-            /**
-             * Try to log in the user. If successful then update the user date
-             * last seen.
-             */
-            httpServletRequest.login(ssoCookie.getUserName(), ssoCookie.getPassword());
-            sso.updateLastSeen(ssoCookie.getUserName());
-            /**
-             * Confirm that the user has valid ROLE privileges to view this
-             * resource. If the user is not in the required role then invalidate
-             * the session.
-             * <p>
-             * If no role was declared then at minimum require the PORTAL role.
-             */
-            if (role == null || role.isEmpty()) {
-              role = ROLE_PORTAL;
-            }
-            if (!httpServletRequest.isUserInRole(role)) {
-              httpServletRequest.logout();
-            } else {
-              /**
-               * At this point the user is signed in and a member of the
-               * required role. Post a welcome message.
-               */
-              FacesUtil.postMessage(FacesMessage.SEVERITY_INFO, "Welcome back", ssoCookie.getUserName());
-            }
-
-          }
-        } catch (Exception ex) {
-          Logger.getLogger(UserSession.class.getName()).log(Level.WARNING, "UserSession autoRun login error {0}", ex.getMessage());
-        }
-      }
-    }
-  }
-
-  /**
    * AJAX backing method when a findUser clicks the Sign In button. This
    * attempts to validate the current HTTP session with the findUser name and
    * password.
@@ -220,22 +126,54 @@ public class UserSession {
      * Validate the session.
      */
     HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-    if (httpServletRequest.getRemoteUser() == null) {
+    /**
+     * If the user is already signed in then redirect them to the main page
+     * (e.g. the context root). getContextPath Returns the portion of the
+     * request URI that indicates the context of the request. The context path
+     * always comes first in a request URI. The path starts with a "/" character
+     * but does not end with a "/" character. For servlets in the default (root)
+     * context, this method returns "".
+     */
+    if (httpServletRequest.getRemoteUser() != null) {
+      FacesUtil.redirectLocal("index.xhtml");
+    } else {
+      /**
+       * Try to sign in the user.
+       */
       try {
         httpServletRequest.login(userName, password);
         /**
-         * If the program has reached here then the use is successfully logged
-         * in. Instantiate a Glassfish SSO Manager REST Client. Touch the
-         * Glassfish User record. Ignore all errors.
+         * If the program has reached here then the user is successfully logged
+         * in.
+         * <p>
+         * Instantiate a SSO Manager SOAP Client. Set a browser cookie if the
+         * user asked for one, touch the User record. Ignore all errors.
          */
         SSO sso = SOAPService.getSSOInstance();
+        /**
+         * Optionally enable SOAP logging. Surround with try/catch as
+         * ResourceBundle does not fail gracefully.
+         */
+        try {
+          if (Boolean.valueOf(ResourceBundle.getBundle(BUNDLE).getString("sso.enable.logging"))) {
+            Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
+            SOAPService.enableLogging(sso); // log to info
+          }
+        } catch (Exception e) {
+          /**
+           * The bundle does not contain an entry for "sso.enable.logging".
+           */
+        }
+        /**
+         * Update the user's last-seen timestamp.
+         */
         sso.updateLastSeen(userName);
         /**
          * Set a SSO cookie if the user has checked "Remember me". The cookie is
          * automatically recorded in the Glassfish SSO Manager.
          */
         if (remember) {
-          String ssoUuid = sso.addCookie(userName, password);
+          String ssoUuid = sso.addCookie(userName, password, FacesUtil.getRemoteAddr());
           FacesUtil.addCookie(SSOCookie.buildCookie(ssoUuid));
         }
         /**
@@ -276,19 +214,10 @@ public class UserSession {
          */
         FacesUtil.postMessage(FacesMessage.SEVERITY_ERROR,
                               "Sign in error",
-                              "Either the email address was not recognized or the password did not match. Please try again.");
+                              "Either the user name was not recognized or the password did not match. Please try again.");
       } catch (Exception ex) {
         Logger.getLogger(UserSession.class.getName()).log(Level.SEVERE, null, ex);
       }
-    } else {
-      /**
-       * Return to the context root. getContextPath Returns the portion of the
-       * request URI that indicates the context of the request. The context path
-       * always comes first in a request URI. The path starts with a "/"
-       * character but does not end with a "/" character. For servlets in the
-       * default (root) context, this method returns "".
-       */
-      FacesUtil.redirectLocal("index.xhtml");
     }
   }
 
@@ -400,20 +329,19 @@ public class UserSession {
   /**
    * Get the HTTP request URL for the current page.
    * <p>
+   * Returns the part of this request URL from the protocol name up to the query
+   * string in the first line of the HTTP request.
+   * <p>
+   * Reconstructs the URL the client used to make the request, using information
+   * in the HttpServletRequest object. The returned URL contains a protocol,
+   * server name, port number, and server path, but it does not include query
+   * string parameters. Because this method returns a StringBuffer, not a
+   * string, you can modify the URL easily, for example, to append query
+   * parameters.
+   * <p>
    * @return the HTTP request URL for the current page
    */
   public String getRequestURL() {
-    /**
-     * Returns the part of this request URL from the protocol name up to the
-     * query string in the first line of the HTTP request.
-     * <p>
-     * Reconstructs the URL the client used to make the request, using
-     * information in the HttpServletRequest object. The returned URL contains a
-     * protocol, server name, port number, and server path, but it does not
-     * include query string parameters. Because this method returns a
-     * StringBuffer, not a string, you can modify the URL easily, for example,
-     * to append query parameters.
-     */
     return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString();
   }
 }
