@@ -45,7 +45,7 @@ public class SOAPService extends Service {
    * The resource service bundle name. This is stored in the
    * glassfish/[domain]/lib/classes/portal.properties
    */
-  private final static String BUNDLE = "portal";
+  public final static String BUNDLE = "portal";
 
   public SOAPService(String wsdlLocation, QName serviceName) throws Exception {
     this(new URL(wsdlLocation), serviceName);
@@ -65,7 +65,7 @@ public class SOAPService extends Service {
    * @param object a SOAP port instance.
    * @param pretty TRUE to enable multi-line pretty print XML
    */
-  public void enableLogging(Object object, boolean pretty) {
+  public static void enableLogging(Object object, boolean pretty) {
     BindingProvider bindingProvider = (BindingProvider) object;
     List<Handler> handlerChain = bindingProvider.getBinding().getHandlerChain();
     handlerChain.add(new SOAPLogger(pretty));
@@ -77,7 +77,7 @@ public class SOAPService extends Service {
    * <p>
    * @param object a SOAP port instance.
    */
-  public void enableLogging(Object object) {
+  public static void enableLogging(Object object) {
     enableLogging(object, true);
   }
 
@@ -113,7 +113,7 @@ public class SOAPService extends Service {
    *                   portal.properties file.
    */
   public static SSO getSSOInstance() throws Exception {
-    return getSSOInstance(ResourceBundle.getBundle(BUNDLE).getString("wsdl.sso"));
+    return getSSOInstance(ResourceBundle.getBundle(BUNDLE).getString("sso.wsdl"));
   }//</editor-fold>
 
 }

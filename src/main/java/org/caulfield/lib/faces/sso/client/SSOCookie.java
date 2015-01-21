@@ -3,6 +3,7 @@ package org.caulfield.lib.faces.sso.client;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.xml.bind.annotation.*;
 import org.apache.commons.codec.binary.Base64;
+import static org.caulfield.lib.faces.sso.client.SOAPService.BUNDLE;
 
 /**
  * <p>
@@ -37,9 +39,7 @@ import org.apache.commons.codec.binary.Base64;
  * <p>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ssoCookie", propOrder = {
-  "groups"
-})
+//@XmlType(name = "ssoCookie", propOrder = {"userName", "password", "uuid", "remoteAddr", "groups"})
 public class SSOCookie {
 
   /**
@@ -58,19 +58,37 @@ public class SSOCookie {
    * <p>
    * The UUID field is re-assigned each time the user session is renewed.
    */
-  @XmlAttribute(name = "uuid", required = true)
-  protected String uuid;
+  @XmlElement(required = true)
+  private String uuid;
 
   /**
    * The user email address.
    */
-  @XmlAttribute(name = "userName", required = true)
-  protected String userName;
+  @XmlElement(required = true)
+  private String userName;
   /**
    * The (encrypted) user password. OAUTH sets the password field to null.
    */
-  @XmlAttribute(name = "password")
-  protected String password;
+  @XmlElement
+  private String password;
+  /**
+   * A String containing the IP address of the client that sent the request.
+   * Specifically: the v4 Internet Protocol (IP) address of the client or last
+   * proxy that sent the request.
+   * <p>
+   * Developer note: If the remote IP address is a private IP address (e.g.
+   * starts with "10." or "192.") then the application is likely behind a load
+   * balancer and the "X-Forwarded-For" request parameter should be inspected.
+   * The X-Forwarded-For request header helps you identify the IP address of a
+   * client. Because load balancers intercept traffic between clients and
+   * servers, your server access logs contain only the IP address of the load
+   * balancer. To see the IP address of the client, use the X-Forwarded-For
+   * request header.
+   * <p>
+   * This is required for User cookies, optional for OAuth.
+   */
+  @XmlElement
+  private String remoteAddr;
 
   /**
    * A set of GlassFish Roles (Groups) that this SSO user is authorized for.
@@ -116,6 +134,26 @@ public class SSOCookie {
       }
     }
     return null;
+  }
+
+  /**
+   * Get the IP address of the client that sent the request.
+   * <p>
+   * @return A String containing the IP address of the client that sent the
+   *         request.
+   */
+  public String getRemoteAddr() {
+    return remoteAddr;
+  }
+
+  /**
+   * Set the IP address of the client that sent the request.
+   * <p>
+   * @param remoteAddr A String containing the IP address of the client that
+   *                   sent the request.
+   */
+  public void setRemoteAddr(String remoteAddr) {
+    this.remoteAddr = remoteAddr;
   }
 
   /**
@@ -180,7 +218,10 @@ public class SSOCookie {
     /**
      * Do not set the cookie domain when testing.
      */
-//    cookie.setDomain(SSOSession.COOKIE_DOMAIN);
+    try {
+      cookie.setDomain(ResourceBundle.getBundle(BUNDLE).getString("sso.cookie.domain"));
+    } catch (Exception e) {
+    }
     cookie.setComment("sso");
     cookie.setVersion(1);
     /**
