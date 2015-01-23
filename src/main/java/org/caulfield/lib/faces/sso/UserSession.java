@@ -149,33 +149,7 @@ public class UserSession {
          * Instantiate a SSO Manager SOAP Client. Set a browser cookie if the
          * user asked for one, touch the User record. Ignore all errors.
          */
-        SSO sso = SOAPService.getSSOInstance();
-        /**
-         * Optionally enable SOAP logging. Surround with try/catch as
-         * ResourceBundle does not fail gracefully.
-         */
-        try {
-          if (Boolean.valueOf(ResourceBundle.getBundle(BUNDLE).getString("sso.enable.logging"))) {
-            Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
-            SOAPService.enableLogging(sso); // log to info
-          }
-        } catch (Exception e) {
-          /**
-           * The bundle does not contain an entry for "sso.enable.logging".
-           */
-        }
-        /**
-         * Update the user's last-seen timestamp.
-         */
-        sso.updateLastSeen(userName);
-        /**
-         * Set a SSO cookie if the user has checked "Remember me". The cookie is
-         * automatically recorded in the Glassfish SSO Manager.
-         */
-        if (remember) {
-          String ssoUuid = sso.addCookie(userName, password, FacesUtil.getRemoteAddr());
-          FacesUtil.addCookie(SSOCookie.buildCookie(ssoUuid));
-        }
+        handleSSO();
         /**
          * If the user got here from a page then redirect them back to that
          * page. Otherwise direct them to the main content page. Since bugzee
@@ -218,6 +192,57 @@ public class UserSession {
       } catch (Exception ex) {
         Logger.getLogger(UserSession.class.getName()).log(Level.SEVERE, null, ex);
       }
+    }
+  }
+
+  /**
+   * Internal method to interact with the SSO SOAP service. This method fails
+   * gracefully for the user. A warning is logged on error.
+   */
+  private void handleSSO() {
+    /**
+     * If the program has reached here then the user is successfully logged in.
+     * <p>
+     * Instantiate a SSO Manager SOAP Client. Set a browser cookie if the user
+     * asked for one, touch the User record. Ignore all errors.
+     */
+    try {
+      SSO sso = SOAPService.getSSOInstance();
+      /**
+       * Optionally enable SOAP logging. Surround with try/catch as
+       * ResourceBundle does not fail gracefully.
+       */
+      try {
+        if (Boolean.valueOf(ResourceBundle.getBundle(BUNDLE).getString("sso.enable.logging"))) {
+          Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
+          SOAPService.enableLogging(sso); // log to info
+        }
+      } catch (Exception e) {
+        /**
+         * The bundle does not contain an entry for "sso.enable.logging".
+         */
+      }
+      /**
+       * Update the user's last-seen timestamp.
+       */
+      sso.updateLastSeen(userName);
+      /**
+       * Set a SSO cookie if the user has checked "Remember me". The cookie is
+       * automatically recorded in the Glassfish SSO Manager.
+       */
+      if (remember) {
+        String ssoUuid = sso.addCookie(userName, password, FacesUtil.getRemoteAddr());
+        FacesUtil.addCookie(SSOCookie.buildCookie(ssoUuid));
+      }
+    } catch (Exception exception) {
+      /**
+       * The SSO service probably failed. Check the logs for:
+       * javax.xml.ws.WebServiceException: Failed to access the WSDL at:
+       * http://localhost:8080/service/sso?wsdl. It failed with:
+       * http://localhost:8080/service/sso?wsdl. or Caused by:
+       * java.io.FileNotFoundException: http://localhost:8080/service/sso?wsdl
+       */
+      Logger.getLogger(UserSession.class.getName()).log(Level.WARNING, "SSO {0}", exception.getMessage());
     }
   }
 
