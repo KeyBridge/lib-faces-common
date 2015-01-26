@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.caulfield.lib.faces.sso.client.SOAPService;
 import org.caulfield.lib.faces.sso.client.SSO;
 import org.caulfield.lib.faces.sso.client.SSOCookie;
@@ -147,7 +146,12 @@ public abstract class ASSOSessionFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-    HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//    HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+    if (excludeFromFilter(httpServletRequest)) {
+      chain.doFilter(request, response);
+      return;
+    }
+
     /**
      * If the HttpServletRequest does not have a Remote User but there are
      * cookies to inspect then try to automatically validated the session.
@@ -195,6 +199,17 @@ public abstract class ASSOSessionFilter implements Filter {
      * Keep the FilterChain party going.
      */
     chain.doFilter(request, response);
+  }
+
+  /**
+   * Exclude certain content from this filter. This exclusion inspects the
+   * servlet path and excludes all resources.
+   * <p>
+   * @param httpServletRequest the httpServletRequest object
+   * @return TRUE if the path starts with javax.faces.resource
+   */
+  private boolean excludeFromFilter(HttpServletRequest httpServletRequest) {
+    return httpServletRequest.getServletPath().startsWith("/javax.faces.resource");
   }
 
   /**
