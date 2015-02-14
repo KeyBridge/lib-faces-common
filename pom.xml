@@ -8,8 +8,11 @@
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
-  <description>A set of common JSF utilities to simplify and streamline JSF page and backing bean 
-    development.</description>
+  <description>A set of common JSF utilities and libraries to streamline JSF page 
+and backing bean development.
+
+Includes compile dependencies for common JSF libraries such as 
+Primefaces, Onmifaces, keybridge-CSS, etc.</description>
   <organization>
     <name>Key Bridge</name>
     <url>http://keybridge.ch</url>
@@ -27,6 +30,7 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
@@ -36,25 +40,27 @@
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
       <version>5.1</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.primefaces.extensions</groupId>
       <artifactId>primefaces-extensions</artifactId>
       <version>3.0.0</version>
-      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.omnifaces</groupId>
+      <artifactId>omnifaces</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>keybridge.css</groupId>
+      <artifactId>css-keybridge</artifactId>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>7.0</version>
       <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.omnifaces</groupId>
-      <artifactId>omnifaces</artifactId>
-      <version>2.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
