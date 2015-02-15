@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import ch.keybridge.lib.faces.sso.client.SOAPService;
+import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
 import ch.keybridge.lib.faces.sso.client.SSO;
 import ch.keybridge.lib.faces.sso.client.SSOCookie;
 
@@ -83,7 +83,7 @@ public abstract class ASSOSessionFilter implements Filter {
      */
     if (sso == null) {
       try {
-        this.sso = SOAPService.getSSOInstance();
+        this.sso = SSOSOAPClient.getSSOInstance();
       } catch (Exception ex) {
         throw new ServletException(ex.getMessage());
       }

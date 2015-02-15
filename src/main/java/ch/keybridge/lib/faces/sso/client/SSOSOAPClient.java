@@ -39,23 +39,23 @@ import javax.xml.ws.handler.Handler;
  * @since 01/15/15
  */
 @WebServiceClient
-public class SOAPService extends Service {
+public class SSOSOAPClient extends Service {
 
   /**
    * The resource service bundle name. This is stored in the
    * glassfish/[domain]/lib/classes/portal.properties
    */
-  public final static String BUNDLE = "portal";
+  public final static String BUNDLE = "sso";
 
-  public SOAPService(String wsdlLocation, QName serviceName) throws Exception {
+  public SSOSOAPClient(String wsdlLocation, QName serviceName) throws Exception {
     this(new URL(wsdlLocation), serviceName);
   }
 
-  public SOAPService(URL wsdlLocation, QName serviceName) {
+  public SSOSOAPClient(URL wsdlLocation, QName serviceName) {
     super(wsdlLocation, serviceName);
   }
 
-  public SOAPService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+  public SSOSOAPClient(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
     super(wsdlLocation, serviceName, features);
   }
 
@@ -102,7 +102,7 @@ public class SOAPService extends Service {
    *                   portal.properties file.
    */
   public static SSO getSSOInstance(String wsdlLocation) throws Exception {
-    return new SOAPService(wsdlLocation, QNAME_SSO).getSSOPort();
+    return new SSOSOAPClient(wsdlLocation, QNAME_SSO).getSSOPort();
   }
 
   /**

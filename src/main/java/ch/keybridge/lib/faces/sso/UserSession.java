@@ -25,8 +25,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import ch.keybridge.lib.faces.sso.client.SOAPService;
-import static ch.keybridge.lib.faces.sso.client.SOAPService.BUNDLE;
+import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
+import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 import ch.keybridge.lib.faces.sso.client.SSO;
 import ch.keybridge.lib.faces.sso.client.SSOCookie;
 import ch.keybridge.lib.faces.util.FacesUtil;
@@ -207,7 +207,7 @@ public class UserSession {
      * asked for one, touch the User record. Ignore all errors.
      */
     try {
-      SSO sso = SOAPService.getSSOInstance();
+      SSO sso = SSOSOAPClient.getSSOInstance();
       /**
        * Optionally enable SOAP logging. Surround with try/catch as
        * ResourceBundle does not fail gracefully.
@@ -215,7 +215,7 @@ public class UserSession {
       try {
         if (Boolean.valueOf(ResourceBundle.getBundle(BUNDLE).getString("sso.enable.logging"))) {
           Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
-          SOAPService.enableLogging(sso); // log to info
+          SSOSOAPClient.enableLogging(sso); // log to info
         }
       } catch (Exception e) {
         /**
@@ -257,7 +257,7 @@ public class UserSession {
     Cookie cookie = FacesUtil.getCookie(SSOCookie.COOKIE_NAME);
     if (cookie != null) {
       try {
-        SOAPService.getSSOInstance().clearCookie(cookie.getValue());
+        SSOSOAPClient.getSSOInstance().clearCookie(cookie.getValue());
       } catch (Exception exception) {
       }
       cookie.setMaxAge(0);

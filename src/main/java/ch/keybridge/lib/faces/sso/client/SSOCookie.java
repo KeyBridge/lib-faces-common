@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.xml.bind.annotation.*;
 import org.apache.commons.codec.binary.Base64;
-import static ch.keybridge.lib.faces.sso.client.SOAPService.BUNDLE;
+import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 
 /**
  * <p>
