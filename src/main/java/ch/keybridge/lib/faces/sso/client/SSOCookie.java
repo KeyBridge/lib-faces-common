@@ -1,5 +1,6 @@
 package ch.keybridge.lib.faces.sso.client;
 
+import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
@@ -11,35 +12,24 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.codec.binary.Base64;
-import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 
 /**
+ * SSO Cookie.
  * <p>
- * Java class for ssoCookie complex type.
+ * The SSO Cookie is exchanged between the SSO service and a web portal to
+ * assist with automatic sign-in using a browser cookie.
  * <p>
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * <
- * pre>
- * &lt;complexType name="ssoCookie"> &lt;complexContent> &lt;restriction
- * base="{http://www.w3.org/2001/XMLSchema}anyType"> &lt;sequence> &lt;element
- * name="groups" type="{http://www.w3.org/2001/XMLSchema}string"/>
- * &lt;/sequence> &lt;attribute name="userName" use="required"
- * type="{http://www.w3.org/2001/XMLSchema}string" /> &lt;attribute
- * name="password" type="{http://www.w3.org/2001/XMLSchema}string" />
- * &lt;attribute name="uuid" use="required"
- * type="{http://www.w3.org/2001/XMLSchema}string" /> &lt;/restriction>
- * &lt;/complexContent> &lt;/complexType>
- * </pre>
- * <p>
- * <p>
+ * @author jesse
  */
+@XmlRootElement(name = "SSOCookie")
 @XmlAccessorType(XmlAccessType.FIELD)
-//@XmlType(name = "ssoCookie", propOrder = {"userName", "password", "uuid", "remoteAddr", "groups"})
+@XmlType(name = "SSOCookie")
 public class SSOCookie {
 
   /**
