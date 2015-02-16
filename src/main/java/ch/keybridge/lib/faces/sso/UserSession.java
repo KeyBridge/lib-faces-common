@@ -1,19 +1,23 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
 package ch.keybridge.lib.faces.sso;
 
+import ch.keybridge.lib.faces.sso.client.SSO;
+import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
+import ch.keybridge.lib.faces.util.FacesUtil;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +29,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
-import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
-import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
-import ch.keybridge.lib.faces.util.FacesUtil;
 
 /**
  * A Session Scoped Bean that handles findUser authentication (log in and log
@@ -213,7 +212,7 @@ public class UserSession {
        * ResourceBundle does not fail gracefully.
        */
       try {
-        if (Boolean.valueOf(ResourceBundle.getBundle(BUNDLE).getString("sso.enable.logging"))) {
+        if (Boolean.valueOf(ResourceBundle.getBundle(SSOSOAPClient.BUNDLE).getString("sso.enable.logging"))) {
           Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
           SSOSOAPClient.enableLogging(sso); // log to info
         }
