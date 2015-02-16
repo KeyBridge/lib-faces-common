@@ -4,7 +4,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.xml.namespace.QName;
-import javax.xml.ws.*;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Service;
+import javax.xml.ws.WebEndpoint;
+import javax.xml.ws.WebServiceClient;
+import javax.xml.ws.WebServiceFeature;
 import javax.xml.ws.handler.Handler;
 
 /**
