@@ -86,7 +86,7 @@ public class SSOSOAPClient extends Service {
   }
 
   //<editor-fold defaultstate="collapsed" desc="SSO">
-  public final static QName QNAME_SSO = new QName("http://sso.am.ejb.caulfield.org/", "service");
+  public final static QName QNAME_SSO = new QName("http://keybridge.ch/sso", "service");
 
   /**
    *
@@ -94,7 +94,7 @@ public class SSOSOAPClient extends Service {
    */
   @WebEndpoint(name = "ssoPort")
   public SSO getSSOPort() {
-    return super.getPort(new QName("http://sso.am.ejb.caulfield.org/", "ssoPort"), SSO.class);
+    return super.getPort(new QName("http://keybridge.ch/sso", "ssoPort"), SSO.class);
   }
 
   /**

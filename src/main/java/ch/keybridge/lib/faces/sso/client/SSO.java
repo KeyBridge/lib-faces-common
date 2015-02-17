@@ -10,7 +10,7 @@ import javax.jws.WebService;
  * version: 2.2
  * <p>
  */
-@WebService(name = "sso", targetNamespace = "http://sso.am.ejb.caulfield.org/")
+@WebService(name = "sso", targetNamespace = "http://keybridge.ch/sso")
 public interface SSO {
 
   /**
