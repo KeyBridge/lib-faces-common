@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+      xmlns:h="http://java.sun.com/jsf/html">
 
   <!--A default sign-in form.-->
   <!--This input form depends upon:-->
@@ -42,12 +42,12 @@
                 <label class="checkbox"><h:selectBooleanCheckbox id="remember" value="#{userSession.remember}" style="margin-top:0px;"/>Remember me</label>
               </div>
             </div>
-          </h:panelGroup>    
+          </h:panelGroup>
           <div class="form-group">
             <p:messages id="signinMessages"/>
           </div>
           <div class="form-group">
-            <input type="hidden" name="referer" value="#{param['referer']}"/> 
+            <input type="hidden" name="referer" value="#{param['referer']}"/>
             <p:commandButton id="submit" value="Sign in" styleClass="btn btn-primary form-control"
                              update="signinMessages, :global:growl"
                              action="#{userSession.signIn()}"/>
@@ -56,7 +56,7 @@
         <h:panelGroup rendered="#{cc.attrs.showFooter}">
           <div class="panel-footer" style="background-color: inherit;">
             <p>
-              #{cc.attrs.labelFooter} 
+              #{cc.attrs.labelFooter}
             </p>
             <p>
               <h:outputLink value="#{link.new_account}" class="btn btn-success btn-sm">Create a new account.</h:outputLink>
