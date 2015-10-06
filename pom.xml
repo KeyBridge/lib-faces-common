@@ -8,10 +8,10 @@
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
-  <description>A set of common JSF utilities and libraries to streamline JSF page 
+  <description>A set of common JSF utilities and libraries to streamline JSF page
     and backing bean development.
 
-    Includes compile dependencies for common JSF libraries such as 
+    Includes compile dependencies for common JSF libraries such as
     Primefaces, Onmifaces, keybridge-CSS, etc.</description>
   <organization>
     <name>Key Bridge</name>
@@ -30,28 +30,23 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    
+
+    <!--coded is used to base64 encode the SSO cookie-->
     <dependency>
       <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId> 
+      <artifactId>commons-codec</artifactId>
       <version>1.10</version>
     </dependency>
+
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>omnifaces</artifactId>
-      <version>2.0</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>keybridge.css</groupId>
-      <artifactId>css-keybridge</artifactId>
-      <version>2.0.0</version>
-      <scope>runtime</scope>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.primefaces.extensions</groupId>
       <artifactId>primefaces-extensions</artifactId>
-      <version>3.0.0</version>
+      <version>3.2.0</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
@@ -74,7 +69,7 @@
       </plugin>
     </plugins>
   </build>
-        
+
   <distributionManagement>
     <repository>
       <id>archiva.internal</id>
@@ -87,5 +82,5 @@
       <url>http://black:8088/repository/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
-  
+
 </project>
