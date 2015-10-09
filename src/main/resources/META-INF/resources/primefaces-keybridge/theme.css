@@ -449,10 +449,5 @@ abbr {margin-right: 5px;}
 .doc-section {margin-bottom: 30px;}
 
 /*do not color header links - do not decorate on hover*/
-h1>a h2>a h3>a h4>a{color: inherit;}
-h1>a:hover h2>a:hover h3>a:hover h4>a:hover{text-decoration: none;}
-
-/*big icon links on the main page*/
-a>h2{color: inherit;}
-h2>a{color: inherit;}
-h2>a:hover{text-decoration: none;}
+h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: inherit;}
+h1>a:hover, h2>a:hover, h3>a:hover, h4>a:hover, h5>a:hover, h6>a:hover{text-decoration: none;}
