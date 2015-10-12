@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -234,12 +235,39 @@ public class FacesUtil {
   }
 
   /**
-   * Get the requesting page
+   * Get the requesting page URI. Returns the part of this request's URL from
+   * the protocol name up to the query string in the first line of the HTTP
+   * request. The web container does not decode this String. For example: First
+   * line of HTTP request
+   * <p>
+   * For example: GET <code>http://foo.bar/a.html</code> HTTP/1.0 RETURNS
+   * <code>/a.html</code>
    * <p/>
-   * @return
+   * @return the requesting page URI
    */
   public static String getRequestURI() {
     return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURI();
+  }
+
+  /**
+   * Get the current URL context path. This returns the URI prefix up to and
+   * including the current context path.
+   * <p>
+   * For example, the application "gis" URL
+   * "http://127.0.01:8080/gis/documentation/boundary.xhtml" will return
+   * "http://127.0.01:8080/gis".
+   * <p>
+   * @return the current URL context path
+   */
+  public static String getContextPath() {
+    ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    return new StringBuilder()
+            .append(context.getRequestScheme())
+            .append("://")
+            .append(context.getRequestServerName())
+            .append(context.getRequestServerPort() != 80 ? ":" + context.getRequestServerPort() : "")
+            .append(context.getRequestContextPath())
+            .toString();
   }
 
   /**
