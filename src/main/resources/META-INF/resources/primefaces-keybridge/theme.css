@@ -357,8 +357,9 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .no-border {border: none !important;}
 /*un-pad the breadcrumb - it's already wrapped*/
 .breadcrumb { margin-bottom: 0px !important; }
-/*global footer placement*/
-.footer {  padding: 3em 1em;  z-index: -100;}
+/*global footer style and placement*/
+.footer-header{font-variant: small-caps; border-top: 1px dotted #aaaaaa;}
+.footer {padding: 3em 1em;  z-index: -100; background-color: #F5F5F5;}
 
 /*global figure formatting. figures include an image and a label*/
 figure {  padding: 2em;  margin: 0px 0px 10px;}
@@ -447,10 +448,12 @@ abbr {margin-right: 5px;}
 .rest-uri{color: rgb(51, 122, 183);}
 .rest-parameter {color: #008800;}
 /*doc section spacing*/
-.doc-section {margin-bottom: 30px;}
+.doc-section, .row {margin-bottom: 30px;}
 
 /*do not color header links - do not decorate on hover*/
 h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: inherit;}
-h1>a:hover, h2>a:hover, h3>a:hover, h4>a:hover, h5>a:hover, h6>a:hover{text-decoration: none;}
+/*do not underline links on hover*/
+a:hover{text-decoration: none;}
+
 /*do not wrap table header text*/
 th{white-space: nowrap;}
