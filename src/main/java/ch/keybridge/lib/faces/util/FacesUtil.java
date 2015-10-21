@@ -253,11 +253,13 @@ public class FacesUtil {
    * Get the current URL context path. This returns the URI prefix up to and
    * including the current context path.
    * <p>
-   * For example, the application "gis" URL
-   * "http://127.0.01:8080/gis/documentation/boundary.xhtml" will return
-   * "http://127.0.01:8080/gis".
+   * The PORT number is noted ONLY if it is not :80 or :443.
    * <p>
-   * @return the current URL context path
+   * For example, the application "gis" URL
+   * "<strong>http://127.0.01:8080/gis</strong>/documentation/boundary.xhtml"
+   * will return "http://127.0.01:8080/gis".
+   * <p>
+   * @return the current application context path
    */
   public static String getContextPath() {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -265,7 +267,9 @@ public class FacesUtil {
             .append(context.getRequestScheme())
             .append("://")
             .append(context.getRequestServerName())
-            .append(context.getRequestServerPort() != 80 ? ":" + context.getRequestServerPort() : "")
+            .append((context.getRequestServerPort() != 80 && context.getRequestServerPort() != 443)
+                    ? ":" + context.getRequestServerPort()
+                    : "")
             .append(context.getRequestContextPath())
             .toString();
   }

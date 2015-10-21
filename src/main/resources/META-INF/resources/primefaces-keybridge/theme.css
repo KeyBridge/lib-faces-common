@@ -358,7 +358,7 @@ body {height: 100% !important; margin: 0; padding: 0;}
 /*un-pad the breadcrumb - it's already wrapped*/
 .breadcrumb { margin-bottom: 0px !important; }
 /*global footer style and placement*/
-.footer-header{font-variant: small-caps; border-top: 1px dotted #aaaaaa;}
+.footer-header {font-variant: small-caps; border-top: 1px dotted #aaaaaa;}
 .footer {padding: 3em 1em;  z-index: -100; background-color: #F5F5F5;}
 
 /*global figure formatting. figures include an image and a label*/
