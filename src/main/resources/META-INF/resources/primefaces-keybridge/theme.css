@@ -457,3 +457,5 @@ a:hover{text-decoration: none;}
 
 /*do not wrap table header text*/
 th{white-space: nowrap;}
+/*bottom pad lists and list entries*/
+ul, ol, dl, dd, dt {margin: 0 0 10px;}
