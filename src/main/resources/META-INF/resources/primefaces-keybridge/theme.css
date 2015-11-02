@@ -459,3 +459,5 @@ a:hover{text-decoration: none;}
 th{white-space: nowrap;}
 /*bottom pad lists and list entries*/
 ul, ol, dl, dd, dt {margin: 0 0 10px;}
+/*right-pad developer notes*/
+span.label  {margin-right: 1em;}
