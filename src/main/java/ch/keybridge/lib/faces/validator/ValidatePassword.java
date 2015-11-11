@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2011 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby
  *  reserves all rights in and to Caulfield Copyrights and no license is
  *  granted under Caulfield Copyrights in this Software License Agreement.
@@ -27,7 +27,7 @@ import javax.faces.validator.ValidatorException;
  * &lt;o:validateEquals&gt; widget when using OmniFaces.
  * <p>
  * This is based upon the BALUSC example.
- * <p>
+ *
  * @see <a
  * href="http://balusc.blogspot.com/2007/12/validator-for-multiple-fields.html">Validator
  * for multiple fields</a>

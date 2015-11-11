@@ -11,7 +11,7 @@
  *  A copy of Caulfield's either License Agreement can be obtained on request
  *  by email from: info@caufield.org.
  */
-package ch.keybridge.lib.faces.util;
+package ch.keybridge.lib.faces;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,14 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * A utility class containing common JSF methods.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 public class FacesUtil {
 
   /**
    * Post a JSF FacesMessage.
-   * <p/>
+   *
    * @param severity The FacesMessage.Severity
    * @param summary  The short summary message label
    * @param detail   The message detail
@@ -44,14 +44,14 @@ public class FacesUtil {
 
   /**
    * Redirect the browser.
-   * <p/>
+   * <p>
    * URI may be an absolute or relative page reference. Absolute references
    * should include the WAR application name, whereas relative reference need
    * not.
-   * <p/>
+   * <p>
    * All page references should identify the fully qualified page name
    * (including suffix).
-   * <p/>
+   *
    * @param pageUri e.g. index.xhtml
    */
   public static void redirect(String pageUri) {
@@ -94,7 +94,7 @@ public class FacesUtil {
    * <p>
    * E.g. if the application is "app" and the pageUri is "status.xhtml" or
    * "/status.xhtml" the browser will be forwarded to "/app/status.xhtml".
-   * <p/>
+   *
    * @param pageUri e.g. index.xhtml
    */
   public static void redirectLocal(String pageUri) {
@@ -126,7 +126,7 @@ public class FacesUtil {
    * This fetches a request value from GET URIs. For example, if the URI query
    * was "?key1=value1&key2=value2" then this method would return "value2" for
    * the query key "key2".
-   * <p>
+   *
    * @param queryKey the URI query key
    * @return the corresponding URI query value
    */
@@ -161,7 +161,7 @@ public class FacesUtil {
    * This fetches a request value from GET URIs. For example, if the URI query
    * was "?key1=value1&key2=value2" then this method would return "value2" for
    * the query key "key2".
-   * <p>
+   *
    * @param queryKey the URI query key
    * @return the corresponding URI query value
    */
@@ -192,7 +192,7 @@ public class FacesUtil {
   /**
    * Add a SSO cookie to the HttpServletResponse. This method can be called
    * multiple times to set more than one cookie.
-   * <p>
+   *
    * @param cookie the cookie to add to the response.
    */
   public static void addCookie(Cookie cookie) {
@@ -204,7 +204,7 @@ public class FacesUtil {
   /**
    * Scan the array of all of the Cookie objects the client sent with this
    * request and return the one with the corresponding name.
-   * <p>
+   *
    * @param cookieName the cookie name
    * @return the cookie with the corresponding name
    */
@@ -223,7 +223,7 @@ public class FacesUtil {
   /**
    * If a corresponding cookie is found then set its max age to zero. This will
    * cause the browser to delete the cookie from its cache.
-   * <p>
+   *
    * @param cookieName the cookie name.
    */
   public static void clearCookie(String cookieName) {
@@ -242,7 +242,7 @@ public class FacesUtil {
    * <p>
    * For example: GET <code>http://foo.bar/a.html</code> HTTP/1.0 RETURNS
    * <code>/a.html</code>
-   * <p/>
+   *
    * @return the requesting page URI
    */
   public static String getRequestURI() {
@@ -258,7 +258,7 @@ public class FacesUtil {
    * For example, the application "gis" URL
    * "<strong>http://127.0.01:8080/gis</strong>/documentation/boundary.xhtml"
    * will return "http://127.0.01:8080/gis".
-   * <p>
+   *
    * @return the current application context path
    */
   public static String getContextPath() {
@@ -276,7 +276,7 @@ public class FacesUtil {
 
   /**
    * Returns true if the user is signed in.
-   * <p/>
+   *
    * @return
    */
   public static boolean isSignedIn() {
@@ -285,15 +285,15 @@ public class FacesUtil {
 
   /**
    * Determine if the current user is in the specified GlassFish ROLE.
-   * <p/>
+   * <p>
    * GlassFish Roles are defined as an entry in the 'glassfish.glassfish_group'
    * table. Roles are assigned to users by an association in the
    * 'glassfish.glassfish_role' table.
-   * <p/>
+   * <p>
    * A GlassFish User may be associated with more than one GlassFish Role.
-   * <p/>
+   * <p>
    * This method inspects the External FacesContext.
-   * <p/>
+   *
    * @param role A GlassFish role.
    * @return True if the user is in the GlassFish role.
    */
@@ -304,7 +304,7 @@ public class FacesUtil {
   /**
    * Returns the remote (i.e. signed in) user name. This is typically an email
    * address.
-   * <p/>
+   *
    * @return null if not signed in
    */
   public static String getCurrentUser() {
@@ -326,7 +326,7 @@ public class FacesUtil {
    * servers, your server access logs contain only the IP address of the load
    * balancer. To see the IP address of the client, use the X-Forwarded-For
    * request header.
-   * <p>
+   *
    * @return a String containing the IP address of the client that sent the
    *         request
    */
@@ -340,7 +340,7 @@ public class FacesUtil {
    * (to improve performance), this method returns the dotted-string form of the
    * IP address. For HTTP servlets, same as the value of the CGI variable
    * REMOTE_HOST.
-   * <p>
+   *
    * @return a String containing the fully qualified name of the client
    */
   public static String getRemoteHost() {
@@ -356,7 +356,7 @@ public class FacesUtil {
    * startup or shutdown. If called during application startup or shutdown, this
    * method calls through to the actual container context to return the init
    * parameter value.
-   * <p>
+   *
    * @param name Name of the requested initialization parameter
    * @return the value of the specified application initialization parameter (if
    *         any).
@@ -377,7 +377,7 @@ public class FacesUtil {
    * <p>
    * After using this method, the response should be considered to be committed
    * and should not be written to.
-   * <p>
+   *
    * @param statusCode the error status code. Suggest using HttpServletResponse
    *                   enumerated codes.
    */

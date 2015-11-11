@@ -1,16 +1,16 @@
 /**
  * Copyright (C) Key Bridge Global LLC and/or its affiliates.
- * <p/>
+ * <p>
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * <p/>
+ * <p>
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * <p/>
+ * <p>
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
@@ -34,10 +37,10 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
  * The SOAPHandler class extends Handler to provide type safety for the message
  * context parameter and add a method to obtain access to the headers that may
  * be processed by the handler.
- * <p/>
+ * <p>
  * You can update this class file to log all soap query and response messages to
  * a file or to a database.
- * <p/>
+ *
  * @see <a
  * href="http://docs.oracle.com/javaee/5/api/javax/xml/ws/handler/soap/SOAPHandler.html">Interface
  * SOAPHandler</a>
@@ -58,7 +61,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
 
   /**
    * Pretty Print = TRUE logs pretty-print XML.
-   * <p>
+   *
    * @param prettyPrint pretty-print XML
    */
   public SOAPLogger(boolean prettyPrint) {
@@ -72,7 +75,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
 
   /**
    * Pretty Print = TRUE logs pretty-print XML.
-   * <p>
+   *
    * @param pretty pretty-print XML
    */
   public void setPretty(boolean pretty) {
@@ -83,7 +86,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
    * The handleMessage method is invoked for normal processing of inbound and
    * outbound messages. Refer to the description of the handler framework in the
    * JAX-WS specification for full details.
-   * <p/>
+   *
    * @param context the message context
    * @return An indication of whether handler processing should continue for the
    *         current message. <ul> <li> TRUE to continue processing.</li> <li>
@@ -98,8 +101,8 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
     try {
       logger.log(Level.INFO,
                  ((Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY))
-        ? "MESSAGE OUT {0}"
-        : "MESSAGE IN {0}",
+                 ? "MESSAGE OUT {0}"
+                 : "MESSAGE IN {0}",
                  getSOAPMessageAsString(soapMessage));
 
     } catch (Exception ex) {
@@ -118,7 +121,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
    * call SOAPmessage.writeTo(System.out), but this method writes the full SOAP
    * message in one line and which can be little hard to read this is sample
    * output
-   * <p>
+   *
    * @param soapMessage a SOAP message instance
    * @return pretty print xml
    * @throws Exception
@@ -148,7 +151,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
    * The handleFault method is invoked for fault message processing. Refer to
    * the description of the handler framework in the JAX-WS specification for
    * full details.
-   * <p/>
+   *
    * @param context the message context
    * @return An indication of whether handler processing should continue for the
    *         current message. <ul> <li> TRUE to continue processing.</li> <li>
@@ -167,7 +170,7 @@ public class SOAPLogger implements SOAPHandler<SOAPMessageContext> {
    * JAX-WS runtime dispatching a message, fault or exception. Refer to the
    * description of the handler framework in the JAX-WS specification for full
    * details.
-   * <p/>
+   *
    * @param context the message context
    */
   @Override

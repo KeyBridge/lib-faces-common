@@ -19,7 +19,7 @@ import ch.keybridge.lib.faces.validator.ValidatePassword;
  */
 /**
  *
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield 
  */
 public class Test_password {
 

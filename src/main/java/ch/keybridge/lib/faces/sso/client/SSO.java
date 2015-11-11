@@ -16,7 +16,7 @@ public interface SSO {
   /**
    * Find and return the USER SSO Session corresponding to the provided
    * "JSESSIONSSO" cookie UUID. This method supports Portal sign in.
-   * <p>
+   *
    * @param uuid the browser cookie UUID
    * @return the corresponding SSOSession instance, null if not found
    */
@@ -26,7 +26,7 @@ public interface SSO {
   /**
    * Find and return the API SSO Session corresponding to the provided
    * oauth_consumer_key. This method supports API queries.
-   * <p>
+   *
    * @param oauth_consumer_key the API outh consumer key
    * @return the corresponding SSOSession instance, null if not found in the
    *         database and or if there is no corresponding credential for the
@@ -37,7 +37,7 @@ public interface SSO {
 
   /**
    * Update the GlassfishUser "dateLastSeen" field
-   * <p/>
+   *
    * @param username the user email addCookieress
    */
   @WebMethod
@@ -51,7 +51,7 @@ public interface SSO {
    * exists then a new one is created with the user name and password fields.
    * <p>
    * This method is called when a user logs in from a JSF sign in page.
-   * <p>
+   *
    * @param cookie the SSO Session - this is created by the User Session *
    *               manager when the user sign in.
    * @return TRUE if the SSO session was setCookie setCookie
@@ -64,7 +64,7 @@ public interface SSO {
    * then a NEW session is created with the user name and password fields.
    * <p>
    * This method is called when a user logs in from a JSF sign in page.
-   * <p>
+   *
    * @param username   the user name
    * @param password   the user password
    * @param remoteAddr the users remote IP address
@@ -79,7 +79,7 @@ public interface SSO {
   /**
    * Remove the SSO Session for the indicated cookie name. If no session exists
    * the method completes silently.
-   * <p>
+   *
    * @param uuid the cookie UUID
    */
   @WebMethod

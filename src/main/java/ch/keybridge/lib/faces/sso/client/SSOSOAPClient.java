@@ -4,11 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.Service;
-import javax.xml.ws.WebEndpoint;
-import javax.xml.ws.WebServiceClient;
-import javax.xml.ws.WebServiceFeature;
+import javax.xml.ws.*;
 import javax.xml.ws.handler.Handler;
 
 /**
@@ -29,17 +25,17 @@ import javax.xml.ws.handler.Handler;
  * <p>
  * Developer note: Change the endpoint address by updating the request context
  * ENDPOINT_ADDRESS_PROPERTY.
- * <p/>
+ * <p>
  * The BindingProvider interface provides access to the protocol binding and
  * associated context objects for request and response message processing.
- * <p/>
+ * <p>
  * The ENDPOINT_ADDRESS_PROPERTY is the target service endpoint address. The URI
  * scheme for the endpoint address specification MUST correspond to the
  * protocol/transport binding for the binding in use.
- * <p/>
+ *
  * @see <a
  * href="http://docs.oracle.com/javase/7/docs/api/javax/xml/ws/BindingProvider.html">BindingProvider</a>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  * @since 01/15/15
  */
 @WebServiceClient
@@ -65,7 +61,7 @@ public class SSOSOAPClient extends Service {
 
   /**
    * Add the SOAP client LOGGER to the handler chain.
-   * <p>
+   *
    * @param object a SOAP port instance.
    * @param pretty TRUE to enable multi-line pretty print XML
    */
@@ -78,7 +74,7 @@ public class SSOSOAPClient extends Service {
 
   /**
    * Add the SOAP client LOGGER to the handler chain with pretty print enable.d
-   * <p>
+   *
    * @param object a SOAP port instance.
    */
   public static void enableLogging(Object object) {
@@ -99,7 +95,7 @@ public class SSOSOAPClient extends Service {
 
   /**
    * Get a SOAP Service.
-   * <p>
+   *
    * @param wsdlLocation the WSDL location.
    * @return a SOAP port instance.
    * @throws Exception if the "wsdl.[service]" entry does not exist in the
@@ -111,7 +107,7 @@ public class SSOSOAPClient extends Service {
 
   /**
    * Get a SOAP Service.
-   * <p>
+   *
    * @return a SOAP port instance.
    * @throws Exception if the "wsdl.[service]" entry does not exist in the
    *                   portal.properties file.

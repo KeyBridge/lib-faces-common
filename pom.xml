@@ -4,7 +4,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>2.0.1</version>
+  <version>2.1.0</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -14,8 +14,12 @@
     Includes compile dependencies for common JSF libraries such as
     Primefaces, Onmifaces, keybridge-CSS, etc.
 
-    v2.0.0 - release
+    History:
+    v1.0.0 - collect common utilities into single JAR
+    v2.0.0 - rewrite as maven release
     v2.0.1 - add getContextPath to FacesUtil
+    v2.1.0 - PF and Omnifaces rev upgrade, refactor utilities into base package
+
   </description>
   <organization>
     <name>Key Bridge</name>
@@ -25,6 +29,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <additionalparam>-Xdoclint:none</additionalparam>
+    <!--4.0.0 - updated 11/11/15-->
+    <pfextensions.version>4.0.0</pfextensions.version>
+    <!--2.1 - 5/3/15-->
+    <omnifaces.version>2.1</omnifaces.version>
   </properties>
 
   <dependencies>
@@ -45,12 +54,12 @@
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>omnifaces</artifactId>
-      <version>2.1</version>
+      <version>${omnifaces.version}</version>
     </dependency>
     <dependency>
       <groupId>org.primefaces.extensions</groupId>
       <artifactId>primefaces-extensions</artifactId>
-      <version>3.2.0</version>
+      <version>${pfextensions.version}</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>

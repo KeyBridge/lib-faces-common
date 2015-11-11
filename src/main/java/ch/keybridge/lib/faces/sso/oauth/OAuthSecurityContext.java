@@ -1,32 +1,32 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
 package ch.keybridge.lib.faces.sso.oauth;
 
+import ch.keybridge.lib.faces.sso.client.SSOCookie;
 import java.security.Principal;
 import javax.ws.rs.core.SecurityContext;
 import static javax.ws.rs.core.SecurityContext.CLIENT_CERT_AUTH;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
 
 /**
  * Security Context Implementation to support OAuth that provides access to
  * security related information.
- * <p/>
+ * <p>
  * javax.ws.rs.core.SecurityContext is an injectable interface that provides
  * access to security related information.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 public class OAuthSecurityContext implements SecurityContext {
 
@@ -49,7 +49,7 @@ public class OAuthSecurityContext implements SecurityContext {
   /**
    * Returns a java.security.Principal object containing the name of the current
    * authenticated user. For API users this is the oauth_consumer_key
-   * <p/>
+   *
    * @return a java.security.Principal containing the oauth_consumer_key of the
    *         client application making this request;
    */
@@ -66,7 +66,7 @@ public class OAuthSecurityContext implements SecurityContext {
   /**
    * Returns a boolean indicating whether the authenticated user is included in
    * the specified logical "role".
-   * <p/>
+   *
    * @param securityRole the required security ROLE identified in the portal
    *                     web.xml file.
    * @return a boolean indicating whether the user making the request belongs to
@@ -80,7 +80,7 @@ public class OAuthSecurityContext implements SecurityContext {
   /**
    * Returns a boolean indicating whether this request was made using a secure
    * channel, such as HTTPS.
-   * <p/>
+   *
    * @return true if the request was made using a secure channel, false
    *         otherwise
    */
@@ -95,7 +95,7 @@ public class OAuthSecurityContext implements SecurityContext {
    * FORM_AUTH, CLIENT_CERT_AUTH, DIGEST_AUTH (suitable for == comparison) or
    * the container-specific string indicating the authentication scheme, or null
    * if the request was not authenticated.
-   * <p/>
+   *
    * @return By default if the resource is not authenticated, null is returned.
    *         This implementation always returns 'CLIENT_CERT_AUTH'.
    */

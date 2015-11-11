@@ -14,10 +14,10 @@
  */
 package ch.keybridge.lib.faces.sso;
 
+import ch.keybridge.lib.faces.FacesUtil;
 import ch.keybridge.lib.faces.sso.client.SSO;
 import ch.keybridge.lib.faces.sso.client.SSOCookie;
 import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
-import ch.keybridge.lib.faces.util.FacesUtil;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,14 +34,12 @@ import javax.servlet.http.HttpSession;
  * A Session Scoped Bean that handles findUser authentication (log in and log
  * out). *** UserSession also includes various utility methods to inspect and
  * determine findUser roles and access entitlements.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 @Named(value = "userSession")
 @RequestScoped
 public class UserSession {
-
-  private static final long serialVersionUID = 1L;
 
   /**
    * The Sign in page. If the referring page is the sign-in page then the
@@ -72,7 +70,7 @@ public class UserSession {
   /**
    * Returns the remote (i.e. signed in) user name. This is typically an email
    * address.
-   * <p/>
+   *
    * @return null if not signed in
    */
   public String getUserName() {
@@ -272,7 +270,7 @@ public class UserSession {
 
   /**
    * Returns true if the findUser is signed in.
-   * <p/>
+   *
    * @return
    */
   public boolean isSignedIn() {
@@ -281,15 +279,15 @@ public class UserSession {
 
   /**
    * Determine if the current findUser is in the specified GlassFish ROLE.
-   * <p/>
+   * <p>
    * GlassFish Roles are defined as an entry in the 'glassfish.glassfish_group'
    * table. Roles are assigned to findUsers by an association in the
    * 'glassfish.glassfish_role' table.
-   * <p/>
+   * <p>
    * A GlassFish User may be associated with more than one GlassFish Role.
-   * <p/>
+   * <p>
    * This method inspects the External FacesContext.
-   * <p/>
+   *
    * @param role A GlassFish role.
    * @return True if the findUser is in the GlassFish role.
    */
@@ -300,7 +298,7 @@ public class UserSession {
   /**
    * Shortcut to Determine if the current findUser is in the ENTERPRISE
    * GlassFish ROLE.
-   * <p>
+   *
    * @return True if the findUser is in the GlassFish role ENTERPRISE.
    */
   public boolean isEnterprise() {
@@ -310,7 +308,7 @@ public class UserSession {
   /**
    * Shortcut to Determine if the current findUser is in the ADMINISTRATOR
    * GlassFish ROLE.
-   * <p>
+   *
    * @return True if the findUser is in the GlassFish role ADMINISTRATOR.
    */
   public boolean isAdministrator() {
@@ -320,7 +318,7 @@ public class UserSession {
   /**
    * Returns the remote (i.e. signed in) findUser name. This is typically an
    * email address.
-   * <p/>
+   *
    * @return null if not signed in
    */
   public String getCurrentUser() {
@@ -330,7 +328,7 @@ public class UserSession {
   /**
    * Returns the NAME portion of the remote (i.e. signed in) findUser name. For
    * example: "findUser"@domain.com will return "findUser"
-   * <p/>
+   *
    * @return "Guest" if not signed in.
    */
   public String getCurrentUserName() {
@@ -343,7 +341,7 @@ public class UserSession {
 
   /**
    * Get the HTTP referer header parameter. This is the referring page.
-   * <p>
+   *
    * @return the HTTP "referer" parameter
    */
   public String getReferrer() {
@@ -362,7 +360,7 @@ public class UserSession {
    * string parameters. Because this method returns a StringBuffer, not a
    * string, you can modify the URL easily, for example, to append query
    * parameters.
-   * <p>
+   *
    * @return the HTTP request URL for the current page
    */
   public String getRequestURL() {

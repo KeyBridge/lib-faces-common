@@ -20,8 +20,8 @@ import javax.faces.validator.ValidatorException;
 
 /**
  * UUID validator instance.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 @FacesValidator("validateUUID")
 public class ValidateUUID extends AValidator {
@@ -33,10 +33,10 @@ public class ValidateUUID extends AValidator {
       if (uuid.length() != 36) {
         throwErrorException("Invalid token",
                             "This does not appear to be a valid token. "
-          + "Security tokens are exactly 36 characters long and formated like "
-          + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'. "
-          + "Did you copy the token exactly as it was sent? "
-          + "Are there any extra white space characters?");
+                            + "Security tokens are exactly 36 characters long and formated like "
+                            + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'. "
+                            + "Did you copy the token exactly as it was sent? "
+                            + "Are there any extra white space characters?");
       }
     }
   }

@@ -1,19 +1,20 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
 package ch.keybridge.lib.faces.sso.oauth;
 
+import ch.keybridge.lib.faces.sso.client.SSO;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import javax.annotation.security.DenyAll;
@@ -26,7 +27,6 @@ import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.core.Response;
-import ch.keybridge.lib.faces.sso.client.SSO;
 
 /**
  * A DynamicFilter that assigns the OAuthContainerFilter to all REST methods not
@@ -85,13 +85,13 @@ import ch.keybridge.lib.faces.sso.client.SSO;
  * annotation in order to be discovered by JAX-RS runtime when scanning for
  * resources and providers. This provider types is supported only as part of the
  * Server API.
- * <p>
+ *
  * @see <a
  * href="https://jersey.java.net/apidocs/2.6/jersey/org/glassfish/jersey/server/filter/RolesAllowedDynamicFeature.html">RolesAllowedDynamicFeature</a>
  * @see <a
  * href="https://github.com/jersey/jersey/blob/master/core-server/src/main/java/org/glassfish/jersey/server/filter/RolesAllowedDynamicFeature.java">RolesAllowedDynamicFeature.java</a>
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 public abstract class AOAuthDynamicFeature implements DynamicFeature {
 

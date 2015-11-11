@@ -27,10 +27,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 /**
  * A JSF converter for handling XMLGregorianCalendar objects.
  * XMLGregorianCalendar objects are passed by some SOAP web services.
- * <p/>
+ * <p>
  * This class is designed only to be used as a text converter for
  * pretty-printing the values, not for marshalling/unmarshalling in a selection.
- * <p/>
+ *
  * @author jesse
  */
 @FacesConverter(value = "convertXMLGregorianCalendar")
@@ -47,7 +47,7 @@ public class ConvertXMLGregorianCalendar implements Converter {
   /**
    * Convert from an XMLGregorian calendar set by the SOAP implementation to a
    * pretty-print string
-   * <p/>
+   *
    * @param context   the faces context
    * @param component the faces component
    * @param value     the xmlGregorianCalendar

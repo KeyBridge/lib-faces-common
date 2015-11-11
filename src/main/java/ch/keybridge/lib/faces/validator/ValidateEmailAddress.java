@@ -23,7 +23,7 @@ import javax.mail.internet.InternetAddress;
 /**
  * Email address validator. This uses the JavaMail API to confirm the email
  * conforms to RFC 822 syntax rules.
- * <p>
+ *
  * @author jesse
  */
 @FacesValidator("validateEmailAddress")
@@ -36,7 +36,7 @@ public class ValidateEmailAddress extends AValidator {
 
   /**
    * Use the JavaMail API to confirm the email conforms to RFC 822 syntax rules.
-   * <p/>
+   *
    * @param emailAddress the email address to validate
    * @return TRUE if the email address conforms with the syntax rules of RFC 822
    */

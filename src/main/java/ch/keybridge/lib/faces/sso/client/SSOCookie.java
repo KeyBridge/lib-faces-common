@@ -12,11 +12,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -24,7 +20,7 @@ import org.apache.commons.codec.binary.Base64;
  * <p>
  * The SSO Cookie is exchanged between the SSO service and a web portal to
  * assist with automatic sign-in using a browser cookie.
- * <p>
+ *
  * @author jesse
  */
 @XmlRootElement(name = "SSOCookie")
@@ -88,9 +84,9 @@ public class SSOCookie {
 
   /**
    * Gets the value of the groups property.
-   * <p>
+   *
    * @return possible object is {@link HashSet }
-   * <p>
+   *
    */
   public Set<String> getGroups() {
     return groups;
@@ -98,9 +94,9 @@ public class SSOCookie {
 
   /**
    * Gets the value of the userName property.
-   * <p>
+   *
    * @return possible object is {@link String }
-   * <p>
+   *
    */
   public String getUserName() {
     return userName;
@@ -108,9 +104,9 @@ public class SSOCookie {
 
   /**
    * Gets the value of the password property.
-   * <p>
+   *
    * @return possible object is {@link String }
-   * <p>
+   *
    */
   public String getPassword() {
     /**
@@ -128,7 +124,7 @@ public class SSOCookie {
 
   /**
    * Get the IP address of the client that sent the request.
-   * <p>
+   *
    * @return A String containing the IP address of the client that sent the
    *         request.
    */
@@ -138,7 +134,7 @@ public class SSOCookie {
 
   /**
    * Set the IP address of the client that sent the request.
-   * <p>
+   *
    * @param remoteAddr A String containing the IP address of the client that
    *                   sent the request.
    */
@@ -148,9 +144,9 @@ public class SSOCookie {
 
   /**
    * Gets the value of the uuid property.
-   * <p>
+   *
    * @return possible object is {@link String }
-   * <p>
+   *
    */
   public String getUuid() {
     return uuid;
@@ -161,7 +157,7 @@ public class SSOCookie {
    * <p>
    * Returns a boolean indicating whether this session is included in the
    * specified logical "role".
-   * <p>
+   *
    * @param role a String specifying the name of the role. This is matched
    *             against the groupName and serviceName fields.
    * @return a boolean indicating whether this session instance belongs to a
@@ -173,7 +169,7 @@ public class SSOCookie {
 
   /**
    * Decrypt an AES encrypted string using the provided key.
-   * <p>
+   *
    * @param key       the encryption key used to encrypt the value.
    * @param encrypted an AES encrypted and Base64 encoded string. Length is 44
    *                  characters or less.
@@ -197,7 +193,7 @@ public class SSOCookie {
    * <p>
    * This method cannot be included in the SSOSession container object as http
    * Cookie is not compatible with JAXB marshalling / un-marshalling.
-   * <p>
+   *
    * @param uuid the SSO Session UUID from which to build a cookie.
    * @return an HTTP version 1 cookie.
    */

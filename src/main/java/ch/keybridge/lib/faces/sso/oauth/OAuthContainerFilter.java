@@ -1,19 +1,21 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
 package ch.keybridge.lib.faces.sso.oauth;
 
+import ch.keybridge.lib.faces.sso.client.SSO;
+import ch.keybridge.lib.faces.sso.client.SSOCookie;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -21,9 +23,8 @@ import java.util.regex.Pattern;
 import javax.annotation.Priority;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.Priorities;
-import javax.ws.rs.container.*;
-import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
 
 /**
  * A ContainerRequestFilter instance providing OAuth Web Service Validation.
@@ -53,8 +54,8 @@ import ch.keybridge.lib.faces.sso.client.SSOCookie;
  * <p>
  * The @Provider annotation is used for anything that is of interest to the
  * JAX-RS runtime.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 @Priority(Priorities.AUTHORIZATION)
 public class OAuthContainerFilter implements ContainerRequestFilter {
@@ -79,8 +80,8 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * <p>
    * The constructor tries to load the host (and optionally port number) running
    * the GlassfishSSOManager Service from the sso.properties file. See
-   * {@link #postContruct()} for details.
-   * <p>
+   * PostContruct for implementation details.
+   *
    * @param sso          a Glassfish SSO Manager instance - this may be either
    *                     an EJB, REST or SOAP client, depending upon the server
    *                     configuration.
@@ -100,8 +101,8 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * <p>
    * The constructor tries to load the host (and optionally port number) running
    * the GlassfishSSOManager Service from the sso.properties file. See
-   * {@link #postContruct()} for details.
-   * <p>
+   * PostContruct for implementation details.
+   *
    * @param sso          a Glassfish SSO Manager instance - this may be either
    *                     an EJB, REST or SOAP client, depending upon the server
    *                     configuration.
@@ -115,7 +116,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
 
   /**
    * Filter the REST request.
-   * <p>
+   *
    * @param requestContext the Container Request Context
    * @throws IOException is OAUTH validation fails, shows UNAUTHORIZED
    */
@@ -168,7 +169,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
    * The resulting HashMap (OAuth) keys are: findOauth_signature,
    * findOauth_nonce, findOauth_consumer_key, findOauth_signature_method,
    * findOauth_timestamp
-   * <p>
+   *
    * @param authorization the HTTP Request header authorization value
    * @return a non-null HashMap instance
    */

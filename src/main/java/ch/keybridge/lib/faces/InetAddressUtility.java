@@ -1,18 +1,18 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
-package ch.keybridge.lib.faces.util;
+package ch.keybridge.lib.faces;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Utility methods to handle the X-Forwarded-For request header.
+ * Utility methods to handle the <code>X-Forwarded-For</code> request header.
  * <p>
  * The X-Forwarded-For header was first introduced by Squid as a means of
  * passing on the IP address of the client to the server. It has since been
@@ -90,11 +90,11 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * The rule that I suggest is <strong><em>Always use the leftmost non-private
  * address.</em></strong>.
- * <p>
+ *
  * @see <a
  * href="http://r.va.gg/2011/07/handling-x-forwarded-for-in-java-and-tomcat.html">Handling
  * X-Forwarded-For in Java</a>
- * @author Jesse Caulfield <jesse@caulfield.org> 08/11/14
+ * @author Jesse Caulfield 08/11/14
  */
 public class InetAddressUtility {
 
@@ -117,7 +117,7 @@ public class InetAddressUtility {
    * return the the first non-private IP Address from within an
    * "X-Forwarded-For" request header. If "X-Forwarded-For" is not present then
    * the request remote Address is returned.
-   * <p>
+   *
    * @param request the HTTP servlet request
    * @return the best guess remote address
    */
@@ -132,7 +132,7 @@ public class InetAddressUtility {
 
   /**
    * Get the DNS-resolved Hostname for a client request.
-   * <p>
+   *
    * @param request the HTTP servlet request
    * @return the resolved host name
    */
@@ -147,7 +147,7 @@ public class InetAddressUtility {
 
   /**
    * Get the Internet address from a client request.
-   * <p>
+   *
    * @param request the HTTP servlet request
    * @return the Internet address
    * @throws UnknownHostException if the internet address does not resolve

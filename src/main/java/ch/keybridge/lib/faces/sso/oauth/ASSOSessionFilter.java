@@ -1,28 +1,28 @@
 /*
  *  Copyright (C) 2014 Caulfield IP Holdings (Caulfield) and/or its affiliates.
  *  All rights reserved. Use is subject to license terms.
- * 
+ *
  *  Software Code is protected by Caulfield Copyrights. Caulfield hereby reserves
  *  all rights in and to Caulfield Copyrights and no license is granted under
  *  Caulfield Copyrights in this Software License Agreement. Caulfield generally
  *  licenses Caulfield Copyrights for commercialization pursuant to the terms of
  *  either Caulfield's Standard Software Source Code License Agreement or
  *  Caulfield's Standard Product License Agreement.
- * 
+ *
  *  A copy of either License Agreement can be obtained on request by email from:
  *  info@caufield.org.
  */
 package ch.keybridge.lib.faces.sso.oauth;
 
+import ch.keybridge.lib.faces.sso.client.SSO;
+import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
-import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
 
 /**
  * Extend this class and add WebFilter annotation to implement a complete web
@@ -43,8 +43,8 @@ import ch.keybridge.lib.faces.sso.client.SSOCookie;
  * <p>
  * This filter is processed by the container at deployment time, and is applied
  * to the specified URL patterns, servlets, and dispatcher types.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 public abstract class ASSOSessionFilter implements Filter {
 
@@ -68,7 +68,7 @@ public abstract class ASSOSessionFilter implements Filter {
    * The web container cannot place the filter into service if the init method
    * either (1) Throws a ServletException or (2) Does not return within a time
    * period defined by the web container
-   * <p>
+   *
    * @param filterConfig
    * @throws ServletException
    */
@@ -136,7 +136,7 @@ public abstract class ASSOSessionFilter implements Filter {
    * <li>Directly set headers on the response after invocation of the next
    * entity in the filter chain. </li>
    * </ol>
-   * <p>
+   *
    * @param request
    * @param response
    * @param chain
@@ -204,7 +204,7 @@ public abstract class ASSOSessionFilter implements Filter {
   /**
    * Exclude certain content from this filter. This exclusion inspects the
    * servlet path and excludes all resources.
-   * <p>
+   *
    * @param httpServletRequest the httpServletRequest object
    * @return TRUE if the path starts with javax.faces.resource
    */
@@ -215,7 +215,7 @@ public abstract class ASSOSessionFilter implements Filter {
   /**
    * Internal helper method to scan an array of Cookies and identify the one
    * cookie with the matching name.
-   * <p>
+   *
    * @param cookieName the cookie name to identify
    * @param cookies    an array of cookies.
    * @return the matching cookie, null if not found.

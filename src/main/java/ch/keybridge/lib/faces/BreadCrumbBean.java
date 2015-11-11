@@ -11,7 +11,7 @@
  *  A copy of Caulfield's either License Agreement can be obtained on request
  *  by email from: info@caufield.org.
  */
-package ch.keybridge.lib.faces.util;
+package ch.keybridge.lib.faces;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -25,8 +25,8 @@ import org.primefaces.model.menu.MenuModel;
  * Bread crumbs indicate the current page's location within a navigational
  * hierarchy. This managed bean provides a Primefaces menu model to
  * programmatically build a Breadcrumb widget.
- * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ *
+ * @author Jesse Caulfield
  */
 @Named(value = "breadCrumbBean")
 @RequestScoped
@@ -49,7 +49,7 @@ public class BreadCrumbBean {
    * tieredMenu, menubar programmatically. This is a very useful feature since
    * in many cases application menus are not static and vary depending on user
    * roles.
-   * <p/>
+   *
    * @return a Primefaces MenuModel instance
    */
   public MenuModel getMenuModel() {
@@ -62,15 +62,15 @@ public class BreadCrumbBean {
     menuModel.addElement(home);
     /**
      * Split the URI into its components, then build a menu item for each.
-     * <p/>
+     * <p>
      * The URI looks like '/[contextRoot]/registration/lpaux.xhtml'.
-     * <p/>
+     * <p>
      * The URL is fully qualified and looks like
      * 'http://localhost:8080/[contextRoot]/registration/lpaux.xhtml'
-     * <p/>
+     * <p>
      * Use the HttpServletRequest to remove the 'contextRoot', then build a
      * bread crumb menu.
-     * <p/>
+     * <p>
      * Use replaceFirst to only clear the contextPath. replace replaces all
      * instances of the search string.
      */
@@ -94,9 +94,9 @@ public class BreadCrumbBean {
   /**
    * Format the input string to Proper-Case by capitalizing the first character
    * of each word and forcing all other characters to lower case.
-   * <p/>
+   * <p>
    * This method includes a null check and will ignore null or empty strings.
-   * <p/>
+   *
    * @param string A free-text string. May contain one or more words.
    * @return The input string converted to Proper case.
    */

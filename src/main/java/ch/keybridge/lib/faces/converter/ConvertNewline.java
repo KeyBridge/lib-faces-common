@@ -23,8 +23,8 @@ import javax.faces.convert.FacesConverter;
  * <p>
  * The newline character (\n) is equivalent to the ASCII linefeed character (hex
  * 0A).
- * <p/>
- * @author Jesse Caulfield <jesse@caulfield.org> 07/26/14
+ *
+ * @author Jesse Caulfield 07/26/14
  */
 @FacesConverter(value = "convertNewline")
 public class ConvertNewline implements Converter {
