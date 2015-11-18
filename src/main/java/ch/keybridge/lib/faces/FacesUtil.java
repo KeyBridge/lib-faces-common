@@ -250,8 +250,8 @@ public class FacesUtil {
   }
 
   /**
-   * Get the current URL context path. This returns the URI prefix up to and
-   * including the current context path.
+   * Get the current application context path. This returns the URI prefix up to
+   * and including the current application context root.
    * <p>
    * The PORT number is noted ONLY if it is not :80 or :443.
    * <p>

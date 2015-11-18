@@ -44,11 +44,12 @@ public class BreadCrumbBean {
   }
 
   /**
-   * Get a Primefaces MenuModel. This is used to dynamically build a bread crumb
-   * menu. MenuModel API is used to create PrimeFaces menu components like menu,
-   * tieredMenu, menubar programmatically. This is a very useful feature since
-   * in many cases application menus are not static and vary depending on user
-   * roles.
+   * Get a Primefaces MenuModel.
+   * <p>
+   * This is used to dynamically build a bread crumb menu. MenuModel API is used
+   * to create PrimeFaces menu components like menu, tieredMenu, menubar
+   * programmatically. This is a very useful feature since in many cases
+   * application menus are not static and vary depending on user roles.
    *
    * @return a Primefaces MenuModel instance
    */
