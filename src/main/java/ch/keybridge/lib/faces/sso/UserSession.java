@@ -332,6 +332,9 @@ public class UserSession {
    * @return "Guest" if not signed in.
    */
   public String getCurrentUserName() {
+    if (isAdministrator()) {
+      return "ADMIN";
+    }
     String name = FacesUtil.getCurrentUser();
     if (name != null && name.contains("@")) {
       return name.split("@")[0];
