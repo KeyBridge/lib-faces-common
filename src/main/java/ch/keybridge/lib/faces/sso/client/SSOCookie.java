@@ -3,9 +3,9 @@ package ch.keybridge.lib.faces.sso.client;
 import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.Cipher;
@@ -44,18 +44,18 @@ public class SSOCookie {
    * <p>
    * The UUID field is re-assigned each time the user session is renewed.
    */
-  @XmlElement(required = true)
+  @XmlElement(name = "UUID", required = true)
   private String uuid;
 
   /**
    * The user email address.
    */
-  @XmlElement(required = true)
+  @XmlElement(name = "Username", required = true)
   private String userName;
   /**
    * The (encrypted) user password. OAUTH sets the password field to null.
    */
-  @XmlElement
+  @XmlElement(name = "Password")
   private String password;
   /**
    * A String containing the IP address of the client that sent the request.
@@ -73,40 +73,44 @@ public class SSOCookie {
    * <p>
    * This is required for User cookies, optional for OAuth.
    */
-  @XmlElement
+  @XmlElement(name = "RemoteAddr")
   private String remoteAddr;
 
   /**
    * A set of GlassFish Roles (Groups) that this SSO user is authorized for.
    */
-  @XmlElement(required = true)
-  protected Set<String> groups;
+  @XmlElement(name = "Groups", required = true)
+  @XmlList
+  protected Collection<String> groups;
 
   /**
-   * Gets the value of the groups property.
+   * Get the group membership of this session.
+   * <p>
+   * Developer note: to determine group membership use
+   * {@link #isInRole(java.lang.String)}
    *
-   * @return possible object is {@link HashSet }
-   *
+   * @return a non-null HashSet
    */
-  public Set<String> getGroups() {
+  public Collection<String> getGroups() {
+    if (groups == null) {
+      groups = new HashSet<>();
+    }
     return groups;
   }
 
   /**
-   * Gets the value of the userName property.
+   * Get the user name.
    *
-   * @return possible object is {@link String }
-   *
+   * @return the user name
    */
   public String getUserName() {
     return userName;
   }
 
   /**
-   * Gets the value of the password property.
+   * Get the password.
    *
-   * @return possible object is {@link String }
-   *
+   * @return the (decrypted) user password
    */
   public String getPassword() {
     /**
@@ -191,8 +195,9 @@ public class SSOCookie {
   /**
    * Get a Session Cookie named "JSESSIONSSO" containing the SSOSession UUID.
    * <p>
-   * This method cannot be included in the SSOSession container object as http
-   * Cookie is not compatible with JAXB marshalling / un-marshalling.
+   * Cookies must be generated on-demand as the
+   * {@code javax.servlet.http.Cookie} object is not compatible with JAXB
+   * marshalling / un-marshalling.
    *
    * @param uuid the SSO Session UUID from which to build a cookie.
    * @return an HTTP version 1 cookie.
