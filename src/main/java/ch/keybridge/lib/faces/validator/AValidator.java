@@ -14,6 +14,7 @@
  */
 package ch.keybridge.lib.faces.validator;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -25,6 +26,26 @@ import javax.faces.validator.ValidatorException;
  * @author Jesse Caulfield
  */
 public abstract class AValidator implements Validator {
+
+  /**
+   * Access to the current container {@code Context &amp; Dependency Injection}
+   * context and select a child Instance for the given required type.
+   * Parameters: subtype - a Class representing the required type
+   * <p>
+   * Developer note: Originally the Named beans were injected directly into
+   * Validators and Converters using OmniFaces CDI bean manager. However this
+   * appears to have broken / is not working after upgrading to GF 4.1.1. A
+   * (more portable) solution is to access the container CDI directly. This
+   * method provides a shortcut.
+   *
+   * @param <U>       the required type
+   * @param namedBean the CDI managed bean class; should be annotated with
+   *                  {@code @Named}
+   * @return an instance of the required type
+   */
+  protected <U> U CDISelect(Class<U> namedBean) {
+    return CDI.current().select(namedBean).get();
+  }
 
   /**
    * Shortcut to throw a SEVERITY_WARN exception.
