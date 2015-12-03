@@ -101,7 +101,7 @@ public class SSOSOAPClient extends Service {
    * @throws Exception if the "wsdl.[service]" entry does not exist in the
    *                   portal.properties file.
    */
-  public static SSO getSSOInstance(String wsdlLocation) throws Exception {
+  public static SSO getInstance(String wsdlLocation) throws Exception {
     return new SSOSOAPClient(wsdlLocation, QNAME_SSO).getSSOPort();
   }
 
@@ -112,8 +112,8 @@ public class SSOSOAPClient extends Service {
    * @throws Exception if the "wsdl.[service]" entry does not exist in the
    *                   portal.properties file.
    */
-  public static SSO getSSOInstance() throws Exception {
-    return getSSOInstance(ResourceBundle.getBundle(BUNDLE).getString("sso.wsdl"));
+  public static SSO getInstance() throws Exception {
+    return SSOSOAPClient.getInstance(ResourceBundle.getBundle(BUNDLE).getString("sso.wsdl"));
   }//</editor-fold>
 
 }

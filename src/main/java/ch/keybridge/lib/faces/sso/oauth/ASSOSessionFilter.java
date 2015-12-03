@@ -83,7 +83,7 @@ public abstract class ASSOSessionFilter implements Filter {
      */
     if (sso == null) {
       try {
-        this.sso = SSOSOAPClient.getSSOInstance();
+        this.sso = SSOSOAPClient.getInstance();
       } catch (Exception ex) {
         throw new ServletException(ex.getMessage());
       }

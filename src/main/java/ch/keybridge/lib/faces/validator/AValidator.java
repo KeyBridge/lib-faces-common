@@ -43,7 +43,7 @@ public abstract class AValidator implements Validator {
    *                  {@code @Named}
    * @return an instance of the required type
    */
-  protected <U> U CDISelect(Class<U> namedBean) {
+  protected final <U> U CDISelect(Class<U> namedBean) {
     return CDI.current().select(namedBean).get();
   }
 

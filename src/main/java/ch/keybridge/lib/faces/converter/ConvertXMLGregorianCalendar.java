@@ -16,12 +16,15 @@
 package ch.keybridge.lib.faces.converter;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -36,29 +39,42 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @FacesConverter(value = "convertXMLGregorianCalendar")
 public class ConvertXMLGregorianCalendar implements Converter {
 
+  /**
+   * Convert from a pretty-print string to an XMLGregorian calendar.
+   *
+   * @param context   the faces context
+   * @param component the faces component
+   * @param value     a SimpleDateFormat SHORT configuration
+   * @return a XMLGregorianCalendar instance
+   */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
     /**
      * This method is not used
      */
-    return null;
+    try {
+      GregorianCalendar calendar = new GregorianCalendar();
+      calendar.setTime(SimpleDateFormat.getDateInstance(DateFormat.SHORT).parse(value));
+      return DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+    } catch (ParseException | DatatypeConfigurationException | NullPointerException ex) {
+//      Logger.getLogger(ConvertXMLGregorianCalendar.class.getName()).log(Level.SEVERE, null, ex);
+      return null;
+    }
   }
 
   /**
    * Convert from an XMLGregorian calendar set by the SOAP implementation to a
-   * pretty-print string
+   * pretty-print string.
    *
    * @param context   the faces context
    * @param component the faces component
-   * @param value     the xmlGregorianCalendar
-   * @return
+   * @param value     the XMLGregorianCalendar instance
+   * @return the formatted calendar
    */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     if (value instanceof XMLGregorianCalendar) {
-      DateFormat sdf = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
-      Date date = ((XMLGregorianCalendar) value).toGregorianCalendar().getTime();
-      return sdf.format(date);
+      return SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(((XMLGregorianCalendar) value).toGregorianCalendar().getTime());
     }
     return "";
   }

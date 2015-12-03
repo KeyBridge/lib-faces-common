@@ -277,7 +277,7 @@ public class FacesUtil {
   /**
    * Returns true if the user is signed in.
    *
-   * @return
+   * @return TRUE if the current user is signed in
    */
   public static boolean isSignedIn() {
     return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser() != null;

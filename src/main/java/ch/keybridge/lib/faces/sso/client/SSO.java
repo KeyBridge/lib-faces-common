@@ -47,19 +47,6 @@ public interface SSO {
   /**
    * Add a user SSO Session Cookie to the current SSO Manager state. Returns a
    * SSOCookie session for the given user name and password. If a SSO session
-   * already exists for the user then that session is REPLACED. If no session
-   * exists then a new one is created with the user name and password fields.
-   * <p>
-   * This method is called when a user logs in from a JSF sign in page.
-   *
-   * @param cookie the SSO Session - this is created by the User Session *
-   *               manager when the user sign in.
-   * @return TRUE if the SSO session was setCookie setCookie
-   */
-//  @WebMethod  public boolean setCookie(@WebParam(name = "cookie") SSOCookie cookie);
-  /**
-   * Add a user SSO Session Cookie to the current SSO Manager state. Returns a
-   * SSOCookie session for the given user name and password. If a SSO session
    * already exists for the user then that is returned. If no session exists
    * then a NEW session is created with the user name and password fields.
    * <p>

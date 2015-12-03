@@ -226,4 +226,15 @@ public class SSOCookie {
     cookie.setMaxAge(Integer.MAX_VALUE);
     return cookie;
   }
+
+  /**
+   * Get the UUID for this cookie.
+   *
+   * @return the UUID
+   */
+  @Override
+  public String toString() {
+    return uuid;
+  }
+
 }
