@@ -34,8 +34,12 @@ public class BreadCrumbBean {
 
   /**
    * The PrimeFaces Menu model.
+   * <p>
+   * Developer note: This must be a {@code MenuModel} interface to avoid
+   * ClassCastExceptions (manifested as IllegalArgumentException) at
+   * {@code org.primefaces.component.breadcrumb.BreadCrumb.getModel()}
    */
-  private DefaultMenuModel menuModel;
+  private MenuModel menuModel;
 
   /**
    * Creates a new instance of BreadCrumbBean
