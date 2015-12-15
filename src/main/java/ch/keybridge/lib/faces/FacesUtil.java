@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.el.ELContext;
+import javax.faces.FactoryFinder;
+import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
+import javax.faces.application.Application;
+import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -25,11 +30,108 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * A utility class containing common JSF methods.
+ * Collection of utility methods for the JSF API that are mainly shortcuts for
+ * obtaining stuff from the thread local {@link FacesContext}.
+ * <p>
+ * Some methods forked from Omnifaces v2.2; some homegrown.
  *
  * @author Jesse Caulfield
+ * @since 1.0.0
  */
 public class FacesUtil {
+
+  /**
+   * Returns the current faces context.
+   * <p>
+   * <i>Note that whenever you absolutely need this method to perform a general
+   * task, you might want to consider to submit a feature request to OmniFaces
+   * in order to add a new utility method which performs exactly this general
+   * task.</i>
+   *
+   * @return The current faces context.
+   * @see FacesContext#getCurrentInstance()
+   */
+  public static FacesContext getContext() {
+    return FacesContext.getCurrentInstance();
+  }
+
+  /**
+   * Returns the faces context that's stored in an ELContext.
+   * <p>
+   * Note that this only works for an ELContext that is created in the context
+   * of JSF.
+   *
+   * @param elContext the EL context to obtain the faces context from.
+   * @return the faces context that's stored in the given ELContext.
+   * @since 1.2
+   */
+  public static FacesContext getContext(ELContext elContext) {
+    return (FacesContext) elContext.getContext(FacesContext.class);
+  }
+
+  /**
+   * Returns the current external context.
+   * <p>
+   * <i>Note that whenever you absolutely need this method to perform a general
+   * task, you might want to consider to submit a feature request to OmniFaces
+   * in order to add a new utility method which performs exactly this general
+   * task.</i>
+   *
+   * @return The current external context.
+   * @see FacesContext#getExternalContext()
+   */
+  public static ExternalContext getExternalContext() {
+    return getContext().getExternalContext();
+  }
+
+  /**
+   * Gets the JSF Application singleton from the FactoryFinder.
+   * <p>
+   * This method is an alternative for {@link Faces#getApplication()} for those
+   * situations where the {@link FacesContext} isn't available.
+   *
+   * @return The faces application singleton.
+   */
+  public static Application getApplicationFromFactory() {
+    return ((ApplicationFactory) FactoryFinder.getFactory(APPLICATION_FACTORY)).getApplication();
+  }
+
+  /**
+   * Returns the implementation information of currently loaded JSF
+   * implementation. E.g. "Mojarra 2.1.7-FCS".
+   *
+   * @return The implementation information of currently loaded JSF
+   *         implementation.
+   * @see Package#getImplementationTitle()
+   * @see Package#getImplementationVersion()
+   */
+  public static String getImplInfo() {
+    Package jsfPackage = FacesContext.class.getPackage();
+    return jsfPackage.getImplementationTitle() + " " + jsfPackage.getImplementationVersion();
+  }
+
+  /**
+   * Signals JSF that the validations phase of the current request has failed.
+   * This can be invoked in any other phase than the validations phase. The
+   * value can be read by {@link #isValidationFailed()} in Java and by
+   * <code>#{facesContext.validationFailed}</code> in EL.
+   *
+   * @see FacesContext#validationFailed()
+   */
+  public static void validationFailed() {
+    getContext().validationFailed();
+  }
+
+  /**
+   * Returns whether the validations phase of the current request has failed.
+   *
+   * @return <code>true</code> if the validations phase of the current request
+   *         has failed, otherwise <code>false</code>.
+   * @see FacesContext#isValidationFailed()
+   */
+  public static boolean isValidationFailed() {
+    return getContext().isValidationFailed();
+  }
 
   /**
    * Post a JSF FacesMessage.
@@ -40,6 +142,46 @@ public class FacesUtil {
    */
   public static void postMessage(FacesMessage.Severity severity, String summary, String detail) {
     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+  }
+
+  /**
+   * Sends a permanent (301) redirect to the given URL.
+   * <p>
+   * If the given URL does <b>not</b> start with <code>http://</code>,
+   * <code>https://</code> or <code>/</code>, then the request context path will
+   * be prepended, otherwise it will be the unmodified redirect URL. So, when
+   * redirecting to another page in the same web application, always specify the
+   * full path from the context root on (which in turn does not need to start
+   * with <code>/</code>).
+   * <pre>
+   * Faces.redirectPermanent("other.xhtml");
+   * </pre>
+   * <p>
+   * You can use {@link String#format(String, Object...)} placeholder
+   * <code>%s</code> in the redirect URL to represent placeholders for any
+   * request parameter values which needs to be URL-encoded. Here's a concrete
+   * example:
+   * <pre>
+   * Faces.redirectPermanent("other.xhtml?foo=%s&amp;bar=%s", foo, bar);
+   * </pre>
+   * <p>
+   * This method does by design not work on ajax requests. It is not possible to
+   * return a "permanent redirect" via JSF ajax XML response.
+   *
+   * @param url         The URL to redirect the current response to.
+   * @param paramValues The request parameter values which you'd like to put
+   *                    URL-encoded in the given URL.
+   * @throws NullPointerException When url is <code>null</code>.
+   * @see ExternalContext#setResponseStatus(int)
+   * @see ExternalContext#setResponseHeader(String, String)
+   */
+  public static void redirectPermanent(String url, String... paramValues) {
+    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    externalContext.getFlash().setRedirect(true); // MyFaces also requires this for a redirect in current request (which is incorrect).
+    externalContext.setResponseStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+    externalContext.setResponseHeader("Location", url);
+    externalContext.setResponseHeader("Connection", "close");
+    FacesContext.getCurrentInstance().responseComplete();
   }
 
   /**
@@ -61,7 +203,10 @@ public class FacesUtil {
        * responseComplete() method to be called on the FacesContext instance for
        * the current request.
        */
-      FacesContext.getCurrentInstance().getExternalContext().redirect(pageUri);
+      ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+      externalContext.getFlash().setRedirect(true); // MyFaces also requires this for a redirect in current request (which is incorrect).
+      externalContext.redirect(pageUri);
+//      FacesContext.getCurrentInstance().getExternalContext().redirect(pageUri);
       /**
        * Send a temporary redirect response to the client using the specified
        * redirect location URL and clears the buffer. The buffer will be
@@ -117,6 +262,16 @@ public class FacesUtil {
      * Do it.
      */
     redirect(sb.toString());
+  }
+
+  /**
+   * Returns the HTTP request parameter values map.
+   *
+   * @return The HTTP request parameter values map.
+   * @see ExternalContext#getRequestParameterValuesMap()
+   */
+  public static Map<String, String[]> getRequestParameterValuesMap() {
+    return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap();
   }
 
   /**
