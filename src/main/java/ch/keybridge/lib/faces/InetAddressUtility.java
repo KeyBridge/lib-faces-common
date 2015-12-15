@@ -115,18 +115,24 @@ public class InetAddressUtility {
   /**
    * Get the (client) request IP address. This method inspects and tries to
    * return the the first non-private IP Address from within an
-   * "X-Forwarded-For" request header. If "X-Forwarded-For" is not present then
-   * the request remote Address is returned.
+   * "X-Forwarded-For" request header. If <code>X-Forwarded-For</code> is not
+   * present then the unmodified request remote Address is returned.
    *
    * @param request the HTTP servlet request
    * @return the best guess remote address
    */
   @SuppressWarnings("NestedAssignment")
   public static String getAddressFromRequest(HttpServletRequest request) {
+    /**
+     * X-Forwarded-For is a comma separated string: client,proxy1,proxy2,...
+     */
     String forwardedFor = request.getHeader("X-Forwarded-For");
     if (forwardedFor != null && (forwardedFor = findNonPrivateIpAddress(forwardedFor)) != null) {
       return forwardedFor;
     }
+    /**
+     * Fall back and return the request remote address.
+     */
     return request.getRemoteAddr();
   }
 
