@@ -439,11 +439,13 @@ public class FacesUtil {
   }
 
   /**
-   * Determine if the current user is in the specified GlassFish ROLE.
+   * Determine if the current user is in the specified GlassFish ROLE. Returns
+   * true if the currently authenticated user is included in the specified role.
+   * Otherwise, returns false.
    * <p>
-   * GlassFish Roles are defined as an entry in the 'glassfish.glassfish_group'
-   * table. Roles are assigned to users by an association in the
-   * 'glassfish.glassfish_role' table.
+   * GlassFish Roles are defined as an entry in the
+   * {@code glassfish_realm.groups} table. Roles are assigned to users by an
+   * association in the {@code glassfish_realm.role} table.
    * <p>
    * A GlassFish User may be associated with more than one GlassFish Role.
    * <p>
