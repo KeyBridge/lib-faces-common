@@ -49,7 +49,7 @@
           <div class="form-group">
             <input type="hidden" name="referer" value="#{param['referer']}"/>
             <p:commandButton id="submit" value="Sign in" styleClass="btn btn-primary form-control"
-                             update="signinMessages, :global:growl"
+                             update="signinMessages"
                              action="#{userSession.signIn()}"/>
           </div>
         </div>
