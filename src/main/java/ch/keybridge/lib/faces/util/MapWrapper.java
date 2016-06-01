@@ -20,6 +20,8 @@ import java.util.Set;
 /**
  * Implementation of Map that wraps another map. This allows interception of one
  * or more method on this wrapped map.
+ * <p>
+ * MapWrapper is used in the ImportConstants utility class.
  *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values

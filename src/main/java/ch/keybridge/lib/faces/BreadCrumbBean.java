@@ -13,13 +13,12 @@
  */
 package ch.keybridge.lib.faces;
 
-import javax.enterprise.context.RequestScoped;
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.component.FacesComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.MenuModel;
 
 /**
  * Bread crumbs indicate the current page's location within a navigational
@@ -27,10 +26,10 @@ import org.primefaces.model.menu.MenuModel;
  * programmatically build a Breadcrumb widget.
  *
  * @author Jesse Caulfield
+ * @since 2.2.0 added 05/17/16
  */
-@Named(value = "breadCrumbBean")
-@RequestScoped
-public class BreadCrumbBean {
+@FacesComponent(value = "breadCrumbBean")
+public class BreadCrumbBean extends UINamingContainer {
 
   /**
    * The PrimeFaces Menu model.
@@ -39,12 +38,33 @@ public class BreadCrumbBean {
    * ClassCastExceptions (manifested as IllegalArgumentException) at
    * {@code org.primefaces.component.breadcrumb.BreadCrumb.getModel()}
    */
-  private MenuModel menuModel;
+  private List<Item> breadcrumb;
 
   /**
    * Creates a new instance of BreadCrumbBean
    */
   public BreadCrumbBean() {
+  }
+
+  /**
+   * Get the Page file name, proper formatted. Ignores index.xhtml
+   *
+   * @return the page file name.
+   */
+  public String getPage() {
+    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    String[] uriPath = request.getRequestURI().replaceFirst(request.getContextPath(), "").split("/");
+    for (String destination : uriPath) {
+      if (!destination.isEmpty()) {
+        if ("index.xhtml".equals(destination)) {
+          continue;
+        }
+        if (destination.endsWith(".xhtml")) {
+          return toProperCase(destination.replace(".xhtml", ""));
+        }
+      }
+    }
+    return null;
   }
 
   /**
@@ -57,14 +77,8 @@ public class BreadCrumbBean {
    *
    * @return a Primefaces MenuModel instance
    */
-  public MenuModel getMenuModel() {
-    menuModel = new DefaultMenuModel();
-    /**
-     * Add the HOME menu item
-     */
-    DefaultMenuItem home = new DefaultMenuItem("Home");
-    home.setUrl("/index.xhtml");
-    menuModel.addElement(home);
+  public List<Item> getBreadcrumb() {
+    breadcrumb = new ArrayList<>();
     /**
      * Split the URI into its components, then build a menu item for each.
      * <p>
@@ -80,6 +94,13 @@ public class BreadCrumbBean {
      * instances of the search string.
      */
     HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    /**
+     * Add the HOME menu item
+     */
+    breadcrumb.add(new Item("Home", request.getContextPath()));
+    /**
+     * Add the current path.
+     */
     String[] uriPath = request.getRequestURI().replaceFirst(request.getContextPath(), "").split("/");
     StringBuilder buildUriPath = new StringBuilder();
     for (String destination : uriPath) {
@@ -88,12 +109,10 @@ public class BreadCrumbBean {
           continue;
         }
         buildUriPath.append("/").append(destination);
-        DefaultMenuItem menuItem = new DefaultMenuItem(toProperCase(destination.replace(".xhtml", "")));
-        menuItem.setUrl(buildUriPath.toString());
-        menuModel.addElement(menuItem);
+        breadcrumb.add(new Item(toProperCase(destination.replace(".xhtml", "")), buildUriPath.toString()));
       }
     }
-    return menuModel;
+    return breadcrumb;
   }
 
   /**
@@ -143,6 +162,62 @@ public class BreadCrumbBean {
        * The string is a single word.
        */
       return string.substring(0, 1).toUpperCase() + string.substring(1);
+    }
+  }
+
+  /**
+   * Inner class describing a Menu Item container for a URL and label.
+   */
+  public static class Item {
+
+    /**
+     * The Text label.
+     */
+    private String label;
+    /**
+     * The relative URL.
+     */
+    private String url;
+
+    public Item(String label, String url) {
+      this.label = label;
+      this.url = url;
+    }
+
+    /**
+     * Get the label.
+     *
+     * @return the label.
+     */
+    public String getLabel() {
+      return label;
+    }
+
+    /**
+     * Set the label.
+     *
+     * @param label the label.
+     */
+    public void setLabel(String label) {
+      this.label = label;
+    }
+
+    /**
+     * Get the URL.
+     *
+     * @return the url.
+     */
+    public String getUrl() {
+      return url;
+    }
+
+    /**
+     * Set the url.
+     *
+     * @param url the url.
+     */
+    public void setUrl(String url) {
+      this.url = url;
     }
   }
 }
