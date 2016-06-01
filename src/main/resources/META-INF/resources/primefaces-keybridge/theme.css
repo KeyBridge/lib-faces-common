@@ -443,15 +443,19 @@ abbr {margin-right: 5px;}
 /*do not pad Google Code PrettyPrint*/
 .prettyprint {border: none !important; padding: 1em !important;}
 /*pretty print uri colors*/
-.context-root {color: #000088;}
-.context {color: #660066;}
+.rest-context-root {color: #000088;}
+.rest-context {color: #660066;}
 .rest-uri{color: rgb(51, 122, 183);}
 .rest-parameter {color: #008800;}
 /*doc section spacing*/
 .doc-section {margin-bottom: 30px;}
 
 /*do not color header links - do not decorate on hover*/
-h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: inherit;}
+h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: #333;}
+h1>a:hover, h2>a:hover, h3>a:hover, h4>a:hover, h5>a:hover, h6>a:hover{color: #444;}
+a>h1, a>h2, a>h3, a>h4, a>h5, a>h6{color: #333;}
+a:hover>h1, a:hover>h2, a:hover>h3, a:hover>h4, a:hover>h5, a:hover>h6{color: #444;}
+
 /*do not underline links on hover*/
 a:hover{text-decoration: none;}
 
