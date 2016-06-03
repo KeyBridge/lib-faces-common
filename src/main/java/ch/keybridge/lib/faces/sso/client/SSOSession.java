@@ -1,6 +1,5 @@
 package ch.keybridge.lib.faces.sso.client;
 
-import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
@@ -15,6 +14,8 @@ import javax.servlet.http.Cookie;
 import javax.xml.bind.annotation.*;
 import org.apache.commons.codec.binary.Base64;
 
+import static ch.keybridge.lib.faces.sso.client.SSOSOAPClient.BUNDLE;
+
 /**
  * SSO Cookie.
  * <p>
@@ -23,10 +24,10 @@ import org.apache.commons.codec.binary.Base64;
  *
  * @author jesse
  */
-@XmlRootElement(name = "SSOCookie")
+@XmlRootElement(name = "SSOSession")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SSOCookie")
-public class SSOCookie {
+@XmlType(name = "SSOSession")
+public class SSOSession {
 
   /**
    * SSO. The browser cookie name. The name must conform to RFC 2109. The name
@@ -120,7 +121,7 @@ public class SSOCookie {
       try {
         return decrypt(uuid.substring(uuid.length() - 16, uuid.length()), password);
       } catch (GeneralSecurityException exception) {
-        Logger.getLogger(SSOCookie.class.getName()).log(Level.SEVERE, "SSOCookie failed to decode password for {0}: {1}", new Object[]{userName, exception.getMessage()});
+        Logger.getLogger(SSOSession.class.getName()).log(Level.SEVERE, "SSOCookie failed to decode password for {0}: {1}", new Object[]{userName, exception.getMessage()});
       }
     }
     return null;
@@ -203,11 +204,26 @@ public class SSOCookie {
    * @return an HTTP version 1 cookie.
    */
   public static Cookie buildCookie(String uuid) {
+    /**
+     * Developer note: This method cannot be included in the Session entity
+     * object as the HTTP Cookie class is not compatible with JAXB marshalling /
+     * un-marshalling.
+     */
     Cookie cookie = new Cookie(COOKIE_NAME, uuid);
+    /**
+     * HttpOnly cookies are not supposed to be exposed to client-side scripting
+     * code, and may therefore help mitigate certain kinds of cross-site
+     * scripting attacks
+     */
     cookie.setHttpOnly(true);
+    /**
+     * Indicates to the browser whether the cookie should only be sent using a
+     * secure protocol, such as HTTPS or SSL. The default value is false.
+     */
     cookie.setSecure(true);
     /**
-     * Do not set the cookie domain when testing.
+     * Do not set the cookie domain when testing. For production, specify the
+     * entire domain within which this cookie should be presented.
      */
     try {
       cookie.setDomain(ResourceBundle.getBundle(BUNDLE).getString("sso.cookie.domain"));
@@ -220,8 +236,8 @@ public class SSOCookie {
      */
     cookie.setPath("/");
     /**
-     * (30days) x (24hrs/1day) x (60min/1hrs) x (60sec/1min) x (1000ms/1sec) =
-     * 2,592,000,000 ms
+     * Set the max age to ~30 days; (30days) x (24hrs/1day) x (60min/1hrs) x
+     * (60sec/1min) x (1000ms/1sec) = 2,592,000,000 ms =~ Integer.MAX_VALUE.
      */
     cookie.setMaxAge(Integer.MAX_VALUE);
     return cookie;
