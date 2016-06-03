@@ -21,7 +21,7 @@ public interface SSO {
    * @return the corresponding SSOSession instance, null if not found
    */
   @WebMethod
-  public SSOCookie findCookieUser(@WebParam(name = "uuid") String uuid);
+  public SSOSession findSessionUser(@WebParam(name = "uuid") String uuid);
 
   /**
    * Find and return the API SSO Session corresponding to the provided
@@ -33,7 +33,7 @@ public interface SSO {
    *         given consumer_key
    */
   @WebMethod
-  public SSOCookie findCookieOauth(@WebParam(name = "oauth_consumer_key") String oauth_consumer_key);
+  public SSOSession findSessionOauth(@WebParam(name = "oauth_consumer_key") String oauth_consumer_key);
 
   /**
    * Update the GlassfishUser "dateLastSeen" field
@@ -46,7 +46,7 @@ public interface SSO {
 
   /**
    * Add a user SSO Session Cookie to the current SSO Manager state. Returns a
-   * SSOCookie session for the given user name and password. If a SSO session
+   * SSOSession session for the given user name and password. If a SSO session
    * already exists for the user then that is returned. If no session exists
    * then a NEW session is created with the user name and password fields.
    * <p>
@@ -56,12 +56,11 @@ public interface SSO {
    * @param password   the user password
    * @param remoteAddr the users remote IP address
    * @return a SSO session for the user
-   * @throws java.lang.Exception if the user does not exist
    */
   @WebMethod
-  public String addCookie(@WebParam(name = "username") String username,
-                          @WebParam(name = "password") String password,
-                          @WebParam(name = "remoteAddr") String remoteAddr);
+  public String createSession(@WebParam(name = "username") String username,
+                              @WebParam(name = "password") String password,
+                              @WebParam(name = "remoteAddr") String remoteAddr);
 
   /**
    * Remove the SSO Session for the indicated cookie name. If no session exists
@@ -71,5 +70,5 @@ public interface SSO {
    */
   @WebMethod
   @Oneway
-  public void clearCookie(@WebParam(name = "uuid") String uuid);
+  public void clearSession(@WebParam(name = "uuid") String uuid);
 }
