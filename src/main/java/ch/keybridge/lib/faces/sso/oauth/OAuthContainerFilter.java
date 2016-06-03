@@ -15,7 +15,7 @@
 package ch.keybridge.lib.faces.sso.oauth;
 
 import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import ch.keybridge.lib.faces.sso.client.SSOSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -140,7 +140,7 @@ public class OAuthContainerFilter implements ContainerRequestFilter {
      * Session.
      */
     if (requestContext.getHeaderString("authorization") != null) {
-      SSOCookie ssoCookie = sso.findCookieOauth(oauthMap(requestContext.getHeaderString("authorization")).get("oauth_consumer_key"));
+      SSOSession ssoCookie = sso.findSessionOauth(oauthMap(requestContext.getHeaderString("authorization")).get("oauth_consumer_key"));
       if (ssoCookie != null) {
         requestContext.setSecurityContext(new OAuthSecurityContext(ssoCookie,
                                                                    requestContext.getSecurityContext().isSecure()));

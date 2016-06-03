@@ -14,9 +14,10 @@
  */
 package ch.keybridge.lib.faces.sso.oauth;
 
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import ch.keybridge.lib.faces.sso.client.SSOSession;
 import java.security.Principal;
 import javax.ws.rs.core.SecurityContext;
+
 import static javax.ws.rs.core.SecurityContext.CLIENT_CERT_AUTH;
 
 /**
@@ -33,7 +34,7 @@ public class OAuthSecurityContext implements SecurityContext {
   /**
    * The current OAuth SSO Session.
    */
-  private final SSOCookie ssoCookie;
+  private final SSOSession ssoCookie;
 
   /**
    * Boolean indicating whether this request was made using a secure channel,
@@ -41,7 +42,7 @@ public class OAuthSecurityContext implements SecurityContext {
    */
   private final boolean secure;
 
-  public OAuthSecurityContext(SSOCookie ssoCookie, boolean secure) {
+  public OAuthSecurityContext(SSOSession ssoCookie, boolean secure) {
     this.ssoCookie = ssoCookie;
     this.secure = secure;
   }

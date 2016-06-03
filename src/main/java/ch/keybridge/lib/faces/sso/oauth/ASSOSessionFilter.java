@@ -15,8 +15,8 @@
 package ch.keybridge.lib.faces.sso.oauth;
 
 import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
 import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
+import ch.keybridge.lib.faces.sso.client.SSOSession;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,28 +165,28 @@ public abstract class ASSOSessionFilter implements Filter {
        * The user is not logged in. Look for a Cookie. If the cookie exists then
        * use it to try validating the session.
        */
-      Cookie cookie = findCookieByName(SSOCookie.COOKIE_NAME, httpServletRequest.getCookies());
+      Cookie cookie = findCookieByName(SSOSession.COOKIE_NAME, httpServletRequest.getCookies());
       if (cookie != null) {
         /**
          * Try to get the SSO Session from the ephemeral GlassfishSSOManager
          * user cache and use the session information to log the user in.
          */
-        SSOCookie ssoCookie = sso.findCookieUser(cookie.getValue());
-        if (ssoCookie != null) {
+        SSOSession ssoSession = sso.findSessionUser(cookie.getValue());
+        if (ssoSession != null) {
           try {
             /**
              * Try to log in the user. If successful then update the user date
              * last seen.
              */
-            httpServletRequest.login(ssoCookie.getUserName(), ssoCookie.getPassword());
-            sso.updateLastSeen(ssoCookie.getUserName());
+            httpServletRequest.login(ssoSession.getUserName(), ssoSession.getPassword());
+            sso.updateLastSeen(ssoSession.getUserName());
             /**
              * At this point the user is signed in.
              * <p>
              * Note that this has no bearing regarding sufficient privileges to
              * view the resource.
              */
-            logger.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoCookie.getUserName());
+            logger.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoSession.getUserName());
           } catch (ServletException servletException) {
             /**
              * Login failed. Has the user changed their password?

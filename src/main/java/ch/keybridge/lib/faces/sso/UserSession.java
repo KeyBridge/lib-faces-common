@@ -16,7 +16,7 @@ package ch.keybridge.lib.faces.sso;
 
 import ch.keybridge.lib.faces.FacesUtil;
 import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOCookie;
+import ch.keybridge.lib.faces.sso.client.SSOSession;
 import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,6 +40,8 @@ import javax.servlet.http.HttpSession;
 @Named(value = "userSession")
 @RequestScoped
 public class UserSession {
+
+  private static final Logger logger = Logger.getLogger(UserSession.class.getName());
 
   /**
    * The Sign in page. If the referring page is the sign-in page then the
@@ -187,7 +189,7 @@ public class UserSession {
                               "Sign in error",
                               "Either the user name was not recognized or the password did not match. Please try again.");
       } catch (Exception ex) {
-        Logger.getLogger(UserSession.class.getName()).log(Level.SEVERE, null, ex);
+        logger.log(Level.SEVERE, null, ex);
       }
     }
   }
@@ -211,7 +213,7 @@ public class UserSession {
        */
       try {
         if (Boolean.valueOf(ResourceBundle.getBundle(SSOSOAPClient.BUNDLE).getString("sso.enable.logging"))) {
-          Logger.getLogger(UserSession.class.getName()).log(Level.INFO, "UserSession enabling SOAPService logging");
+          logger.log(Level.INFO, "UserSession enabling SOAPService logging");
           SSOSOAPClient.enableLogging(sso); // log to info
         }
       } catch (Exception e) {
@@ -225,11 +227,12 @@ public class UserSession {
       sso.updateLastSeen(userName);
       /**
        * Set a SSO cookie if the user has checked "Remember me". The cookie is
-       * automatically recorded in the Glassfish SSO Manager.
+       * automatically recorded in the Glassfish SSO Manager upon construction
+       * by the 'addCookie()' method.
        */
       if (remember) {
-        String ssoUuid = sso.addCookie(userName, password, FacesUtil.getRemoteAddr());
-        FacesUtil.addCookie(SSOCookie.buildCookie(ssoUuid));
+        String ssoUuid = sso.createSession(userName, password, FacesUtil.getRemoteAddr());
+        FacesUtil.addCookie(SSOSession.buildCookie(ssoUuid));
       }
     } catch (Exception exception) {
       /**
@@ -239,7 +242,7 @@ public class UserSession {
        * http://localhost:8080/service/sso?wsdl. or Caused by:
        * java.io.FileNotFoundException: http://localhost:8080/service/sso?wsdl
        */
-      Logger.getLogger(UserSession.class.getName()).log(Level.WARNING, "SSO {0}", exception.getMessage());
+      logger.log(Level.WARNING, "SSO {0}", exception.getMessage());
     }
   }
 
@@ -251,10 +254,10 @@ public class UserSession {
     /**
      * Clear the SSO cookie if it is set.
      */
-    Cookie cookie = FacesUtil.getCookie(SSOCookie.COOKIE_NAME);
+    Cookie cookie = FacesUtil.getCookie(SSOSession.COOKIE_NAME);
     if (cookie != null) {
       try {
-        SSOSOAPClient.getInstance().clearCookie(cookie.getValue());
+        SSOSOAPClient.getInstance().clearSession(cookie.getValue());
       } catch (Exception exception) {
       }
       cookie.setMaxAge(0);
