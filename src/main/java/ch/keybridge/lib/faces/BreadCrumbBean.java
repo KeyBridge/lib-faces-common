@@ -102,7 +102,7 @@ public class BreadCrumbBean extends UINamingContainer {
      * Add the current path.
      */
     String[] uriPath = request.getRequestURI().replaceFirst(request.getContextPath(), "").split("/");
-    StringBuilder buildUriPath = new StringBuilder();
+    StringBuilder buildUriPath = new StringBuilder(request.getContextPath());
     for (String destination : uriPath) {
       if (!destination.isEmpty()) {
         if ("index.xhtml".equals(destination)) {
