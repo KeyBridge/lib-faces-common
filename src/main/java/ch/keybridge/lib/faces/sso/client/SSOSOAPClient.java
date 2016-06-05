@@ -82,7 +82,7 @@ public class SSOSOAPClient extends Service {
   }
 
   //<editor-fold defaultstate="collapsed" desc="SSO">
-  public final static QName QNAME_SSO = new QName("http://keybridge.ch/sso", "soap");
+  public final static QName QNAME_SSO = new QName("http://keybridge.ch/sso", "service");
 
   /**
    *
