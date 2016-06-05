@@ -173,27 +173,6 @@ public class SSOSession {
   }
 
   /**
-   * Decrypt an AES encrypted string using the provided key.
-   *
-   * @param key       the encryption key used to encrypt the value.
-   * @param encrypted an AES encrypted and Base64 encoded string. Length is 44
-   *                  characters or less.
-   * @return the un-encrypted value
-   * @throws GeneralSecurityException if the decryption fails
-   */
-  public static String decrypt(String key, String encrypted) throws GeneralSecurityException {
-    byte[] raw = key.getBytes(Charset.forName("US-ASCII"));
-    if (raw.length != 16) {
-      throw new IllegalArgumentException("Invalid key size. Key length must be 16 characters.");
-    }
-    SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-    cipher.init(Cipher.DECRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
-    byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
-    return new String(original, Charset.forName("US-ASCII"));
-  }//</editor-fold>
-
-  /**
    * Get a Session Cookie named "JSESSIONSSO" containing the SSOSession UUID.
    * <p>
    * Cookies must be generated on-demand as the
@@ -242,6 +221,79 @@ public class SSOSession {
     cookie.setMaxAge(Integer.MAX_VALUE);
     return cookie;
   }
+
+  //<editor-fold defaultstate="collapsed" desc="Encrypt / Decrypt">
+  /**
+   * Encrypt the value using AES crypto algorithm and provided key. The key is
+   * required to decrypt the value.
+   *
+   * @param key   the {@code AES} encryption key used to seed and required to
+   *              decrypt the value.
+   * @param value the value to encrypt
+   * @return the value as an AES encrypted and Base64 encoded string. Length is
+   *         44 characters or less.
+   * @throws GeneralSecurityException if the encryption fails
+   */
+  public static String encrypt(String key, String value) throws GeneralSecurityException {
+    byte[] raw = formatString(key).getBytes(Charset.forName("US-ASCII"));
+    if (raw.length != 16) {
+      throw new IllegalArgumentException("Invalid key size. Key length must be exactly 16 characters.");
+    }
+    /**
+     * Construct a secret key from the given byte array, then get a Cipher
+     * object that implements the specified (AES/CBC/PKCS5Padding)
+     * transformation.
+     */
+    SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    /**
+     * Initialize this cipher with a key and a set of algorithm parameters.
+     * Requires AES key length: 19 bytes
+     */
+    cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
+    /**
+     * Finish the multiple-part encryption operation, then return the byte array
+     * as a Base64 encoded string.
+     */
+    return Base64.encodeBase64String(cipher.doFinal(value.getBytes(Charset.forName("US-ASCII"))));
+  }
+
+  /**
+   * Decrypt an AES encrypted string using the provided key.
+   *
+   * @param key       the {@code AES} encryption key used to encrypt the value.
+   * @param encrypted an AES encrypted and Base64 encoded string. Length is 44
+   *                  characters or less.
+   * @return the un-encrypted value
+   * @throws GeneralSecurityException if the decryption fails
+   */
+  public static String decrypt(String key, String encrypted) throws GeneralSecurityException {
+    byte[] raw = formatString(key).getBytes(Charset.forName("US-ASCII"));
+    if (raw.length != 16) {
+      throw new IllegalArgumentException("Invalid key size. Key length must be exactly 16 characters.");
+    }
+    SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    cipher.init(Cipher.DECRYPT_MODE, skeySpec, new IvParameterSpec(new byte[16]));
+    byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+    return new String(original, Charset.forName("US-ASCII"));
+  }
+
+  /**
+   * Helper method to format the key string to exactly 16 characters.
+   *
+   * @param string the string to format
+   * @return a 16-character string
+   */
+  private static String formatString(String string) {
+    if (string.length() < 16) {
+      return String.format("%16s", string).replace(' ', '*');
+    } else if (string.length() > 16) {
+      return string.substring(0, 16);
+    } else {
+      return string;
+    }
+  }//</editor-fold>
 
   /**
    * Get the UUID for this cookie.
