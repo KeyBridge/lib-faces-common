@@ -18,6 +18,7 @@ import ch.keybridge.lib.faces.sso.client.SSO;
 import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
 import ch.keybridge.lib.faces.sso.client.SSOSession;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.*;
@@ -178,7 +179,8 @@ public abstract class ASSOSessionFilter implements Filter {
              * Try to log in the user. If successful then update the user date
              * last seen.
              */
-            httpServletRequest.login(ssoSession.getUserName(), ssoSession.getPassword());
+            httpServletRequest.login(ssoSession.getUserName(),
+                                     SSOSession.decrypt(ssoSession.getUserName(), ssoSession.getPassword()));
             sso.updateLastSeen(ssoSession.getUserName());
             /**
              * At this point the user is signed in.
@@ -187,10 +189,11 @@ public abstract class ASSOSessionFilter implements Filter {
              * view the resource.
              */
             logger.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoSession.getUserName());
-          } catch (ServletException servletException) {
+          } catch (ServletException | GeneralSecurityException exception) {
             /**
              * Login failed. Has the user changed their password?
              */
+            logger.log(Level.WARNING, "SSOSessionFilter sign in failed for {0}", ssoSession.getUserName());
           }
         }
       }
