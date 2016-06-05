@@ -16,8 +16,8 @@ package ch.keybridge.lib.faces.sso;
 
 import ch.keybridge.lib.faces.FacesUtil;
 import ch.keybridge.lib.faces.sso.client.SSO;
-import ch.keybridge.lib.faces.sso.client.SSOSession;
 import ch.keybridge.lib.faces.sso.client.SSOSOAPClient;
+import ch.keybridge.lib.faces.sso.client.SSOSession;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -231,7 +231,9 @@ public class UserSession {
        * by the 'addCookie()' method.
        */
       if (remember) {
-        String ssoUuid = sso.createSession(userName, password, FacesUtil.getRemoteAddr());
+        String ssoUuid = sso.createSession(userName,
+                                           SSOSession.encrypt(userName, password),
+                                           FacesUtil.getRemoteAddr());
         FacesUtil.addCookie(SSOSession.buildCookie(ssoUuid));
       }
     } catch (Exception exception) {
