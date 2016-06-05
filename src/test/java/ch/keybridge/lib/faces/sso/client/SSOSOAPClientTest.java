@@ -34,7 +34,7 @@ public class SSOSOAPClientTest extends TestCase {
   private SSO getSSOClient() {
     SSO sso = null;
     try {
-      sso = SSOSOAPClient.getInstance("http://localhost:8080/soap/sso?wsdl");
+      sso = SSOSOAPClient.getInstance("http://localhost:8080/service/sso?wsdl");
       SSOSOAPClient.enableLogging(sso);
     } catch (Exception exception) {
       LOG.log(Level.SEVERE, null, exception);
@@ -49,7 +49,7 @@ public class SSOSOAPClientTest extends TestCase {
     getSSOClient().updateLastSeen("jesse@caulfield.org");
   }
 
-  public void testAddCookie() {
+  public void _testAddCookie() {
     System.out.println("Test Add Cookie");
     String user = "jesse@caulfield.org";
 //    String user = "bogususer@bogus.bog";
