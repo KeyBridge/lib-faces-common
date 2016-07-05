@@ -41,7 +41,7 @@ import javax.servlet.http.HttpSession;
 @RequestScoped
 public class UserSession {
 
-  private static final Logger logger = Logger.getLogger(UserSession.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(UserSession.class.getName());
 
   /**
    * The Sign in page. If the referring page is the sign-in page then the
@@ -189,7 +189,7 @@ public class UserSession {
                               "Sign in error",
                               "Either the user name was not recognized or the password did not match. Please try again.");
       } catch (Exception ex) {
-        logger.log(Level.SEVERE, null, ex);
+        LOGGER.log(Level.SEVERE, null, ex);
       }
     }
   }
@@ -213,7 +213,7 @@ public class UserSession {
        */
       try {
         if (Boolean.valueOf(ResourceBundle.getBundle(SSOSOAPClient.BUNDLE).getString("sso.enable.logging"))) {
-          logger.log(Level.INFO, "UserSession enabling SOAPService logging");
+          LOGGER.log(Level.INFO, "UserSession enabling SOAPService logging");
           SSOSOAPClient.enableLogging(sso); // log to info
         }
       } catch (Exception e) {
@@ -244,7 +244,7 @@ public class UserSession {
        * http://localhost:8080/service/sso?wsdl. or Caused by:
        * java.io.FileNotFoundException: http://localhost:8080/service/sso?wsdl
        */
-      logger.log(Level.WARNING, "SSO {0}", exception.getMessage());
+      LOGGER.log(Level.WARNING, "SSO {0}", exception.getMessage());
     }
   }
 
