@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.el.ELContext;
 import javax.faces.FactoryFinder;
-import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
@@ -28,6 +27,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 
 /**
  * Collection of utility methods for the JSF API that are mainly shortcuts for
@@ -82,6 +84,30 @@ public class FacesUtil {
    */
   public static ExternalContext getExternalContext() {
     return getContext().getExternalContext();
+  }
+
+  /**
+   * Return any existing session instance associated with the current request,
+   * or return null if there is no such session.
+   * <p>
+   * Servlet: This returns the result of calling getSession(false) on the
+   * underlying <code>javax.servlet.http.HttpServletRequest</code> instance.
+   *
+   * @return the current HTTP Session
+   */
+  public static HttpSession getHttpSession() {
+    return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+  }
+
+  /**
+   * Return the environment-specific object instance for the current request.
+   * This is be the current request
+   * <code>javax.servlet.http.HttpServletRequest</code> instance.
+   *
+   * @return the immediate HTTP servlet request
+   */
+  public static HttpServletRequest getHttpServletRequest() {
+    return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
   }
 
   /**
@@ -257,7 +283,9 @@ public class FacesUtil {
      * Append the page, stripping a prefix slash "/" if present to avoid double
      * slashing.
      */
-    sb.append(pageUri.startsWith("/") ? pageUri.replaceFirst("/", "") : pageUri);
+    if (pageUri != null) {
+      sb.append(pageUri.startsWith("/") ? pageUri.replaceFirst("/", "") : pageUri);
+    }
     /**
      * Do it.
      */
@@ -265,7 +293,13 @@ public class FacesUtil {
   }
 
   /**
-   * Returns the HTTP request parameter values map.
+   * Returns the HTTP request parameter values map. This is a key / value map
+   * encoded as <code>&lt;String, String[]&gt;</code>
+   * <p>
+   * Returns an immutable Map whose keys are the set of request parameters names
+   * included in the current request, and whose values (of type String[]) are
+   * all of the values for each parameter name returned by the underlying
+   * request.
    *
    * @return The HTTP request parameter values map.
    * @see ExternalContext#getRequestParameterValuesMap()
@@ -290,9 +324,7 @@ public class FacesUtil {
      * Developer note: getRequestParameterMap() returns an immutable Map whose
      * keys are the set of request parameters names included in the current
      * request, and whose values (of type String) are the first (or only) value
-     * for each parameter name returned by the underlying request. The returned
-     * Map must implement the entire contract for an unmodifiable map as
-     * described in the JavaDocs for java.util.Map.
+     * for each parameter name returned by the underlying request. T
      */
     return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(queryKey);
   }
@@ -314,20 +346,18 @@ public class FacesUtil {
    * FacesContext request parameters included in the current request.
    * <p>
    * This fetches a request value from GET URIs. For example, if the URI query
-   * was "?key1=value1&key2=value2" then this method would return "value2" for
-   * the query key "key2".
+   * was "?key1=value1&key2=value2" then this method would return "key2" for the
+   * query key "key2".
    *
    * @param queryKey the URI query key
    * @return the corresponding URI query value
    */
   public static String getRequestHeader(String queryKey) {
     /**
-     * Developer note: getRequestParameterMap() returns an immutable Map whose
-     * keys are the set of request header names included in the current request,
-     * and whose values (of type String) are the first (or only) value for each
-     * parameter name returned by the underlying request. The returned Map must
-     * implement the entire contract for an unmodifiable map as described in the
-     * JavaDocs for java.util.Map.
+     * Developer note: getRequestHeaderMap() returns an immutable Map whose keys
+     * are the set of request header names included in the current request, and
+     * whose values (of type String) are the first (or only) value for each
+     * parameter name returned by the underlying request.
      */
     return FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get(queryKey);
   }
@@ -544,6 +574,69 @@ public class FacesUtil {
       FacesContext.getCurrentInstance().responseComplete();
     } catch (IOException iOException) {
     }
+  }
+
+  /**
+   * Get a Session Cookie named "JSESSIONSSO" containing the SSOSession UUID.
+   * <p>
+   * The name must conform to RFC 2109. However, vendors may provide a
+   * configuration option that allows cookie names conforming to the original
+   * Netscape Cookie Specification to be accepted. The name of a cookie cannot
+   * be changed once the cookie has been created. The value can be anything the
+   * server chooses to send. Its value is probably of interest only to the
+   * server. The cookie's value can be changed after creation with the setValue
+   * method. By default, cookies are created according to the Netscape cookie
+   * specification.
+   * <p>
+   * Developer note: The {@code javax.servlet.http.Cookie} object is not
+   * compatible with JAXB marshalling / un-marshalling.
+   *
+   * @param name    the name of the cookie value
+   * @param value   the value of the cookie
+   * @param maxAge  the maximum age in seconds for this Cookie.
+   * @param domain  the domain within which this cookie should be presented.
+   * @param comment a comment that describes a cookie's purpose
+   * @return an HTTP version 1 cookie.
+   */
+  public static Cookie buildCookie(String name, String value, Integer maxAge, String domain, String comment) {
+    /**
+     * Developer note: This method cannot be included in the Session entity
+     * object as the HTTP Cookie class is not compatible with JAXB marshalling /
+     * un-marshalling.
+     */
+    Cookie cookie = new Cookie(name, value);
+    /**
+     * HttpOnly cookies are not supposed to be exposed to client-side scripting
+     * code, and may therefore help mitigate certain kinds of cross-site
+     * scripting attacks
+     */
+    cookie.setHttpOnly(true);
+    /**
+     * Indicates to the browser whether the cookie should only be sent using a
+     * secure protocol, such as HTTPS or SSL. The default value is false.
+     */
+    cookie.setSecure(true);
+    /**
+     * Do not set the cookie domain when testing. For production, specify the
+     * entire domain within which this cookie should be presented.
+     */
+    if (domain != null) {
+      cookie.setDomain(domain);
+    }
+    if (comment != null) {
+      cookie.setComment("sso");
+    }
+    cookie.setVersion(1);
+    /**
+     * Set the cookie to respond to all applications.
+     */
+    cookie.setPath("/");
+    /**
+     * Set the max age to ~30 days; (30days) x (24hrs/1day) x (60min/1hrs) x
+     * (60sec/1min) x (1000ms/1sec) = 2,592,000,000 ms =~ Integer.MAX_VALUE.
+     */
+    cookie.setMaxAge(maxAge);
+    return cookie;
   }
 
 }
