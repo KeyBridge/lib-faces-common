@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class ASSOSessionFilter implements Filter {
 
-  private static final Logger logger = Logger.getLogger(ASSOSessionFilter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ASSOSessionFilter.class.getName());
 
   /**
    * The WebServiceRef annotation is used to define a reference to a web service
@@ -88,7 +88,7 @@ public abstract class ASSOSessionFilter implements Filter {
       } catch (Exception ex) {
         throw new ServletException(ex.getMessage());
       }
-      logger.log(Level.INFO, "ASSOSessionFilter initialize SOAP client");
+      LOGGER.log(Level.INFO, "ASSOSessionFilter initialize SOAP client");
     }
   }
 
@@ -180,7 +180,8 @@ public abstract class ASSOSessionFilter implements Filter {
              * last seen.
              */
             httpServletRequest.login(ssoSession.getUserName(),
-                                     SSOSession.decrypt(ssoSession.getUserName(), ssoSession.getPassword()));
+                                     SSOSession.decrypt(ssoSession.getUserName(),
+                                                        ssoSession.getPassword()));
             sso.updateLastSeen(ssoSession.getUserName());
             /**
              * At this point the user is signed in.
@@ -188,12 +189,12 @@ public abstract class ASSOSessionFilter implements Filter {
              * Note that this has no bearing regarding sufficient privileges to
              * view the resource.
              */
-            logger.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoSession.getUserName());
+            LOGGER.log(Level.INFO, "SSOSessionFilter signed in {0}", ssoSession.getUserName());
           } catch (ServletException | GeneralSecurityException exception) {
             /**
              * Login failed. Has the user changed their password?
              */
-            logger.log(Level.WARNING, "SSOSessionFilter sign in failed for {0}", ssoSession.getUserName());
+            LOGGER.log(Level.WARNING, "SSOSessionFilter sign in failed for {0}", ssoSession.getUserName());
           }
         }
       }
