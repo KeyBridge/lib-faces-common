@@ -420,11 +420,11 @@ abbr {margin-right: 5px;}
 
 /*SIDEBAR navigation panel*/
 /*A sidebar navigation. This is activated by setting the class="sidebar hidden-print affix"*/
-.sidebar .nav{display:block;padding-bottom:10px}
+.sidebar .nav{display:block;}
 /*1st level*/
 .sidebar .nav>li>a{display:block;font-weight:500;padding:4px 20px}
-.sidebar .nav>li>a:hover,.sidebar .nav>li>a:focus{padding-left:19px;color:#563d7c;text-decoration:none;background-color:transparent;border-left:1px solid #563d7c}
-.sidebar .nav>.active>a,.sidebar .nav>.active:hover>a,.sidebar .nav>.active:focus>a{padding-left:18px;font-weight:700;color:#563d7c;background-color:transparent;border-left:2px solid #563d7c}
+.sidebar .nav>li>a:hover,.sidebar .nav>li>a:focus{padding-left:19px;color:#333;text-decoration:none;background-color:transparent;border-left:1px solid #333}
+.sidebar .nav>.active>a,.sidebar .nav>.active:hover>a,.sidebar .nav>.active:focus>a{padding-left:18px;font-weight:700;color:#333;background-color:transparent;border-left:2px solid #333}
 /*2nd level*/
 .sidebar .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:0.8em;font-weight:400}
 .sidebar .nav .nav>li>a:hover,.sidebar .nav .nav>li>a:focus{padding-left:29px}
@@ -439,10 +439,10 @@ abbr {margin-right: 5px;}
 .sidebar .nav .nav .nav .nav>.active>a,.sidebar .nav .nav .nav .nav>.active:hover>a,.sidebar .nav .nav .nav .nav>.active:focus>a{font-weight:500;padding-left:48px}
 /*sidebar back to top*/
 .back-to-top{margin-top:10px;margin-left:10px;padding:4px 10px;font-weight:500;color:#999}
-.back-to-top:hover{text-decoration:none;color:#563d7c}
+.back-to-top:hover{text-decoration:none;color:#333}
 
 /*do not pad Google Code PrettyPrint*/
-.prettyprint {border: none !important; padding: 1em !important;}
+.prettyprint {border: none !important; padding: 1em !important; font-size: smaller;}
 /*pretty print uri colors*/
 .rest-context-root {color: #000088;}
 .rest-context {color: #660066;}
@@ -462,7 +462,7 @@ a:hover{text-decoration: none;}
 
 /*do not wrap table header text*/
 th{white-space: nowrap;}
-/*bottom pad lists and list entries*/
-ul, ol, dl, dd, dt {margin: 0 0 10px;}
+/*bottom pad lists*/
+ul, ol, dl {margin: 0 0 10px;}
 /*right-pad developer notes*/
 span.label  {margin-right: 1em;}
