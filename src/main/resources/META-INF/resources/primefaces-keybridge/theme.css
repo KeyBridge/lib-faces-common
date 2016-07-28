@@ -350,6 +350,8 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .nav a{ color: inherit;}
 /*pad nav icons*/
 .nav i{ margin-right: 5px;}
+/*don't wrap nav items*/
+.nav > li {white-space: nowrap;}
 /*clean up the home link*/
 .navbar-brand a {color: inherit;}
 .navbar-brand a:hover {text-decoration: none;}
