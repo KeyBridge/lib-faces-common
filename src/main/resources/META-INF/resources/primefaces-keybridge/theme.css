@@ -364,9 +364,9 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .footer {padding: 3em 1em;  z-index: -100; background-color: #F5F5F5;}
 
 /*global figure formatting. figures include an image and a label*/
-figure {  padding: 2em;  margin: 0px 0px 10px;}
-figure>img {  margin: 0px 0px 10px;}
-figure>label {  font-size: smaller;  margin-left: 2em;}
+figure { margin: 0px 0px 10px;}
+figure>img {  margin: 0px 0px 5px;}
+figure>label, figure>caption {  font-size: smaller; text-align: center; font-style: italic; }
 
 /*make blockquotes the same font size unless specifically declared otherwise*/
 blockquote {  font-size: inherit !important;}
