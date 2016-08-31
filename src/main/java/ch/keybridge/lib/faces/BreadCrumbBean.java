@@ -47,37 +47,49 @@ public class BreadCrumbBean extends UINamingContainer {
   }
 
   /**
-   * Get the Page file name, proper formatted. Ignores index.xhtml
+   * Get the Page file name, proper formatted. If the current page is the
+   * default (i.e. "index.xhtml") then the immediate directory name is used
+   * instead.
+   * <p>
+   * For example, the URI path "http://example.com/directory/index.xhtml" will
+   * return the page label "Directory".
    *
-   * @return the page file name.
+   * @return the URI page file name.
    */
   public String getPage() {
     HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     String[] uriPath = request.getRequestURI().replaceFirst(request.getContextPath(), "").split("/");
+    String page = null;
     for (String destination : uriPath) {
-      if (!destination.isEmpty()) {
-        if ("index.xhtml".equals(destination)) {
-          continue;
-        }
-        if (destination.endsWith(".xhtml")) {
-          return toProperCase(destination.replace(".xhtml", ""));
-        }
+      if ("index.xhtml".equals(destination)) {
+        continue;
       }
+      page = toProperCase(destination.replace(".xhtml", ""));
     }
-    return null;
+    return page;
   }
 
   /**
-   * Get a Primefaces MenuModel.
+   * Get a list of entries in the URI, each with a component URI and label,
+   * using "Home" as the root label.
    * <p>
-   * This is used to dynamically build a bread crumb menu. MenuModel API is used
-   * to create PrimeFaces menu components like menu, tieredMenu, menubar
-   * programmatically. This is a very useful feature since in many cases
-   * application menus are not static and vary depending on user roles.
+   * This is used to dynamically build a bread crumb menu.
    *
-   * @return a Primefaces MenuModel instance
+   * @return a list of Item enties.
    */
   public List<Item> getBreadcrumb() {
+    return getBreadcrumb("Home");
+  }
+
+  /**
+   * Get a list of entries in the URI, each with a component URI and label.
+   * <p>
+   * This is used to dynamically build a bread crumb menu.
+   *
+   * @param applicationName the application name
+   * @return a list of Item enties.
+   */
+  public List<Item> getBreadcrumb(String applicationName) {
     breadcrumb = new ArrayList<>();
     /**
      * Split the URI into its components, then build a menu item for each.
@@ -95,9 +107,9 @@ public class BreadCrumbBean extends UINamingContainer {
      */
     HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     /**
-     * Add the HOME menu item
+     * Add the ROOT menu item
      */
-    breadcrumb.add(new Item("Home", request.getContextPath()));
+    breadcrumb.add(new Item(applicationName != null ? applicationName : "Home", request.getContextPath()));
     /**
      * Add the current path.
      */
