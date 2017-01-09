@@ -468,3 +468,7 @@ th{white-space: nowrap;}
 ul, ol, dl {margin: 0 0 10px;}
 /*right-pad developer notes*/
 span.label  {margin-right: 1em;}
+/*text decorations*/
+.text-italic {font-style: italic};
+.text-underline { text-decoration: underline; }
+.text-strikethrough { text-decoration: line-through; }
