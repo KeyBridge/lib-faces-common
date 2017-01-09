@@ -62,7 +62,7 @@ import javax.faces.view.facelets.TagHandler;
  * in the above example.
  * <p>
  * The resolved constants are by reference stored in the cache to improve
- * retrieving performance. There is also a runtime (no, not compiletime as
+ * retrieving performance. There is also a runtime (no, not compile time as
  * that's just not possible in EL) check during retrieving the constant value.
  * If a constant value doesn't exist, then an
  * <code>IllegalArgumentException</code> will be thrown.
@@ -113,6 +113,10 @@ public class ImportConstants extends TagHandler {
    * and store in cache. Finally set the constants in the request scope by the
    * simple name of the type, or by the name as specified in the
    * <code>var</code> attribute, if any.
+   *
+   * @param context the facelet context
+   * @param parent  the parent calling UI component
+   * @throws IOException
    */
   @Override
   public void apply(FaceletContext context, UIComponent parent) throws IOException {

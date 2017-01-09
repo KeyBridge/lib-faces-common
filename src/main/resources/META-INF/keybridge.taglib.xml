@@ -9,9 +9,9 @@
   <tag>
     <description>
 <![CDATA[
-<p>This <code>&lt;k:importConstants&gt;</code> tag is forked from OmniFaces v2.2 to provide
+<p>This <code>&lt;kb:importConstants&gt;</code> tag is forked from OmniFaces v2.2 to provide
 just this useful capability without CDI, beans, and all the other baggage that comes along with it.
-<p>The <code>&lt;k:importConstants&gt;</code> allows the developer to have a mapping of all constant field values of
+<p>The <code>&lt;kb:importConstants&gt;</code> allows the developer to have a mapping of all constant field values of
 the given type in the request scope. The constant field values are those public static final fields. This works for
 classes, interfaces and enums. For example:
 <pre>
