@@ -52,7 +52,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!--coded is used to base64 encode the SSO cookie-->
+    <!--codec is used to base64 encode the SSO cookie in SSOSession class-->
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
