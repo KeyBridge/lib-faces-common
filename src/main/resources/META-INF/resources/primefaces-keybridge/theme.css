@@ -343,19 +343,7 @@ body {height: 100% !important; margin: 0; padding: 0;}
 
 /* add space around a checkbox */
 .ui-chkbox {margin: 0.25em 0.5em 0 0; }
-/*make the breadcrumb an extension of the navbar*/
-.navbar{margin-bottom: 5px !important;}
-/*highlight the application name*/
-.navbar-brand{font-weight: bold;}
-/*show navbar links as normal*/
-.nav a{ color: inherit;}
-/*pad nav icons*/
-.nav i{ margin-right: 5px;}
-/*don't wrap nav items*/
-.nav > li {white-space: nowrap;}
-/*clean up the home link*/
-.navbar-brand a {color: inherit;}
-.navbar-brand a:hover {text-decoration: none;}
+
 /*border patrol*/
 .no-border {border: none !important;}
 /*un-pad the breadcrumb - it's already wrapped*/
