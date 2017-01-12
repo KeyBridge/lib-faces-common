@@ -3,8 +3,9 @@
 
   History
   02/13/14 - created
-  01/11/14 - change to maven project
-  01/12/14 - import templace css
+  01/11/15 - change to maven project
+  01/12/15 - import templace css
+  11/11/16 - move non-primefaces junk to extra.css
 
   About
   This is a slightly modified version of the Primefaces Bootstrap theme.
@@ -420,44 +421,10 @@ abbr {margin-right: 5px;}
 /*match jumbotron list text*/
 .jumbotron ul, .jumbotron ol, .jumbotron dl, .jumbotron table th, .jumbotron table td { margin-bottom: 15px; font-size: 21px; font-weight: 200;}
 
-/*SIDEBAR navigation panel*/
-/*A sidebar navigation. This is activated by setting the class="sidebar hidden-print affix"*/
-.sidebar .nav{display:block;}
-/*1st level*/
-.sidebar .nav>li>a{display:block;font-weight:500;padding:4px 20px}
-.sidebar .nav>li>a:hover,.sidebar .nav>li>a:focus{padding-left:19px;color:#333;text-decoration:none;background-color:transparent;border-left:1px solid #333}
-.sidebar .nav>.active>a,.sidebar .nav>.active:hover>a,.sidebar .nav>.active:focus>a{padding-left:18px;font-weight:700;color:#333;background-color:transparent;border-left:2px solid #333}
-/*2nd level*/
-.sidebar .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:0.8em;font-weight:400}
-.sidebar .nav .nav>li>a:hover,.sidebar .nav .nav>li>a:focus{padding-left:29px}
-.sidebar .nav .nav>.active>a,.sidebar .nav .nav>.active:hover>a,.sidebar .nav .nav>.active:focus>a{font-weight:500;padding-left:28px}
-/*3rd level*/
-.sidebar .nav .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:0.8em;font-weight:400}
-.sidebar .nav .nav .nav>li>a:hover,.sidebar .nav .nav .nav>li>a:focus{padding-left:39px}
-.sidebar .nav .nav .nav>.active>a,.sidebar .nav .nav .nav>.active:hover>a,.sidebar .nav .nav .nav>.active:focus>a{font-weight:500;padding-left:38px}
-/*4th level*/
-.sidebar .nav .nav .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:50px;font-size:0.8em;font-weight:400}
-.sidebar .nav .nav .nav .nav>li>a:hover,.sidebar .nav .nav .nav .nav>li>a:focus{padding-left:49px}
-.sidebar .nav .nav .nav .nav>.active>a,.sidebar .nav .nav .nav .nav>.active:hover>a,.sidebar .nav .nav .nav .nav>.active:focus>a{font-weight:500;padding-left:48px}
-/*sidebar back to top*/
-.back-to-top{margin-top:10px;margin-left:10px;padding:4px 10px;font-weight:500;color:#999}
-.back-to-top:hover{text-decoration:none;color:#333}
-
 /*do not pad Google Code PrettyPrint*/
 .prettyprint {border: none !important; padding: 1em !important; font-size: smaller;}
-/*pretty print uri colors*/
-.rest-context-root {color: #000088;}
-.rest-context {color: #660066;}
-.rest-uri{color: rgb(51, 122, 183);}
-.rest-parameter {color: #008800;}
 /*doc section spacing*/
 .doc-section {margin-bottom: 30px;}
-
-/*do not color header links - do not decorate on hover*/
-h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: #333;}
-h1>a:hover, h2>a:hover, h3>a:hover, h4>a:hover, h5>a:hover, h6>a:hover{color: #444;}
-a>h1, a>h2, a>h3, a>h4, a>h5, a>h6{color: #333;}
-a:hover>h1, a:hover>h2, a:hover>h3, a:hover>h4, a:hover>h5, a:hover>h6{color: #444;}
 
 /*do not underline links on hover*/
 a:hover{text-decoration: none;}
@@ -466,8 +433,7 @@ a:hover{text-decoration: none;}
 th{white-space: nowrap;}
 /*bottom pad lists*/
 ul, ol, dl {margin: 0 0 10px;}
-/*right-pad developer notes*/
-/*span.label  {margin-right: 1em;}*/
+
 /*text decorations*/
 .text-italic {font-style: italic};
 .text-underline { text-decoration: underline; }

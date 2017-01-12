@@ -1,0 +1,35 @@
+
+/*Contents navigation panel*/
+/*A sidebar navigation. This is activated by setting the class="sidebar hidden-print affix"*/
+.sidebar .nav{display:block;}
+/*1st level*/
+.sidebar .nav>li>a{display:block;font-weight:500;padding:4px 20px}
+.sidebar .nav>li>a:hover,.sidebar .nav>li>a:focus{padding-left:19px;color:#333;text-decoration:none;background-color:transparent;border-left:1px solid #333}
+.sidebar .nav>.active>a,.sidebar .nav>.active:hover>a,.sidebar .nav>.active:focus>a{padding-left:18px;font-weight:700;color:#333;background-color:transparent;border-left:2px solid #333}
+/*2nd level*/
+.sidebar .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:0.8em;font-weight:400}
+.sidebar .nav .nav>li>a:hover,.sidebar .nav .nav>li>a:focus{padding-left:29px}
+.sidebar .nav .nav>.active>a,.sidebar .nav .nav>.active:hover>a,.sidebar .nav .nav>.active:focus>a{font-weight:500;padding-left:28px}
+/*3rd level*/
+.sidebar .nav .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:0.8em;font-weight:400}
+.sidebar .nav .nav .nav>li>a:hover,.sidebar .nav .nav .nav>li>a:focus{padding-left:39px}
+.sidebar .nav .nav .nav>.active>a,.sidebar .nav .nav .nav>.active:hover>a,.sidebar .nav .nav .nav>.active:focus>a{font-weight:500;padding-left:38px}
+/*4th level*/
+.sidebar .nav .nav .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:50px;font-size:0.8em;font-weight:400}
+.sidebar .nav .nav .nav .nav>li>a:hover,.sidebar .nav .nav .nav .nav>li>a:focus{padding-left:49px}
+.sidebar .nav .nav .nav .nav>.active>a,.sidebar .nav .nav .nav .nav>.active:hover>a,.sidebar .nav .nav .nav .nav>.active:focus>a{font-weight:500;padding-left:48px}
+/*sidebar back to top*/
+.back-to-top{margin-top:10px;margin-left:10px;padding:4px 10px;font-weight:500;color:#999}
+.back-to-top:hover{text-decoration:none;color:#333}
+
+/*do not color header links - do not decorate on hover*/
+h1>a, h2>a, h3>a, h4>a, h5>a, h6>a{color: #333;}
+h1>a:hover, h2>a:hover, h3>a:hover, h4>a:hover, h5>a:hover, h6>a:hover{color: #444;}
+a>h1, a>h2, a>h3, a>h4, a>h5, a>h6{color: #333;}
+a:hover>h1, a:hover>h2, a:hover>h3, a:hover>h4, a:hover>h5, a:hover>h6{color: #444;}
+
+/*pretty print uri colors*/
+.rest-context-root {color: #000088;}
+.rest-context {color: #660066;}
+.rest-uri{color: rgb(51, 122, 183);}
+.rest-parameter {color: #008800;}

@@ -26,6 +26,8 @@
     v2.2.0 - rewrite to minimize Primefaces dependency
     v2.3.0 - remove UserManager sign-in/out utility
     v2.4.0 - move SSO utility to lib-faces-sso, upgrade primefaces
+    - move non-primefaces css to extra.css
+
   </description>
 
   <organization>
