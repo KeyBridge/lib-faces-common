@@ -296,7 +296,6 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .ui-breadcrumb li{display:inline-block;*display:inline;*zoom:1;margin-left: 5px;}
 .ui-breadcrumb .divider{padding:0 5px;color:#999999;}
 .ui-breadcrumb a{color:#0088CC;font-weight:normal;}
-
 /* ProgressBar */
 .ui-progressbar.ui-widget-content{height:18px;margin-bottom:18px;overflow:hidden;background-color:#f7f7f7;background-image:-moz-linear-gradient(top, #f5f5f5, #f9f9f9);background-image:-ms-linear-gradient(top, #f5f5f5, #f9f9f9);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f9f9f9));background-image:-webkit-linear-gradient(top, #f5f5f5, #f9f9f9);background-image:-o-linear-gradient(top, #f5f5f5, #f9f9f9);background-image:linear-gradient(top, #f5f5f5, #f9f9f9);background-repeat:repeat-x;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:dximagetransform.microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#f9f9f9', GradientType=0);-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);}
 .ui-progressbar .ui-progressbar-value.ui-widget-header{height:18px;color:#ffffff;text-align:center;border:0 none;margin:0;background-color:#0e90d2;background-image:-moz-linear-gradient(top, #149bdf, #0480be);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#149bdf), to(#0480be));background-image:-webkit-linear-gradient(top, #149bdf, #0480be);background-image:-o-linear-gradient(top, #149bdf, #0480be);background-image:linear-gradient(top, #149bdf, #0480be);background-image:-ms-linear-gradient(top, #149bdf, #0480be);background-repeat:repeat-x;filter:progid:dximagetransform.microsoft.gradient(startColorstr='#149bdf', endColorstr='#0480be', GradientType=0);-webkit-box-shadow:inset 0 -1px 0 rgba(0, 0, 0, 0.15);-moz-box-shadow:inset 0 -1px 0 rgba(0, 0, 0, 0.15);box-shadow:inset 0 -1px 0 rgba(0, 0, 0, 0.15);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;-webkit-transition:width 0.6s ease;-moz-transition:width 0.6s ease;-ms-transition:width 0.6s ease;-o-transition:width 0.6s ease;transition:width 0.6s ease;}
@@ -341,8 +340,49 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .ui-menu.ui-menubar{padding-right:20px;padding-left:10px;background-color:#fafafa;background-image:-moz-linear-gradient(top, #ffffff, #f2f2f2);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));background-image:-webkit-linear-gradient(top, #ffffff, #f2f2f2);background-image:-o-linear-gradient(top, #ffffff, #f2f2f2);background-image:linear-gradient(to bottom, #ffffff, #f2f2f2);background-repeat:repeat-x;border:1px solid #d4d4d4;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);}
 .ui-menu.ui-menubar .ui-menu-parent .ui-menu-child{padding:5px 0;}
 
+/*Primefaces TWEAKS AND FIXES*/
+
 /* add space around a checkbox */
 .ui-chkbox {margin: 0.25em 0.5em 0 0; }
+/*adjust the height of primefaces text-only and icon-only buttons*/
+.ui-button-text-only .ui-button-text {padding: 0.5em 1em !important;}
+.ui-button-icon-only {padding: 0.5em 1em !important;}
+/*fix the text in buttons*/
+.ui-button .ui-button-text {display: inline !important;}
+/*fix the text in booleanButtons*/
+.form-control .ui-button-text { padding: 0 0 0 1.5em; }
+/*clean up font-awesome iconts in primefaces buttons*/
+.ui-icon.fa {text-indent:0px !important; background-image:none !important;}
+/*shift the growl messages below the topbar*/
+.ui-growl {top:75px !important;}
+/*tell the selectonemenu button to auto-size*/
+.ui-selectonemenu .ui-selectonemenu-trigger {width: auto !important;}
+/*fix p:calendar form-control incompatibility*/
+.pcalendar .ui-inputfield { padding: 0px; background: inherit; border: none; }
+/*fix p:calendar widget embedded silliness*/
+.form-control .ui-selectonemenu-label { padding: 0px; }
+.form-control .ui-selectonemenu { width: 100% !important; }
+/*reduce the p:schedule header title to a reasonable size*/
+.fc-header-title h2 {font-size: 18px;}
+/*soften the calendar widget highlight for TODAY*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  background-color:#CCF5CC !important; background-image: none; background-position: 0 center;  background-repeat: repeat-x; color: inherit; text-decoration: none;
+}
+/*clean up primefaces autocomplete widget - this applies bootstrap css to components wrapped in a form-group div*/
+/*.form-group .ui-autocomplete {  display: block;  width: 100%;}*/
+/*apply form-control CSS to the input sub-component of the autocomplete widget*/
+.form-group .ui-autocomplete > input {width: -moz-calc(100% - 35px);width: -webkit-calc(100% - 35px);width: calc(100% - 35px);height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.428571429;}
+/*extend the input if there is no dropdon*/
+.nodropdown > input {width: 100% !important;}
+/*remove borders and padding if the ui-autocomplete has styleClass form-control*/
+.form-group .ui-autocomplete {border: none !important;padding: 0  !important;}
+/*apply form-control CSS to the input sub-component of the ui-spinner widget*/
+.form-group .ui-spinner input {width: -moz-calc(100% - 20px);width: -webkit-calc(100% - 20px);width: calc(100% - 20px);height: 34px;font-size: 14px;line-height: 1.428571429;}
+/*remove borders and padding if the ui-spinner has styleClass form-control*/
+.form-group .ui-spinner {border: none !important;padding: 0  !important;}
+
+
+/*General Bootstrap TWEAKS AND FIXES*/
 
 /*border patrol*/
 .no-border {border: none !important;}
@@ -359,50 +399,18 @@ figure label, figure caption, figure .caption {  font-size: smaller; font-style:
 
 /*make blockquotes the same font size unless specifically declared otherwise*/
 blockquote {  font-size: inherit !important;}
-/*adjust the height of primefaces text-only and icon-only buttons*/
-.ui-button-text-only .ui-button-text {padding: 0.5em 1em !important;}
-.ui-button-icon-only {padding: 0.5em 1em !important;}
-/*fix the text in buttons*/
-.ui-button .ui-button-text {display: inline !important;}
-/*fix the text in booleanButtons*/
-.form-control .ui-button-text { padding: 0 0 0 1.5em; }
-/*clean up font-awesome iconts in primefaces buttons*/
-.ui-icon.fa {text-indent:0px !important; background-image:none !important;}
-/*shift the growl messages below the topbar*/
-.ui-growl {top:75px !important;}
-/*tell the selectonemenu button to auto-size*/
-.ui-selectonemenu .ui-selectonemenu-trigger {width: auto !important;}
-/*fix p:calendar widget embedded silliness*/
-.form-control .ui-selectonemenu-label { padding: 0px; }
-.form-control .ui-selectonemenu { width: 100% !important; }
-/*fix p:calendar form-control incompatibility*/
-.pcalendar .ui-inputfield { padding: 0px; background: inherit; border: none; }
+
 /*fix ugly selects in safari*/
 select.form-control { -webkit-appearance: none; }
-/*reduce the p:schedule header title to a reasonable size*/
-.fc-header-title h2 {font-size: 18px;}
-/*soften the calendar widget highlight for TODAY*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-  background-color:#CCF5CC !important; background-image: none; background-position: 0 center;  background-repeat: repeat-x; color: inherit; text-decoration: none;
-}
+
 /*recognize "glyph" as an alias for glyphicon*/
 glyph{position: relative;top: 1px;display: inline-block;font-family: 'Glyphicons Halflings';font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
 /*recognize "i" and "icon" as aliases for font awesome*/
 i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
+
 /*right pad the abbreviation*/
 abbr {margin-right: 5px;}
-/*clean up primefaces autocomplete widget - this applies bootstrap css to components wrapped in a form-group div*/
-/*.form-group .ui-autocomplete {  display: block;  width: 100%;}*/
-/*apply form-control CSS to the input sub-component of the autocomplete widget*/
-.form-group .ui-autocomplete > input {width: -moz-calc(100% - 35px);width: -webkit-calc(100% - 35px);width: calc(100% - 35px);height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.428571429;}
-/*extend the input if there is no dropdon*/
-.nodropdown > input {width: 100% !important;}
-/*remove borders and padding if the ui-autocomplete has styleClass form-control*/
-.form-group .ui-autocomplete {border: none !important;padding: 0  !important;}
-/*apply form-control CSS to the input sub-component of the ui-spinner widget*/
-.form-group .ui-spinner input {width: -moz-calc(100% - 20px);width: -webkit-calc(100% - 20px);width: calc(100% - 20px);height: 34px;font-size: 14px;line-height: 1.428571429;}
-/*remove borders and padding if the ui-spinner has styleClass form-control*/
-.form-group .ui-spinner {border: none !important;padding: 0  !important;}
+
 /*add "inactive" as a grey table contextual class*/
 .table > thead > tr > td.inactive, .table > tbody > tr > td.inactive, .table > tfoot > tr > td.inactive, .table > thead > tr > th.inactive, .table > tbody > tr > th.inactive, .table > tfoot > tr > th.inactive, .table > thead > tr.inactive > td, .table > tbody > tr.inactive > td, .table > tfoot > tr.inactive > td, .table > thead > tr.inactive > th, .table > tbody > tr.inactive > th, .table > tfoot > tr.inactive > th{background-color: #DDDDDD;}
 .bg-inactive {background-color: #DDDDDD;}
@@ -419,10 +427,12 @@ a:hover{text-decoration: none;}
 
 /*do not wrap table header text*/
 th{white-space: nowrap;}
-/*bottom pad lists*/
+/*bottom pad lists similar to paragraphs*/
 ul, ol, dl {margin: 0 0 10px;}
 
 /*text decorations*/
-.text-italic {font-style: italic};
+.text-italic {font-style: italic; }
 .text-underline { text-decoration: underline; }
 .text-strikethrough { text-decoration: line-through; }
+.text-inactive { color: #DDD; }
+
