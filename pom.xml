@@ -79,8 +79,8 @@
 
   <distributionManagement>
     <repository>
-      <id>archiva.internal</id>
-      <url>${repository.url}</url>
+      <id>archiva.external</id>
+      <url>${archiva.external}</url>
     </repository>
   </distributionManagement>
 
