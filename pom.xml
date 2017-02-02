@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.1</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -27,7 +27,7 @@
     v2.3.0 - remove UserManager sign-in/out utility
     v2.4.0 - move SSO utility to lib-faces-sso, upgrade primefaces
     - move non-primefaces css to extra.css
-
+    v2.4.1 - add abstract converter class; add evaluateExpression in FacesUtil
   </description>
 
   <organization>
