@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
@@ -46,9 +48,8 @@ public class FacesUtil {
    * Returns the current faces context.
    * <p>
    * <i>Note that whenever you absolutely need this method to perform a general
-   * task, you might want to consider to submit a feature request to OmniFaces
-   * in order to add a new utility method which performs exactly this general
-   * task.</i>
+   * task, you might want to consider to add a new utility method which performs
+   * exactly this general task.</i>
    *
    * @return The current faces context.
    * @see FacesContext#getCurrentInstance()
@@ -84,6 +85,26 @@ public class FacesUtil {
    */
   public static ExternalContext getExternalContext() {
     return getContext().getExternalContext();
+  }
+
+  /**
+   * Evaluates the expression relative to the provided context, and returns the
+   * resulting value.
+   * <p>
+   * The resulting value is automatically coerced to the type returned by
+   * getExpectedType(), which was provided to the ExpressionFactory when this
+   * expression was created.
+   *
+   * @param expression a JSF expression. i.e. #{link.property}
+   * @return the evaluated value
+   */
+  public static String evaluateExpression(String expression) {
+    FacesContext context = FacesContext.getCurrentInstance();
+    ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+    ELContext elContext = context.getELContext();
+    ValueExpression valueExpression = expressionFactory.createValueExpression(elContext, expression, String.class);
+    String result = (String) valueExpression.getValue(elContext);
+    return result;
   }
 
   /**
