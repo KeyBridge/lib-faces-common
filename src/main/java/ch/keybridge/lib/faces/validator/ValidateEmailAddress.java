@@ -41,6 +41,12 @@ public class ValidateEmailAddress extends AValidator {
    * @return TRUE if the email address conforms with the syntax rules of RFC 822
    */
   public boolean isValidEmailAddress(String emailAddress) {
+    /**
+     * Ignore null or empty values.
+     */
+    if (emailAddress == null || emailAddress.isEmpty()) {
+      return true;
+    }
     try {
       InternetAddress internetAddress = new InternetAddress(emailAddress);
       internetAddress.validate();
