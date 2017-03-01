@@ -6,6 +6,7 @@
   01/11/15 - change to maven project
   01/12/15 - import templace css
   11/11/16 - move non-primefaces junk to extra.css
+  02/27/17 - move ALL remaining non-primefaces junk to extra.css
 
   About
   This is a slightly modified version of the Primefaces Bootstrap theme.
@@ -22,8 +23,8 @@
 @viewport           { width: device-width; }
 
 /* set the page and window (body) height to 100% - this is important for maps */
-html {height: 100%;}
-body {height: 100% !important; margin: 0; padding: 0;}
+/*html {height: 100%;}*/
+/*body {height: 100% !important; margin: 0; padding: 0;}*/
 
 /* Component containers----------------------------------*/
 .ui-widget{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
@@ -380,59 +381,4 @@ body {height: 100% !important; margin: 0; padding: 0;}
 .form-group .ui-spinner input {width: -moz-calc(100% - 20px);width: -webkit-calc(100% - 20px);width: calc(100% - 20px);height: 34px;font-size: 14px;line-height: 1.428571429;}
 /*remove borders and padding if the ui-spinner has styleClass form-control*/
 .form-group .ui-spinner {border: none !important;padding: 0  !important;}
-
-
-/*General Bootstrap TWEAKS AND FIXES*/
-
-/*border patrol*/
-.no-border {border: none !important;}
-/*un-pad the breadcrumb - it's already wrapped*/
-.breadcrumb { margin-bottom: 0px !important; }
-/*global footer style and placement*/
-.footer-header {font-variant: small-caps; border-top: 1px dotted #aaaaaa;}
-.footer {padding: 3em 1em;  z-index: -100; background-color: #F5F5F5;}
-
-/*global figure formatting. figures include an image and a label*/
-figure { margin-bottom: 10px;}
-figure img {  margin-bottom: 5px;}
-figure label, figure caption, figure .caption {  font-size: smaller; font-style: italic; }
-
-/*make blockquotes the same font size unless specifically declared otherwise*/
-blockquote {  font-size: inherit !important;}
-
-/*fix ugly selects in safari*/
-select.form-control { -webkit-appearance: none; }
-
-/*recognize "glyph" as an alias for glyphicon*/
-glyph{position: relative;top: 1px;display: inline-block;font-family: 'Glyphicons Halflings';font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
-/*recognize "i" and "icon" as aliases for font awesome*/
-i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
-
-/*right pad the abbreviation*/
-abbr {margin-right: 5px;}
-
-/*add "inactive" as a grey table contextual class*/
-.table > thead > tr > td.inactive, .table > tbody > tr > td.inactive, .table > tfoot > tr > td.inactive, .table > thead > tr > th.inactive, .table > tbody > tr > th.inactive, .table > tfoot > tr > th.inactive, .table > thead > tr.inactive > td, .table > tbody > tr.inactive > td, .table > tfoot > tr.inactive > td, .table > thead > tr.inactive > th, .table > tbody > tr.inactive > th, .table > tfoot > tr.inactive > th{background-color: #DDDDDD;}
-.bg-inactive {background-color: #DDDDDD;}
-/*match jumbotron list text*/
-.jumbotron ul, .jumbotron ol, .jumbotron dl, .jumbotron table th, .jumbotron table td { margin-bottom: 15px; font-size: 21px; font-weight: 200;}
-
-/*do not pad Google Code PrettyPrint*/
-.prettyprint {border: none !important; padding: 1em !important; font-size: smaller;}
-/*doc section spacing*/
-.doc-section {margin-bottom: 30px;}
-
-/*do not underline links on hover*/
-a:hover{text-decoration: none;}
-
-/*do not wrap table header text*/
-th{white-space: nowrap;}
-/*bottom pad lists similar to paragraphs*/
-ul, ol, dl {margin: 0 0 10px;}
-
-/*text decorations*/
-.text-italic {font-style: italic; }
-.text-underline { text-decoration: underline; }
-.text-strikethrough { text-decoration: line-through; }
-.text-inactive { color: #DDD; }
 
