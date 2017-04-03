@@ -184,11 +184,27 @@ public class FacesUtil {
    * Post a JSF FacesMessage.
    *
    * @param severity The FacesMessage.Severity
-   * @param summary  The short summary message label
-   * @param detail   The message detail
+   * @param summary  Localized summary message text
+   * @param detail   Localized detail message text
    */
   public static void postMessage(FacesMessage.Severity severity, String summary, String detail) {
     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+  }
+
+  /**
+   * Post a JSF FacesMessage. Appends a FacesMessage to the set of messages
+   * associated with the specified client identifier, if clientId is not null.
+   * If clientId is null, this FacesMessage is assumed to not be associated with
+   * any specific component instance.
+   *
+   * @param clientId The client identifier with which this message is associated
+   *                 (if any)
+   * @param severity The FacesMessage.Severity
+   * @param summary  Localized summary message text
+   * @param detail   Localized detail message text
+   */
+  public static void postMessage(String clientId, FacesMessage.Severity severity, String summary, String detail) {
+    FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(severity, summary, detail));
   }
 
   /**
