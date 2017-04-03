@@ -354,8 +354,7 @@
 .form-control .ui-button-text { padding: 0 0 0 1.5em; }
 /*clean up font-awesome iconts in primefaces buttons*/
 .ui-icon.fa {text-indent:0px !important; background-image:none !important;}
-/*shift the growl messages below the topbar*/
-.ui-growl {top:75px !important;}
+
 /*tell the selectonemenu button to auto-size*/
 .ui-selectonemenu .ui-selectonemenu-trigger {width: auto !important;}
 /*fix p:calendar form-control incompatibility*/
@@ -382,3 +381,12 @@
 /*remove borders and padding if the ui-spinner has styleClass form-control*/
 .form-group .ui-spinner {border: none !important;padding: 0  !important;}
 
+/*GROWL customization*/
+/*shift the growl messages below the topbar*/
+.ui-growl {top:75px !important;}
+.ui-growl-image { display: none !important; }
+.ui-growl-message {
+  padding: 0 0 5px 0;
+  width: 100% !important;
+  float: next !important;
+}
