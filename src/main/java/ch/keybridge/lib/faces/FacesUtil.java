@@ -152,7 +152,7 @@ public class FacesUtil {
    * @see Package#getImplementationTitle()
    * @see Package#getImplementationVersion()
    */
-  public static String getImplInfo() {
+  public static String getImplementationVersion() {
     Package jsfPackage = FacesContext.class.getPackage();
     return jsfPackage.getImplementationTitle() + " " + jsfPackage.getImplementationVersion();
   }
@@ -181,30 +181,65 @@ public class FacesUtil {
   }
 
   /**
-   * Post a JSF FacesMessage.
+   * Get the {@code ClientID} of the page component that triggered the current
+   * AJAX action. This typically returns the JSF ID of the command widget
+   * (button or link) that was clicked.
+   * <p>
+   * This method returns the HTTP POST parameter "javax.faces.source", which
+   * generally corresponds to the desired component. When in doubt is it
+   * generally best to reference the Client ID manually.
    *
-   * @param severity The FacesMessage.Severity
-   * @param summary  Localized summary message text
-   * @param detail   Localized detail message text
+   * @return the HTTP POST parameter "javax.faces.source"
    */
-  public static void postMessage(FacesMessage.Severity severity, String summary, String detail) {
-    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+  public static String getAjaxFacesSource() {
+    return FacesUtil.getExternalContext().getRequestParameterMap().get("javax.faces.source");
   }
 
   /**
-   * Post a JSF FacesMessage. Appends a FacesMessage to the set of messages
+   * Post a JSF FacesMessage.
+   * <p>
+   * Note that the {@code  clientId} references the DESTINATION UIComponent ID,
+   * not the source, and is generally a {@code messages} or {@code growl}
+   * widget. This method appends a FacesMessage to the set of messages
    * associated with the specified client identifier, if clientId is not null.
-   * If clientId is null, this FacesMessage is assumed to not be associated with
-   * any specific component instance.
+   * If clientId is null the FacesMessage is assumed to not be associated with
+   * any specific component instance and will be picked up by ALL message
+   * rendering components..
    *
-   * @param clientId The client identifier with which this message is associated
-   *                 (if any)
+   * @param clientId The client identifier to which this message is directed (if
+   *                 any)
    * @param severity The FacesMessage.Severity
    * @param summary  Localized summary message text
    * @param detail   Localized detail message text
    */
   public static void postMessage(String clientId, FacesMessage.Severity severity, String summary, String detail) {
     FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(severity, summary, detail));
+  }
+
+  /**
+   * Post a global JSF FacesMessage.
+   * <p>
+   * Appends a FacesMessage to the global set of messages.
+   *
+   * @param severity The FacesMessage.Severity
+   * @param summary  Localized summary message text
+   * @param detail   Localized detail message text
+   */
+  public static void postMessage(FacesMessage.Severity severity, String summary, String detail) {
+    postMessage(getAjaxFacesSource(), severity, summary, detail);
+  }
+
+  /**
+   * Post a global JSF FacesMessage.
+   * <p>
+   * Appends a FacesMessage to the global set of messages.
+   *
+   * @param severity The FacesMessage.Severity
+   * @param summary  Localized summary message text
+   * @param detail   Localized detail message text
+   */
+  public static void postMessageGlobal(FacesMessage.Severity severity, String summary, String detail) {
+    postMessage(null, severity, summary, detail);
   }
 
   /**
