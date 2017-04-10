@@ -390,3 +390,7 @@
   width: 100% !important;
   float: next !important;
 }
+/*remove internal margin from alerts*/
+.ui-messages-info-detail, .ui-messages-warn-detail, .ui-messages-error-detail, .ui-messages-fatal-detail, .ui-message-info-detail, .ui-message-warn-detail, .ui-message-error-detail, .ui-message-fatal-detail {
+  margin: 0 !important;
+}
