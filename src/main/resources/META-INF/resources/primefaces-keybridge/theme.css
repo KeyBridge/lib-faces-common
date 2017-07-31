@@ -309,6 +309,8 @@
 .ui-dialog.ui-widget-content .ui-dialog-content{padding:15px;}
 .ui-dialog.ui-widget-content .ui-dialog-titlebar-close{margin-top:10px;}
 .ui-dialog.ui-widget-content .ui-dialog-titlebar-close:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-close:focus, .ui-dialog.ui-widget-content .ui-dialog-titlebar-minimize:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-minimize:focus, .ui-dialog.ui-widget-content .ui-dialog-titlebar-maximize:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-maximize:focus{padding:1px;}
+/*SelectManyButton*/
+.ui-selectmanybutton .ui-state-active { background: #5f83b9 !important; }
 /** DataTable **/
 .ui-datatable-odd{background-color:#F9F9F9}
 /** TabMenu **/
@@ -344,7 +346,8 @@
 .ui-menu.ui-menubar .ui-menu-parent .ui-menu-child{padding:5px 0;}
 
 /*Primefaces TWEAKS AND FIXES*/
-
+/*Make PF buttons look like Bootstrap btn */
+.ui-button { padding: 0.5rem 1rem !important; }
 /* add space around a checkbox */
 .ui-chkbox {margin: 0.25em 0.5em 0 0; }
 /*adjust the height of primefaces text-only and icon-only buttons*/
@@ -367,9 +370,9 @@
 /*reduce the p:schedule header title to a reasonable size*/
 .fc-header-title h2 {font-size: 18px;}
 /*soften the calendar widget highlight for TODAY*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+/*.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
   background-color:#CCF5CC !important; background-image: none; background-position: 0 center;  background-repeat: repeat-x; color: inherit; text-decoration: none;
-}
+}*/
 /*clean up primefaces autocomplete widget - this applies bootstrap css to components wrapped in a form-group div*/
 /*.form-group .ui-autocomplete {  display: block;  width: 100%;}*/
 /*apply form-control CSS to the input sub-component of the autocomplete widget*/
@@ -458,6 +461,15 @@
 /*.ui-datepicker .ui-datepicker-next::before {  content: "\f061";}*/
 /*.ui-datepicket-prev > .ui-icon {display: none;}*/
 /*.ui-datepicket-next > .ui-icon {display: none;}*/
+.ui-datepicker .ui-datepicker-current-day .ui-state-highlight, .ui-datepicker .ui-datepicker-current-day .ui-state-default {
+  background: #5f83b9 !important;
+  font-weight: bold;
+}
+.ui-datepicker .ui-datepicker-today .ui-state-highlight {
+  background: #5f83b9 !important;
+  font-weight: bold;
+}
+
 .ui-timepicker-div dl dt {  font-size: small;}
 .ui-timepicker-div dl dd { margin: 0 10px 1em 40%; padding-top: 5px; }
 .ui_tpicker_time_label{padding-top: 2px; }
