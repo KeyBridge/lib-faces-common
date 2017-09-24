@@ -1,8 +1,8 @@
 /*
-  Primefaces Theme: 'none'
+  Primefaces Theme: 'minimal'
 
   History
-  0924/17 - fork from primefaces-keybridge as a non-styled css
+  09/24/17 - fork from primefaces-keybridge as a non-styled css
 
   About
   This is a minimal Primefaces intended to disable all default theme styles. 
@@ -22,14 +22,14 @@
 /* Icons----------------------------------*/
 /*PF widgets are tighly coupled and dependent on the jQueryUI icon set.*/
 /* states and images */
-.ui-icon{width:16px;height:16px;margin-right:2px;background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-widget-content .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-widget-header .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-state-default .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-state-active .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-.ui-state-highlight .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_ffffff_256x240.png']}");}
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
+.ui-icon{width:16px;height:16px;margin-right:2px;background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-widget-content .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-widget-header .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-state-default .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-state-active .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
+.ui-state-highlight .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_ffffff_256x240.png']}");}
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon{background-image:url("#{resource['primefaces-minimal:images/ui-icons_333333_256x240.png']}");}
 /* positioning */
 .ui-icon-carat-1-n{background-position:0 0;}
 .ui-icon-carat-1-ne{background-position:-16px 0;}
