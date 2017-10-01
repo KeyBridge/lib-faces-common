@@ -373,20 +373,31 @@
 /*.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
   background-color:#CCF5CC !important; background-image: none; background-position: 0 center;  background-repeat: repeat-x; color: inherit; text-decoration: none;
 }*/
+
 /*clean up primefaces autocomplete widget - this applies bootstrap css to components wrapped in a form-group div*/
-/*.form-group .ui-autocomplete {  display: block;  width: 100%;}*/
+.form-group .ui-autocomplete {  display: block;  width: 100%;
+                                background-clip: padding-box;
+                                border: 1px solid rgba(0,0,0,.15) !important;
+                                border-radius: .25rem;
+                                padding: 0 !important;
+}
 /*apply form-control CSS to the input sub-component of the autocomplete widget*/
-.form-group .ui-autocomplete > input {width: -moz-calc(100% - 35px);width: -webkit-calc(100% - 35px);width: calc(100% - 35px);height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.428571429;}
+.form-group .ui-autocomplete > input {width: -moz-calc(100% - 35px);
+                                      width: -webkit-calc(100% - 35px);
+                                      width: calc(100% - 35px);
+                                      line-height: 1.5rem;
+                                      padding: 0.5rem 0.75rem;
+                                      color: #464a4c;
+                                      font-size: 1rem;
+                                      border: none;}
 /*extend the input if there is no dropdon*/
 .nodropdown > input {width: 100% !important;}
 /*remove borders and padding if the ui-autocomplete has styleClass form-control*/
-.form-group .ui-autocomplete {border: none !important;padding: 0  !important;}
+/*.form-group .ui-autocomplete {border: none !important;padding: 0  !important;}*/
 /*apply form-control CSS to the input sub-component of the ui-spinner widget*/
 .form-group .ui-spinner input {width: -moz-calc(100% - 20px);width: -webkit-calc(100% - 20px);width: calc(100% - 20px);height: 34px;font-size: 14px;line-height: 1.428571429;}
 /*remove borders and padding if the ui-spinner has styleClass form-control*/
 .form-group .ui-spinner {border: none !important;padding: 0  !important;}
-
-
 
 /*REBOOTSTRAP*/
 /*primefaces bootstrap modifications to match bootstrap 4*/
@@ -483,8 +494,9 @@
 /*show the icons*/
 /*.ui-icon {  text-indent: 0px !important;}*/
 
-
-
+/*selectOneRadio  table formatting*/
+.selectOneRadio  [type="radio"] {margin-right: 5px;}
+.selectOneRadio td { padding: 0 0.5rem; white-space: nowrap; }
 
 /*transform all PF selects to look normal*/
 /*SELECT*/
@@ -616,4 +628,7 @@
   color: #a94442 !important;
   font-weight: bold;
 }
+
+/*well behaved modal dialogs*/
+.ui-confirm-dialog {width: 33% !important;}
 
