@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>2.6.0</version>
+  <version>2.6.1</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -31,7 +31,9 @@
     v2.4.2 - remove primefaces extensions dep - these are now integrated into PF mainline
     v2.5.0 - remove all possible PF CSS, try to v4 bootstrapify
     v2.5.1 - add primefaces-none theme to disable all PF special formatting
-v2.6.0 -  upgrade using PF extensions 6.1.1; PF 6.1
+    v2.6.0 -  upgrade using PF extensions 6.1.1; PF 6.1
+    v2.6.1 - add Ajax shortcuts to FacesUtil
+
   </description>
 
   <organization>

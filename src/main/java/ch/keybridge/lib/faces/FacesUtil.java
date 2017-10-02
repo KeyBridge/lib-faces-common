@@ -13,6 +13,7 @@
  */
 package ch.keybridge.lib.faces;
 
+import ch.keybridge.lib.faces.util.Ajax;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.FactoryFinder;
+import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
@@ -30,8 +32,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 
 /**
  * Collection of utility methods for the JSF API that are mainly shortcuts for
@@ -521,14 +521,14 @@ public class FacesUtil {
   public static String getContextPath() {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     return new StringBuilder()
-            .append(context.getRequestScheme())
-            .append("://")
-            .append(context.getRequestServerName())
-            .append((context.getRequestServerPort() != 80 && context.getRequestServerPort() != 443)
-                    ? ":" + context.getRequestServerPort()
-                    : "")
-            .append(context.getRequestContextPath())
-            .toString();
+      .append(context.getRequestScheme())
+      .append("://")
+      .append(context.getRequestServerName())
+      .append((context.getRequestServerPort() != 80 && context.getRequestServerPort() != 443)
+              ? ":" + context.getRequestServerPort()
+              : "")
+      .append(context.getRequestContextPath())
+      .toString();
   }
 
   /**
@@ -709,6 +709,35 @@ public class FacesUtil {
      */
     cookie.setMaxAge(maxAge);
     return cookie;
+  }
+
+  /**
+   * Update the entire view.
+   *
+   * @see PartialViewContext#setRenderAll(boolean)
+   * @since 1.5
+   */
+  public static void ajaxUpdateAll() {
+    Ajax.updateAll();
+  }
+
+  /**
+   * Update the given client IDs in the current ajax response. Note that those
+   * client IDs should not start with the naming container separator character
+   * like <code>:</code>. This method also supports the client ID keywords
+   * <code>@all</code>, <code>@form</code> and <code>@this</code> which
+   * respectively refers the entire view, the currently submitted form as
+   * obtained by {@link Components#getCurrentForm()} and the currently processed
+   * component as obtained by
+   * {@link UIComponent#getCurrentComponent(FacesContext)}. Any other client ID
+   * starting with <code>@</code> is by design ignored, including
+   * <code>@none</code>.
+   *
+   * @param clientIds The client IDs to be updated in the current ajax response.
+   * @see PartialViewContext#getRenderIds()
+   */
+  public static void ajaxUpdate(String... clientIds) {
+    Ajax.update(clientIds);
   }
 
 }
