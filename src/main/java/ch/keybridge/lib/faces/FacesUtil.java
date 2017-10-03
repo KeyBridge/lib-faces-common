@@ -447,6 +447,18 @@ public class FacesUtil {
   }
 
   /**
+   * The User-Agent request header contains a characteristic string that allows
+   * the network protocol peers to identify the application type, operating
+   * system, software vendor or software version of the requesting software user
+   * agent.
+   *
+   * @return the HTTP user agent request header.
+   */
+  public static String getUserAgent() {
+    return getRequestHeader("User-Agent");
+  }
+
+  /**
    * Add a SSO cookie to the HttpServletResponse. This method can be called
    * multiple times to set more than one cookie.
    *
