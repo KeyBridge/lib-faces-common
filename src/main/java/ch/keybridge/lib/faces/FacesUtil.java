@@ -26,6 +26,7 @@ import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ProjectStage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
@@ -85,6 +86,16 @@ public class FacesUtil {
    */
   public static ExternalContext getExternalContext() {
     return getContext().getExternalContext();
+  }
+
+  /**
+   * Return the project stage for the currently running application instance.
+   * The default value is ProjectStage.Production
+   *
+   * @return the project stage for the currently running application
+   */
+  public static ProjectStage getProjectStage() {
+    return FacesUtil.getContext().getApplication().getProjectStage();
   }
 
   /**
