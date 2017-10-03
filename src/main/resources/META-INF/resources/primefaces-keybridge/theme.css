@@ -632,3 +632,12 @@
 /*well behaved modal dialogs*/
 .ui-confirm-dialog {width: 33% !important;}
 
+/*fish and chips*/
+.ui-chips-container {
+  width: 100% !important;
+}
+.ui-chips-token {
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  color: #586069 !important;
+}
