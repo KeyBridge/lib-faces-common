@@ -36,4 +36,11 @@ This makes an instance of <code>java.util.Date</code> as current datetime availa
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
 
+
+  <converter>
+    <converter-id>prettyTimeConverter</converter-id>
+    <converter-class>org.ocpsoft.prettytime.jsf.PrettyTimeConverter</converter-class>
+  </converter>
+
+
 </faces-config>
