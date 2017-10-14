@@ -121,8 +121,7 @@ public class InetAddressUtility {
    * @param request the HTTP servlet request
    * @return the best guess remote address
    */
-  @SuppressWarnings("NestedAssignment")
-  public static String getAddressFromRequest(HttpServletRequest request) {
+  public static String getAddressFromRequest(final HttpServletRequest request) {
     /**
      * X-Forwarded-For is a comma separated string: client,proxy1,proxy2,...
      */
@@ -142,7 +141,7 @@ public class InetAddressUtility {
    * @param request the HTTP servlet request
    * @return the resolved host name
    */
-  public static String getHostnameFromRequest(HttpServletRequest request) {
+  public static String getHostnameFromRequest(final HttpServletRequest request) {
     String addr = getAddressFromRequest(request);
     try {
       return Inet4Address.getByName(addr).getHostName();
@@ -158,7 +157,7 @@ public class InetAddressUtility {
    * @return the Internet address
    * @throws UnknownHostException if the internet address does not resolve
    */
-  public static InetAddress getInet4AddressFromRequest(HttpServletRequest request) throws UnknownHostException {
+  public static InetAddress getInet4AddressFromRequest(final HttpServletRequest request) throws UnknownHostException {
     return Inet4Address.getByName(getAddressFromRequest(request));
   }
 }
