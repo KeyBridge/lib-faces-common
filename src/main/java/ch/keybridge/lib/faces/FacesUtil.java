@@ -673,7 +673,7 @@ public class FacesUtil {
   }
 
   /**
-   * Get a Session Cookie named "JSESSIONSSO" containing the SSOSession UUID.
+   * Build a HTTP new Cookie configuration.
    * <p>
    * The name must conform to RFC 2109. However, vendors may provide a
    * configuration option that allows cookie names conforming to the original
@@ -720,7 +720,7 @@ public class FacesUtil {
       cookie.setDomain(domain);
     }
     if (comment != null) {
-      cookie.setComment("sso");
+      cookie.setComment(comment);
     }
     cookie.setVersion(1);
     /**
