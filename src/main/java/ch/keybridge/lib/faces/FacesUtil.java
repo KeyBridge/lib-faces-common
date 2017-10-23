@@ -341,15 +341,16 @@ public class FacesUtil {
   /**
    * Redirect the browser to a page within the current application.
    * <p>
-   * URIS may be relative or absolute PAGE references but are pre-pended with
-   * the current context root.
+   * The provided {@code pageUri} field will be pre-pended with the current
+   * context root and should be relative to the application context root.
    * <p>
-   * Page references with no path are assumed to be in the context root.
-   * <p>
-   * E.g. if the application is "app" and the pageUri is "status.xhtml" or
-   * "/status.xhtml" the browser will be forwarded to "/app/status.xhtml".
+   * The {@code pageUri} field need not start with "/" as one will be
+   * conditionally added if needed. E.g. if the application context root is
+   * "app" and the provide pageUri is "status.xhtml" or "/status.xhtml" the
+   * browser will be forwarded to "/app/status.xhtml".
    *
-   * @param pageUri e.g. index.xhtml
+   * @param pageUri the page URI within the current application. e.g.
+   *                "/director/index.xhtml"
    */
   public static void redirectLocal(String pageUri) {
     /**
