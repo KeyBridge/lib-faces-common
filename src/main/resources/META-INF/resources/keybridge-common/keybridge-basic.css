@@ -1,0 +1,215 @@
+/*!
+ * BASIC key bridge template configs
+ * Released under MIT license. Copyright 2017 Key Bridge.
+ *
+ * 10/25/17 - sync with bs-4 beta 
+ *
+ */ 
+html {
+  position: relative;
+  min-height: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {  word-wrap: break-word;}
+.body-md {min-width: 768px; }
+.body-lg {min-width: 992px; }
+.body-xl {min-width: 1200px; }
+.body-xga {  min-width: 1020px; }
+
+/*a darker background than bs-4 standard*/
+.bg-inverse {   background-color: #222222!important;  }
+a.bg-inverse:focus, a.bg-inverse:hover {  background-color: #1d2124 !important;}        /*nanobar*/
+/*a light gray*/
+.bg-faded {  background-color: #f7f7f7 !important; }
+/*mustard*/
+.bg-pending {  background-color: #dbab09 !important}
+
+/*icons*/
+i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
+
+/*fix JSF radio selectOneRadio and selectManyCheckbox*/
+[type="radio"] {margin-right: 0.5rem !important;}
+[type="checkbox"] {margin-right: 0.5rem !important;}
+.select td { border: none !important; }
+.select label {font-weight: inherit; }
+
+/*border patrol*/
+.border-none {border: none !important;}
+.border-bottom {border-bottom: 1px solid rgba(0,0,0,.2);}
+
+/*figures wrap an image and a label*/
+figure { margin-bottom: 1em;}
+figure img { margin-bottom: 0.5em;}
+figure label, figure caption, figure .caption {  font-size: smaller; font-style: italic; }
+
+/*make blockquotes the same font size unless specifically declared otherwise*/
+blockquote {  font-size: inherit !important;}
+
+/*fix ugly selects in safari*/
+select.form-control { -webkit-appearance: none; }
+/*right pad abbreviations*/
+abbr {margin-right: 5px;}
+
+/*tables*/
+th{white-space: nowrap;}
+/*add "inactive" as a grey table contextual class*/
+.table > thead > tr > td.inactive, .table > tbody > tr > td.inactive, .table > tfoot > tr > td.inactive, .table > thead > tr > th.inactive, .table > tbody > tr > th.inactive, .table > tfoot > tr > th.inactive, .table > thead > tr.inactive > td, .table > tbody > tr.inactive > td, .table > tfoot > tr.inactive > td, .table > thead > tr.inactive > th, .table > tbody > tr.inactive > th, .table > tfoot > tr.inactive > th { background-color: #DDD; }
+.bg-inactive {background-color: #DDD;}
+
+/*jumbotron list text size normal*/
+.jumbotron ul, .jumbotron ol, .jumbotron dl, .jumbotron table th, .jumbotron table td {   margin-bottom: 1rem; }
+
+/*do not pad Google Code PrettyPrint*/
+.prettyprint {border: none !important; padding: 1em !important; font-size: smaller;}
+
+/*do not underline links on hover*/
+a:hover{text-decoration: none !important;}
+
+/*make labels bold*/
+label { font-weight: bold; }
+
+/*text decorations*/
+.text-italic {font-style: italic !important; }
+.text-underline { text-decoration: underline !important; }
+.text-strikethrough { text-decoration: line-through !important; }
+.text-inactive { color: #DDD !important; }
+.text-indent { padding: 0 2em 0 2em !important; }
+.text-small {font-size: small !important;}
+.text-smaller {font-size: smaller !important;}
+.text-bolder {font-weight: bolder !important; }
+.text-normal {  font-weight:normal !important}
+.text-bold {  font-weight:600 !important}
+.text-italic {  font-style:italic !important}
+.text-uppercase {  text-transform:uppercase !important}
+.text-lowercase {  text-transform:lowercase !important}
+.text-capitalize {  text-transform:capitalize !important}
+.text-initial {  text-transform:initial !important}
+
+.text-underline {  text-decoration: underline !important}
+.text-no-underline {  text-decoration:none !important}
+.text-ws-no-wrap {  white-space:nowrap !important}
+.text-ws-normal {  white-space:normal !important}
+.text-wb-break-all {  word-break:break-all !important}
+
+.text-emphasized {  font-weight:600;  color:#24292e}
+.text-shadow-dark {  text-shadow:0 1px 1px rgba(27,31,35,0.25),0 1px 25px rgba(27,31,35,0.75)}
+.text-shadow-light {  text-shadow:0 1px 0 rgba(255,255,255,0.5)}
+
+/*text colors*/
+.text-inherit {  color:inherit !important}
+.text-blue {  color:#0366d6 !important}
+.text-red {  color:#cb2431 !important}
+.text-gray-light {  color:#6a737d !important}
+.text-gray {  color:#586069 !important}
+.text-gray-dark {  color:#24292e !important}
+.text-green {  color:#28a745 !important}
+.text-orange {  color:#a04100 !important}
+.text-orange-light {  color:#e36209 !important}
+.text-purple {  color:#6f42c1 !important}
+.text-white {  color:#fff !important}
+.text-pending {  color:#b08800 !important}
+
+.link-gray {  color:#586069 !important}
+.link-gray:hover {  color:#0366d6 !important}
+.link-gray-dark {  color:#24292e !important}
+.link-gray-dark:hover {  color:#0366d6 !important}
+.link-hover-blue:hover {  color:#0366d6 !important}
+.muted-link {  color:#586069 !important}
+.muted-link:hover {  color:#0366d6 !important;  text-decoration:none}
+
+/*stinking badges*/
+.badge-secondary {
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  color: #586069 !important;
+}
+
+/*!
+ * GitHub light syntax theme v0.5.0
+ * Copyright (c) 2012 - 2017 GitHub, Inc.
+ * Licensed under MIT (https://github.com/primer/github-syntax-theme-generator/blob/master/LICENSE)
+ * Extracts created on : Sep 27, 2017, 8:43:04 AM
+ */
+
+/*container*/
+.container-md {
+  max-width:768px;
+  margin-right:auto;
+  margin-left:auto
+}
+.container-lg {
+  max-width:1012px;
+  margin-right:auto;
+  margin-left:auto
+}
+.container-xl {
+  max-width:1280px;
+  margin-right:auto;
+  margin-left:auto
+}
+
+/*split screen*/
+.one-third {  width:33.333333%}
+.two-thirds {  width:66.666667%}
+.one-fourth {  width:25%}
+.one-half {  width:50%}
+.three-fourths {  width:75%}
+.one-fifth {  width:20%}
+.four-fifths {  width:80%}
+.centered {  display:block;  float:none;  margin-right:auto;  margin-left:auto}
+
+/*position*/
+.position-static {  position:static !important}
+.position-relative {  position:relative !important}
+.position-absolute {  position:absolute !important}
+.position-fixed {  position:fixed !important}
+.top-0 {  top:0 !important}
+.right-0 {  right:0 !important}
+.bottom-0 {  bottom:0 !important}
+.left-0 {  left:0 !important}
+.v-align-middle {  vertical-align:middle !important}
+.v-align-top {  vertical-align:top !important}
+.v-align-bottom {  vertical-align:bottom !important}
+.v-align-text-top {  vertical-align:text-top !important}
+.v-align-text-bottom {  vertical-align:text-bottom !important}
+.overflow-hidden {  overflow:hidden !important}
+.overflow-scroll {  overflow:scroll !important}
+.overflow-auto {  overflow:auto !important}
+
+
+/*width*/
+.width-fit {  max-width:100% !important}
+.width-full {  width:100% !important}
+.height-full {  height:100% !important}
+
+/*responsive padding*/
+.p-responsive {  padding-right:16px !important;  padding-left:16px !important}
+@media (min-width: 544px) {
+  .p-responsive {    padding-right:40px !important;    padding-left:40px !important  }
+}
+@media (min-width: 1012px) {
+  .p-responsive {    padding-right:16px !important;    padding-left:16px !important  }
+}
+
+/*show and tell*/
+.v-hidden {  visibility:hidden !important}
+.v-visible {  visibility:visible !important}
+.hidden { display: none !important; }
+
+/*screen reader*/
+.show-on-focus {
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:0;
+  overflow:hidden;
+  clip:rect(1px, 1px, 1px, 1px)
+}
+.show-on-focus:focus {
+  z-index:20;
+  width:auto;
+  height:auto;
+  clip:auto
+}
