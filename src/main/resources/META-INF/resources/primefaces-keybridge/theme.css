@@ -8,12 +8,21 @@
   11/11/16 - move non-primefaces junk to extra.css
   02/27/17 - move ALL remaining non-primefaces junk to extra.css
   04/26/17 - merge in rebootstrap css
+  10/25/17 - excise all non-PF content, placed in keybridge-basic.css
+             match growl colors with bs-4 alerts
 
-  About
-  This is a modified version of the Primefaces Bootstrap theme.
-  Custom CSS is located at the bottom.
+  About:
+
+  This is the CSS file automatically loaded when the primefaces theme 'keybridge' 
+  is declared in web.xml. e.g.
+
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>keybridge</param-value>
+  </context-param>
 
   Origin
+  This is a (highly) modified version of the Primefaces Bootstrap theme. 
   Forked from the primefaces bootstrap-1.10.10.jar*/
 
 /*Internet Explorer 10 in Windows 8 and Windows Phone 8*/
@@ -599,25 +608,25 @@
 .ui-growl-info {
   /*alert-info*/
   border: 1px solid transparent;
-  background-color: #d9edf7 !important;
-  border-color: #31708f !important;
-  color: #31708f !important;
+  background-color: #cce5ff !important;
+  border-color: #b8daff !important;
+  color: #004085 !important;
 }
 
 .ui-growl-warn {
   /*alert-warning*/
   border: 1px solid transparent;
-  background-color: #fcf8e3 !important;
-  border-color: #8a6d3b !important;
-  color: #8a6d3b !important;
+  background-color: #fff3cd !important;
+  border-color: #ffeeba !important;
+  color: #856404 !important;
 }
 
 .ui-growl-error {
   /*alert-danger*/
   border: 1px solid transparent;
-  background-color: #f2dede !important;
-  border-color: #a94442 !important;
-  color: #a94442 !important;
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb !important;
+  color: #721c24 !important;
 }
 
 .ui-growl-fatal {
