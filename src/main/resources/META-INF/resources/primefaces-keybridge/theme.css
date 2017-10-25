@@ -597,7 +597,7 @@
 /*GROWL customization*/
 /*make growl resemble normal alerts with darker borders */
 /*shift the growl messages below the topbar*/
-.ui-growl {top:75px !important;}
+.ui-growl {top:85px !important;}
 .ui-growl-image { display: none !important; }
 .ui-growl-message {
   padding: 0 0 5px 0;
