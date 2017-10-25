@@ -29,6 +29,13 @@ a.bg-inverse:focus, a.bg-inverse:hover {  background-color: #1d2124 !important;}
 /*icons*/
 i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
 
+/*preserve card-bloc from bs-4 alpha; same as card-body*/
+.card-block {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
 /*fix JSF radio selectOneRadio and selectManyCheckbox*/
 [type="radio"] {margin-right: 0.5rem !important;}
 [type="checkbox"] {margin-right: 0.5rem !important;}
@@ -120,10 +127,17 @@ label { font-weight: bold; }
 .muted-link:hover {  color:#0366d6 !important;  text-decoration:none}
 
 /*stinking badges*/
-.badge-secondary {
-  border: solid 1px #ddd;
+.badge-outline-dark {
+  border: 1px solid #343a40;
   border-radius: 3px;
-  color: #586069 !important;
+  background-color: transparent;
+  background-image: none;
+}
+.badge-outline-secondary {
+  border: 1px solid #868e96;
+  border-radius: 3px;
+  background-color: transparent;
+  background-image: none;
 }
 
 /*!
