@@ -22,7 +22,6 @@ import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.FactoryFinder;
-import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.FacesMessage;
@@ -33,6 +32,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 
 /**
  * Collection of utility methods for the JSF API that are mainly shortcuts for
@@ -678,20 +679,32 @@ public class FacesUtil {
    * The name must conform to RFC 2109. However, vendors may provide a
    * configuration option that allows cookie names conforming to the original
    * Netscape Cookie Specification to be accepted. The name of a cookie cannot
-   * be changed once the cookie has been created. The value can be anything the
-   * server chooses to send. Its value is probably of interest only to the
-   * server. The cookie's value can be changed after creation with the setValue
-   * method. By default, cookies are created according to the Netscape cookie
-   * specification.
+   * be changed once the cookie has been created.
+   * <p>
+   * The value can be anything the server chooses to send. Its value is probably
+   * of interest only to the server. The cookie's value can be changed after
+   * creation with the setValue method. By default, cookies are created
+   * according to the Netscape cookie specification.
    * <p>
    * Developer note: The {@code javax.servlet.http.Cookie} object is not
    * compatible with JAXB marshalling / un-marshalling.
+   * <p>
+   * Domain specifies the interet domain within which this cookie should be
+   * presented. The form of the domain name is specified by RFC 2109. A domain
+   * name begins with a dot (<code>.foo.com</code>) and means that the cookie is
+   * visible to servers in a specified Domain Name System (DNS) zone (for
+   * example, <code>www.foo.com</code>, but not <code>a.b.foo.com</code>). By
+   * default, cookies are only returned to the server that sent them.
    *
-   * @param name    the name of the cookie value
+   * @param name    the name of the cookie per RFC 2109
    * @param value   the value of the cookie
-   * @param maxAge  the maximum age in seconds for this Cookie.
-   * @param domain  the domain within which this cookie should be presented.
-   * @param comment a comment that describes a cookie's purpose
+   * @param maxAge  the maximum age in seconds for this Cookie. Default is
+   *                Integer.MAX_VALUE =~ 30 days.
+   * @param domain  the domain name within which this cookie is visible; form is
+   *                according to RFC 2109
+   * @param comment Specifies a comment that describes a cookie's purpose. The
+   *                comment is useful if the browser presents the cookie to the
+   *                user.
    * @return an HTTP version 1 cookie.
    */
   public static Cookie buildCookie(String name, String value, Integer maxAge, String domain, String comment) {
@@ -713,8 +726,9 @@ public class FacesUtil {
      */
     cookie.setSecure(true);
     /**
-     * Do not set the cookie domain when testing. For production, specify the
-     * entire domain within which this cookie should be presented.
+     * Do not set a null cookie domain value; throws NPE. Also, do not set when
+     * testing. For production, specify the entire domain within which this
+     * cookie should be presented. e.g. ".keybridgewireless.com"
      */
     if (domain != null) {
       cookie.setDomain(domain);

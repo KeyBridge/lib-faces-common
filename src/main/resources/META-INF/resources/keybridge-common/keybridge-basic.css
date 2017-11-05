@@ -2,11 +2,11 @@
  * BASIC key bridge template configs
  * Released under MIT license. Copyright 2017 Key Bridge.
  *
- * 10/25/17 - sync with bs-4 beta 
+ * 10/25/17 - sync with bs-4 beta
  *            resurrect secondary button style as btn-default
  *            extend border patrol
- *
- */ 
+ * 11/04/17 - add text-code
+ */
 html {
   position: relative;
   min-height: 100%;
@@ -161,6 +161,14 @@ label { font-weight: bold; }
 .link-hover-blue:hover {  color:#0366d6 !important}
 .muted-link {  color:#586069 !important}
 .muted-link:hover {  color:#0366d6 !important;  text-decoration:none}
+
+.text-code {
+  padding: .2rem .4rem;
+  font-size: 90%;
+  color: #bd4147;
+  background-color: #f8f9fa;
+  border-radius: .25rem;
+}
 
 /*stinking badges*/
 .badge-outline-dark {
