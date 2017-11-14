@@ -359,9 +359,10 @@
 .ui-button { padding: 0.5rem 1rem !important; }
 /* add space around a checkbox */
 .ui-chkbox {margin: 0.25em 0.5em 0 0; }
-/*adjust the height of primefaces text-only and icon-only buttons*/
-.ui-button-text-only .ui-button-text {padding: 0.5em 1em !important;}
-.ui-button-icon-only {padding: 0.5em 1em !important;}
+/*p:selectManyButton : adjust the height of primefaces text-only and icon-only buttons*/
+.ui-buttonset .ui-button { margin-right: 5px !important; }
+.ui-button-text-only .ui-button-text {padding: 0 !important; }
+.ui-button-icon-only {padding: 0 !important; }
 /*fix the text in buttons*/
 .ui-button .ui-button-text {display: inline !important;}
 /*fix the text in booleanButtons*/
