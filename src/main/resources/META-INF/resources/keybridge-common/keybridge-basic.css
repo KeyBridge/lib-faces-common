@@ -183,6 +183,19 @@ label { font-weight: bold; }
   background-color: transparent;
   background-image: none;
 }
+/*nav tabs*/
+.nav-tabs{ border: none; }
+.nav-link{ color: #373a40 !important; }
+.nav-link .fa, .dropdown-item .fa{
+  color: #b6bcc0 !important;
+  margin-right: .5rem !important;
+}
+/*hightlight the active tab.*/
+.nav-tabs  a.active {
+  border-color: #005cb7 #e1e4e8 transparent !important;
+  border-width: 3px 1px 1px !important;
+}
+
 
 /*!
  * GitHub light syntax theme v0.5.0
@@ -271,3 +284,4 @@ label { font-weight: bold; }
   height:auto;
   clip:auto
 }
+
