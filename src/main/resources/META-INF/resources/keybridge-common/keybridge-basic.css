@@ -184,16 +184,20 @@ label { font-weight: bold; }
   background-image: none;
 }
 /*nav tabs*/
-.nav-tabs{ border: none; }
 .nav-link{ color: #373a40 !important; }
 .nav-link .fa, .dropdown-item .fa{
   color: #b6bcc0 !important;
   margin-right: .5rem !important;
 }
 /*hightlight the active tab.*/
-.nav-tabs  a.active {
+.nav-overtabs  a.active {
   border-color: #005cb7 #e1e4e8 transparent !important;
   border-width: 3px 1px 1px !important;
+}
+.nav-undertabs  a.active {
+  font-weight: bold;
+  border-bottom-color: #005cb7 !important;
+  border-width: 0px 0px 2px !important;
 }
 
 
