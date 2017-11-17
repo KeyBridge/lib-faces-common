@@ -185,10 +185,7 @@ label { font-weight: bold; }
 }
 /*nav tabs*/
 .nav-link{ color: #373a40 !important; }
-.nav-link .fa, .dropdown-item .fa{
-  color: #b6bcc0 !important;
-  margin-right: .5rem !important;
-}
+.nav-link .fa, .dropdown-item .fa{ margin-right: .5rem !important;}
 /*hightlight the active tab.*/
 .nav-overtabs  a.active {
   border-color: #005cb7 #e1e4e8 transparent !important;
