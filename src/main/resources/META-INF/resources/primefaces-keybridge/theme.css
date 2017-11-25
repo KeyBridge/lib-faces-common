@@ -318,8 +318,8 @@
 .ui-dialog.ui-widget-content .ui-dialog-content{padding:15px;}
 .ui-dialog.ui-widget-content .ui-dialog-titlebar-close{margin-top:10px;}
 .ui-dialog.ui-widget-content .ui-dialog-titlebar-close:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-close:focus, .ui-dialog.ui-widget-content .ui-dialog-titlebar-minimize:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-minimize:focus, .ui-dialog.ui-widget-content .ui-dialog-titlebar-maximize:hover, .ui-dialog.ui-widget-content .ui-dialog-titlebar-maximize:focus{padding:1px;}
-/*SelectManyButton*/
-.ui-selectmanybutton .ui-state-active { background: #5f83b9 !important; }
+/*SelectManyButton active looks like btn-secondary (grey solid)*/
+.ui-selectmanybutton .ui-state-active { color: #fff !important; background-color: #868e96  !important; border-color: #868e96 !important; }
 /** DataTable **/
 /*.ui-datatable-odd{background-color:#F9F9F9}*/
 /** TabMenu **/
@@ -597,7 +597,7 @@ button.ui-datepicker-close{
 }
 
 
-/*transform buttons to look like normal btn-secondary*/
+/*transform buttons to look like normal btn-default*/
 .ui-button {
   /*btn*/
   display: inline-block;
