@@ -380,7 +380,8 @@
 /*reduce the p:schedule header title to a reasonable size*/
 .fc-header-title h2 {font-size: 18px;}
 /*color p:schedule events like btn-secondary*/
-.fc-event{ background-color: #868e96  !important; border: 1px solid #868e96 !important; }
+.fc-event.fc-event-secondary { color: white !important; background-color: #868e96  !important; border: 1px solid #868e96 !important; }
+.fc-event.fc-event-default { background-color: #d6dadc !important; border: 1px solid #d6dadc !important; }
 /*soften the calendar widget highlight for TODAY*/
 /*.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
   background-color:#CCF5CC !important; background-image: none; background-position: 0 center;  background-repeat: repeat-x; color: inherit; text-decoration: none;
