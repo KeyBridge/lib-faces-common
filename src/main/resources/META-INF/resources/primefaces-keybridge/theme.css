@@ -578,7 +578,8 @@ button.ui-datepicker-close{
 
 /*transform all PF selects to look normal*/
 /*SELECT*/
-.ui-widget select {
+/*.ui-widget select {*/
+.ui-selectonemenu {
   /*display: block;*/
   /*width: 100%;*/
   /*padding: .5rem .75rem;*/
@@ -586,7 +587,7 @@ button.ui-datepicker-close{
   /*line-height: 1.25;*/
   color: #464a4c;
   background-color: #fff;
-  background-image: none;
+  /*background-image: none;*/
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 1px solid rgba(0,0,0,.15);
