@@ -357,6 +357,8 @@
 /*Primefaces TWEAKS AND FIXES*/
 /*Make PF buttons look like Bootstrap btn */
 .ui-button { padding: 0.5rem 1rem !important; }
+/*configure a skinny button for compact calendar day select*/
+.ui-button-thin {padding: 0.5rem 0.5rem !important; }
 /* add space around a checkbox */
 .ui-chkbox {margin: 0.25em 0.5em 0 0; }
 /*p:selectManyButton : adjust the height of primefaces text-only and icon-only buttons*/
