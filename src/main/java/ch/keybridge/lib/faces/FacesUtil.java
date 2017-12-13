@@ -43,7 +43,7 @@ import static javax.faces.FactoryFinder.APPLICATION_FACTORY;
 
 /**
  * Collection of utility methods for the JSF API that are mainly shortcuts for
- * obtaining stuff from the thread local {@link FacesContext}.
+ * obtaining stuff from the thread local {@code FacesContext}.
  * <p>
  * Some methods forked from Omnifaces v2.2; some homegrown.
  *
@@ -152,8 +152,8 @@ public class FacesUtil {
   /**
    * Gets the JSF Application singleton from the FactoryFinder.
    * <p>
-   * This method is an alternative for {@link Faces#getApplication()} for those
-   * situations where the {@link FacesContext} isn't available.
+   * This method is an alternative for {@code #getApplication()} for those
+   * situations where the {@code FacesContext} isn't available.
    *
    * @return The faces application singleton.
    */
@@ -178,7 +178,7 @@ public class FacesUtil {
   /**
    * Signals JSF that the validations phase of the current request has failed.
    * This can be invoked in any other phase than the validations phase. The
-   * value can be read by {@link #isValidationFailed()} in Java and by
+   * value can be read by {@code #isValidationFailed()} in Java and by
    * <code>#{facesContext.validationFailed}</code> in EL.
    *
    * @see FacesContext#validationFailed()
@@ -273,7 +273,7 @@ public class FacesUtil {
    * Faces.redirectPermanent("other.xhtml");
    * </pre>
    * <p>
-   * You can use {@link String#format(String, Object...)} placeholder
+   * You can use {@code String#format(String, Object...)} placeholder
    * <code>%s</code> in the redirect URL to represent placeholders for any
    * request parameter values which needs to be URL-encoded. Here's a concrete
    * example:
@@ -404,8 +404,8 @@ public class FacesUtil {
    * the FacesContext request parameters included in the current request.
    * <p>
    * This fetches a request value from GET URIs. For example, if the URI query
-   * was "?key1=value1&key2=value2" then this method would return "value2" for
-   * the query key "key2".
+   * was "?key1=value1&amp;key2=value2" then this method would return "value2"
+   * for the query key "key2".
    *
    * @param queryKey the URI query key
    * @return the corresponding URI query value
@@ -437,8 +437,8 @@ public class FacesUtil {
    * FacesContext request parameters included in the current request.
    * <p>
    * This fetches a request value from GET URIs. For example, if the URI query
-   * was "?key1=value1&key2=value2" then this method would return "key2" for the
-   * query key "key2".
+   * was "?key1=value1&amp;key2=value2" then this method would return "key2" for
+   * the query key "key2".
    *
    * @param queryKey the URI query key
    * @return the corresponding URI query value

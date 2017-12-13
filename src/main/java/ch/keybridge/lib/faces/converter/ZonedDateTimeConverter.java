@@ -37,9 +37,9 @@ import javax.faces.convert.FacesConverter;
  * and ZonedDateTime in the model. This converter will lookup the pattern and
  * locale attributes from the parent component. If the parent component doesn't
  * natively support a pattern or locale attribute, simply add them as
- * <f:attribute name="..." value="...">. If the locale attribute is absent, the
- * (default) <f:view locale> will be used instead. There is no timeZone
- * attribute for the reason as explained in #1 here above.
+ * &lt;f:attribute name="..." value="..."&gt;. If the locale attribute is
+ * absent, the (default) &lt;f:view locale&gt; will be used instead. There is no
+ * timeZone attribute for the reason as explained in #1 here above.
  * <p>
  * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
  * &lt;f:converter converterId="zonedDateTimeConverter" /&gt;

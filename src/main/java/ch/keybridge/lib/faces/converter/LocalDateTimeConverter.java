@@ -41,10 +41,10 @@ import javax.faces.convert.FacesConverter;
  * between String in the UI and LocalDateTime in the model. This converter will
  * lookup the pattern, timeZone and locale attributes from the parent component.
  * If the parent component doesn't natively support a pattern, timeZone and/or
- * locale attribute, simply add them as <f:attribute name="..." value="...">.
- * The timeZone attribute must represent the fallback time zone of the input
- * string (when the pattern doesn't contain a time zone), and the time zone of
- * the output string.
+ * locale attribute, simply add them as &lt;f:attribute name="..."
+ * value="..."&gt;. The timeZone attribute must represent the fallback time zone
+ * of the input string (when the pattern doesn't contain a time zone), and the
+ * time zone of the output string.
  * <p>
  * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
  * &lt;f:converter converterId="localDateTimeConverter" /&gt;

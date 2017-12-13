@@ -116,7 +116,7 @@ public class ImportConstants extends TagHandler {
    *
    * @param context the facelet context
    * @param parent  the parent calling UI component
-   * @throws IOException
+   * @throws IOException on error
    */
   @Override
   public void apply(FaceletContext context, UIComponent parent) throws IOException {
@@ -158,10 +158,10 @@ public class ImportConstants extends TagHandler {
 
   /**
    * Convert the given type, which should represent a fully qualified name, to a
-   * concrete {@link Class} instance.
+   * concrete {@code Class} instance.
    *
    * @param type The fully qualified name of the class.
-   * @return The concrete {@link Class} instance.
+   * @return The concrete {@code Class} instance.
    * @throws IllegalArgumentException When it is missing in the classpath.
    */
   static Class<?> toClass(String type) { // Package-private so that ImportFunctions can also use it.
@@ -200,8 +200,8 @@ public class ImportConstants extends TagHandler {
   // Nested classes -------------------------------------------------------------------------------------------------
   /**
    * Specific map implementation which wraps the given map in
-   * {@link Collections#unmodifiableMap(Map)} and throws an
-   * {@link IllegalArgumentException} in {@link ConstantsMap#get(Object)} method
+   * {@code Collections#unmodifiableMap(Map)} and throws an
+   * {@code IllegalArgumentException} in {@code ConstantsMap#get(Object)} method
    * when the key doesn't exist at all.
    *
    * @author Bauke Scholtz
