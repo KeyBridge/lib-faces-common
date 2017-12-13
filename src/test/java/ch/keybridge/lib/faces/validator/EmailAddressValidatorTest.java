@@ -19,15 +19,15 @@ import org.junit.Test;
  *
  * @author Key Bridge
  */
-public class ValidateEmailAddressTest {
+public class EmailAddressValidatorTest {
 
-  public ValidateEmailAddressTest() {
+  public EmailAddressValidatorTest() {
   }
 
   @Test
   public void testEmailValidator() {
 
-    ValidateEmailAddress validator = new ValidateEmailAddress();
+    EmailAddressValidator validator = new EmailAddressValidator();
     for (String email : new String[]{"\"Fred Bloggs\"@example.com", "user@.invalid.com", "Chuck Norris <gmail@chucknorris.com>", "webmaster@müller.de", "matteo@78.47.122.114"}) {
 
       System.out.println("  " + email + " is valid " + validator.isValidEmailAddress(email));

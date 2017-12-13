@@ -20,16 +20,16 @@ import junit.framework.TestCase;
  *
  * @author Key Bridge LLC
  */
-public class ValidatePasswordTest extends TestCase {
+public class PasswordValidatorTest extends TestCase {
 
-  public ValidatePasswordTest(String testName) {
+  public PasswordValidatorTest(String testName) {
     super(testName);
   }
 
   public void testValidator() {
     System.out.println("Test Password Validator ");
 
-    ValidatePassword p = new ValidatePassword();
+    PasswordValidator p = new PasswordValidator();
 
     for (String string : new String[]{"abcd", "aBc45DSD_sdf", "password", "afv", "1234", "reallylon)*()*09809809:LJLKJLKJLKJLKJLKJgpassword", "1agdA*$#", "1agdA*$#", "@12X*567", "1#Zv96g@*Yfasd4", "#67jhgt@erd"}) {
       try {
