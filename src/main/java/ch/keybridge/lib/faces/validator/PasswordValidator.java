@@ -32,9 +32,10 @@ import javax.faces.validator.ValidatorException;
  * href="http://balusc.blogspot.com/2007/12/validator-for-multiple-fields.html">Validator
  * for multiple fields</a>
  * @author jesse
+ * @since v2.8.0 rename 12/13/17 ValidatePassword to PasswordValidator
  */
-@FacesValidator("validatePassword")
-public class ValidatePassword extends AValidator {
+@FacesValidator("passwordValidator")
+public class PasswordValidator extends AValidator {
 
   /**
    * Password matching expression. Password must be at least 4 characters, no

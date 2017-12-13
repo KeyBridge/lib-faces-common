@@ -23,12 +23,13 @@ import javax.faces.validator.ValidatorException;
  * Email address validator. This uses the JavaMail API to confirm the email
  * conforms to RFC 822 syntax rules.
  *
+ * @see <a href="https://www.ietf.org/rfc/rfc0822.txt">rfc0822</a>
  * @author jesse
  * @since v2.5.0 rewritten 08/08/17 to use REGEX instead of javax.mail
- * @see <a href="https://www.ietf.org/rfc/rfc0822.txt">rfc0822</a>
+ * @since v2.7.0 rename 12/13/17 to EmailAddressValidator
  */
-@FacesValidator("validateEmailAddress")
-public class ValidateEmailAddress extends AValidator {
+@FacesValidator("emailAddressValidator")
+public class EmailAddressValidator extends AValidator {
 
   /**
    * RFC822 compliant regex adapted for Java. The regex is taken from this post:

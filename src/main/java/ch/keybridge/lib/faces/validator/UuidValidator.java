@@ -22,9 +22,10 @@ import javax.faces.validator.ValidatorException;
  * UUID validator instance.
  *
  * @author Jesse Caulfield
+ * @since v2.8.0 rename 12/13/17 ValidateUUID to UuidValidator
  */
-@FacesValidator("validateUUID")
-public class ValidateUUID extends AValidator {
+@FacesValidator("uuidValidator")
+public class UuidValidator extends AValidator {
 
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
