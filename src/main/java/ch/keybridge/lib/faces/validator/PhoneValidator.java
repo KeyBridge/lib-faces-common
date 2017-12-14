@@ -20,6 +20,7 @@ package ch.keybridge.lib.faces.validator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**
@@ -37,6 +38,7 @@ import javax.faces.validator.ValidatorException;
  * @author Key Bridge
  * @since v2.8.0 created 12/13/17
  */
+@FacesValidator("phoneValidator")
 public class PhoneValidator extends AValidator {
 
   private static final int REQUIRED_DIGITS = 7;
