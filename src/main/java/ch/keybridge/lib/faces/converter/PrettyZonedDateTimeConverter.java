@@ -64,9 +64,8 @@ public class PrettyZonedDateTimeConverter implements Converter {
     if (modelValue == null) {
       return "";
     }
-
     if (modelValue instanceof ZonedDateTime) {
-      return new PrettyTime().format(toDate((ZonedDateTime) modelValue));
+      return new PrettyTime(getLocale(context, component)).format(toDate((ZonedDateTime) modelValue));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid ZonedDateTime"));
     }
@@ -77,7 +76,6 @@ public class PrettyZonedDateTimeConverter implements Converter {
     if (submittedValue == null || submittedValue.isEmpty()) {
       return null;
     }
-
     try {
       return ZonedDateTime.parse(submittedValue, getFormatter(context, component));
     } catch (DateTimeParseException e) {
@@ -107,11 +105,9 @@ public class PrettyZonedDateTimeConverter implements Converter {
    */
   private String getPattern(UIComponent component) {
     String pattern = (String) component.getAttributes().get("pattern");
-
     if (pattern == null) {
       throw new IllegalArgumentException("Pattern attribute is required");
     }
-
     return pattern;
   }
 

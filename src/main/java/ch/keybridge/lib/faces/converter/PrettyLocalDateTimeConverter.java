@@ -70,7 +70,7 @@ public class PrettyLocalDateTimeConverter implements Converter {
     }
 
     if (modelValue instanceof LocalDateTime) {
-      return new PrettyTime().format(toDate((LocalDateTime) modelValue));
+      return new PrettyTime(getLocale(context, component)).format(toDate((LocalDateTime) modelValue));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid LocalDateTime"));
     }
