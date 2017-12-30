@@ -21,6 +21,7 @@ package ch.keybridge.lib.faces.converter;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -41,8 +42,7 @@ import javax.faces.convert.FacesConverter;
  * absent, the (default) &lt;f:view locale&gt; will be used instead. There is no
  * timeZone attribute for the reason as explained in #1 here above.
  * <p>
- * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
- * &lt;f:converter converterId="zonedDateTimeConverter" /&gt;
+ * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}" converter="zonedDateTimeConverter"&gt;
  * &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
  * &lt;f:attribute name="timeZone" value="Asia/Kolkata" /&gt;
  * &lt;/h:outputText&gt;
@@ -91,7 +91,10 @@ public class ZonedDateTimeConverter implements Converter {
    * @return a Formatter instnace
    */
   private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
-    return DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
+    String pattern = getPattern(component);
+    return pattern == null
+           ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component))
+           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
   }
 
   /**
@@ -104,13 +107,9 @@ public class ZonedDateTimeConverter implements Converter {
    * @return the output pattern.
    */
   private String getPattern(UIComponent component) {
-    String pattern = (String) component.getAttributes().get("pattern");
-
-    if (pattern == null) {
-      throw new IllegalArgumentException("Pattern attribute is required");
-    }
-
-    return pattern;
+    return (String) component.getAttributes().get("pattern");
+//    if (pattern == null) {      throw new IllegalArgumentException("Pattern attribute is required");    }
+//    return pattern;
   }
 
   /**

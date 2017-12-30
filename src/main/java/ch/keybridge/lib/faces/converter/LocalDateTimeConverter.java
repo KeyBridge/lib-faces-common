@@ -24,6 +24,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.TimeZone;
 import javax.faces.application.FacesMessage;
@@ -46,8 +47,7 @@ import javax.faces.convert.FacesConverter;
  * of the input string (when the pattern doesn't contain a time zone), and the
  * time zone of the output string.
  * <p>
- * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
- * &lt;f:converter converterId="localDateTimeConverter" /&gt;
+ * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}" converter="localDateTimeConverter" &gt;
  * &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
  * &lt;f:attribute name="timeZone" value="Asia/Kolkata" /&gt;
  * &lt;/h:outputText&gt;
@@ -96,7 +96,10 @@ public class LocalDateTimeConverter implements Converter {
    * @return a Formatter instnace
    */
   private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
+    String pattern = getPattern(component);
+    DateTimeFormatter formatter = pattern == null
+                                  ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component))
+                                  : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
     ZoneId zone = getZoneId(component);
     return (zone != null) ? formatter.withZone(zone) : formatter;
   }
@@ -111,13 +114,7 @@ public class LocalDateTimeConverter implements Converter {
    * @return the output pattern.
    */
   private String getPattern(UIComponent component) {
-    String pattern = (String) component.getAttributes().get("pattern");
-
-    if (pattern == null) {
-      throw new IllegalArgumentException("Pattern attribute is required");
-    }
-
-    return pattern;
+    return (String) component.getAttributes().get("pattern");
   }
 
   /**
