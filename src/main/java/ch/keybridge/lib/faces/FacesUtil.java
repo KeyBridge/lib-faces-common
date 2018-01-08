@@ -478,8 +478,27 @@ public class FacesUtil {
   }
 
   /**
-   * Add a SSO cookie to the HttpServletResponse. This method can be called
+   * Add a cookie cookie to the HttpServletResponse. This method can be called
    * multiple times to set more than one cookie.
+   * <p>
+   * The cookie is set with the current context path, version 0, and expires at
+   * the end of the current session.
+   *
+   * @param name  the cookie name
+   * @param value the cookie value
+   * @return the new cookie
+   */
+  public static Cookie addCookie(String name, String value) {
+    Cookie cookie = new Cookie(name, value);
+    cookie.setPath(getExternalContext().getRequestContextPath());
+    cookie.setVersion(0);
+    addCookie(cookie);
+    return cookie;
+  }
+
+  /**
+   * Add a cookie to the HttpServletResponse. This method can be called multiple
+   * times to set more than one cookie.
    *
    * @param cookie the cookie to add to the response.
    */
