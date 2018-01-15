@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="number" required="true" type="java.lang.Number" displayName="a scalar value"/>
+    <cc:attribute name="label" required="true" type="java.lang.String" displayName="a label"/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="a css class"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.attrs.id}" class="#{cc.attrs.styleClass}">
+      <h3 class="statcard-number text-primary">
+        <h:outputText value="#{cc.attrs.number}"><f:convertNumber type="number"/> </h:outputText>
+      </h3>
+      <span class="statcard-desc">#{cc.attrs.label}</span>
+    </div>
+  </cc:implementation>
+</html>

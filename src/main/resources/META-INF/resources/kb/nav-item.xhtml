@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!--Nav Menu Item-->
+  <!--this template provides a standard bootstrap nav item and a standard iconav
+  menu template with an icon or image is provided-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="id" required="false" type="java.lang.String" default="${cc.id}" displayName="the component id"/>
+    <cc:attribute name="outcome" required="true" type="java.lang.String" default="#" displayName="the href"/>
+    <cc:attribute name="value" required="true" type="java.lang.String" default="Label" displayName="the link text"/>
+    <cc:attribute name="label" required="false" type="java.lang.String" displayName="the link label"/>
+    <cc:attribute name="icon" required="false" type="java.lang.String" displayName="the icon css class (e.g. 'icon icon-home' or 'fa fa-user'"/>
+    <cc:attribute name="badge" required="false" type="java.lang.String" displayName="the badge text"/>
+    <cc:attribute name="library" required="false" type="java.lang.String" displayName="an image library"/>
+    <cc:attribute name="image" required="false" type="java.lang.String" displayName="an image name"/>
+    <cc:attribute name="active" required="false" type="java.lang.Boolean" displayName="true if this is the active page link"/>
+    <cc:attribute name="disabled" required="false" type="java.lang.Boolean" displayName="true if this link is disabled"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <li id="#{cc.attrs.id}" class="nav-item">
+      <h:link styleClass="nav-link #{cc.attrs.active?'active':''}" outcome="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}">
+        <f:passThroughAttribute name="data-toggle" value="tooltip"/>
+        <f:passThroughAttribute name="data-placement" value="right"/>
+        <f:passThroughAttribute name="data-container" value="body"/>
+        <h:outputText styleClass="#{cc.attrs.icon} text-muted" rendered="#{cc.attrs.icon ne null}"/>
+        <h:graphicImage library="#{cc.attrs.library}" name="#{cc.attrs.image}" styleClass="rounded-circle" rendered="#{cc.attrs.image ne null}"/>
+        <h:outputText value="#{cc.attrs.value}"/>
+        <h:outputText value="#{cc.attrs.badge}" rendered="#{cc.attrs.badge ne null and cc.attrs.badge gt 0}" styleClass="ml-1 badge badge-pill badge-light text-dark"/>
+      </h:link>
+    </li>
+  </cc:implementation>
+</html>

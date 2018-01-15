@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+  <!--LE MENU-->
+  <!--12/30/17 - first draft-->
+
+  <cc:interface>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="CSS to wrap this element."/>
+  </cc:interface>
+
+  <!--toggle d-none to show-->
+  <cc:implementation>
+    <div id="#{cc.id}" class="d-flex align-content-start flex-wrap #{cc.attrs.styleClass}">
+      <div class="col-4 d-flex">
+        <!--icon-->
+        <div class="d-block text-bold text-muted mr-2">
+          <icon class="fa fa-fw fa-desktop"/>
+        </div>
+        <!--content-->
+        <div>
+          <!--category-->
+          <div class="d-block text-bold text-muted pb-1 mb-3">
+            Portals
+          </div>
+
+          <!--jurisdiction-->
+          <div class="mb-3">
+            <span class="d-block text-muted text-small"> Canada </span>
+            <!--products-->
+            <h:link class="d-block" outcome="#{link.home}" value="TV White Space"/>
+          </div>
+
+          <!--jurisdiction-->
+          <div class="mb-3">
+            <span class="d-block text-muted text-small"> United States </span>
+            <!--products-->
+            <span class="d-block"> TV White Space </span>
+            <span class="d-block"> UHF transition  </span>
+            <span class="d-block"> AWS3 Transition </span>
+            <span class="d-block"> CBRS </span>
+            <span class="d-block"> Millimeter band</span>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">              Services            </div>
+      <div class="col-4">              Developer            </div>
+
+    </div>
+
+  </cc:implementation>
+
+</html>
+

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="fileContent" required="true" type="java.lang.String" displayName="The file name (no extension)"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+
+    <div class="card-body">
+      <div class="d-flex flex-row">
+        <div class="p-2">
+          <icon class="fa fa-info-circle fa-fw fa-2x mt-1 text-muted" aria-hidden="true"/>
+        </div>
+        <div class="p-2 text-small">
+          <h:outputText value="#{fileContent.readContent(cc.attrs.fileContent)}" escape="false"/>
+        </div>
+      </div>
+    </div>
+
+  </cc:implementation>
+</html>
