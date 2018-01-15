@@ -2,7 +2,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
 
-  <description>Key Bridge OmniFaces UI components.</description>
+  <description>Key Bridge common JSF UI components.</description>
   <namespace>http://keybridge.ch/ui</namespace>
   <short-name>kb</short-name>
 
