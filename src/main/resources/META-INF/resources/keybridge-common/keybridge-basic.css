@@ -140,6 +140,9 @@ label { font-weight: bold; }
 .text-shadow-dark {  text-shadow:0 1px 1px rgba(27,31,35,0.25),0 1px 25px rgba(27,31,35,0.75)}
 .text-shadow-light {  text-shadow:0 1px 0 rgba(255,255,255,0.5)}
 
+.text-superscript {position: relative; top: -0.5em; font-size: small;}
+.text-subscript {position: relative; bottom: -0.5em; font-size: small;}
+
 /*text colors*/
 .text-inherit {  color:inherit !important}
 .text-blue {  color:#0366d6 !important}
@@ -153,6 +156,7 @@ label { font-weight: bold; }
 .text-purple {  color:#6f42c1 !important}
 .text-white {  color:#fff !important}
 .text-pending {  color:#b08800 !important}
+
 
 .link-gray {  color:#586069 !important}
 .link-gray:hover {  color:#0366d6 !important}
