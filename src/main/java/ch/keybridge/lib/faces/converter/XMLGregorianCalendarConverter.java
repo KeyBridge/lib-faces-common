@@ -37,7 +37,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * @author jesse
  */
 @FacesConverter(value = "convertXMLGregorianCalendar")
-public class ConvertXMLGregorianCalendar implements Converter {
+public class XMLGregorianCalendarConverter implements Converter {
 
   /**
    * Convert from a pretty-print string to an XMLGregorian calendar.
