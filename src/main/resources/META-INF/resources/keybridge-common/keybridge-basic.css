@@ -122,7 +122,7 @@ label { font-weight: bold; }
 .text-small {font-size: small !important;}
 .text-smaller {font-size: smaller !important;}
 .text-bolder {font-weight: bolder !important; }
-.text-normal {  font-weight:normal !important}
+.text-normal { font-weight:normal !important}
 .text-bold {  font-weight:600 !important}
 .text-italic {  font-style:italic !important}
 .text-uppercase {  text-transform:uppercase !important}
@@ -157,14 +157,13 @@ label { font-weight: bold; }
 .text-white {  color:#fff !important}
 .text-pending {  color:#b08800 !important}
 
-
 .link-gray {  color:#586069 !important}
 .link-gray:hover {  color:#0366d6 !important}
 .link-gray-dark {  color:#24292e !important}
 .link-gray-dark:hover {  color:#0366d6 !important}
 .link-hover-blue:hover {  color:#0366d6 !important}
-.muted-link {  color:#586069 !important}
-.muted-link:hover {  color:#0366d6 !important;  text-decoration:none}
+.link-muted {  color:#586069 !important}
+.link-muted:hover {  color:#0366d6 !important;  text-decoration:none}
 
 .text-code {
   padding: .2rem .4rem;
