@@ -21,11 +21,12 @@
     <cc:attribute name="image" required="false" type="java.lang.String" displayName="an image name"/>
     <cc:attribute name="active" required="false" type="java.lang.Boolean" displayName="true if this is the active page link"/>
     <cc:attribute name="disabled" required="false" type="java.lang.Boolean" displayName="true if this link is disabled"/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <li id="#{cc.attrs.id}" class="nav-item">
+    <li id="#{cc.attrs.id}" class="nav-item #{cc.attrs.styleClass}">
       <h:link styleClass="nav-link #{cc.attrs.active?'active':''}" outcome="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}">
         <f:passThroughAttribute name="data-toggle" value="tooltip"/>
         <f:passThroughAttribute name="data-placement" value="right"/>
