@@ -44,23 +44,19 @@ i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-
   background-color: #fff;
   border-color: #ccc;
 }
-
 .btn-default:hover {
   color: #292b2c;
   background-color: #e6e6e6;
   border-color: #adadad;
 }
-
 .btn-default:focus, .btn-default.focus {
   -webkit-box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
   box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
 }
-
 .btn-default.disabled, .btn-default:disabled {
   background-color: #fff;
   border-color: #ccc;
 }
-
 .btn-default:active, .btn-default.active,
 .show > .btn-default.dropdown-toggle {
   color: #292b2c;
@@ -186,6 +182,7 @@ label { font-weight: bold; }
   background-color: transparent;
   background-image: none;
 }
+
 /*nav tabs*/
 .nav-link{ color: #373a40 !important; }
 .nav-link .fa, .dropdown-item .fa{ margin-right: .5rem !important;}
@@ -208,19 +205,27 @@ label { font-weight: bold; }
  * Extracts created on : Sep 27, 2017, 8:43:04 AM
  */
 
-/*container*/
+/*container see BS4 grid options */
+.container-sm {
+  max-width:576px;
+  margin-right:auto;
+  margin-left:auto
+}
 .container-md {
   max-width:768px;
+  min-width:540px;
   margin-right:auto;
   margin-left:auto
 }
 .container-lg {
-  max-width:1012px;
+  max-width:992px;
+  min-width:720px;
   margin-right:auto;
   margin-left:auto
 }
 .container-xl {
   max-width:1280px;
+  min-width:960px;
   margin-right:auto;
   margin-left:auto
 }
@@ -234,6 +239,11 @@ label { font-weight: bold; }
 .one-fifth {  width:20%}
 .four-fifths {  width:80%}
 .centered {  display:block;  float:none;  margin-right:auto;  margin-left:auto}
+/*BS-4 width variants*/
+.w-33 {width:33.333333%}
+.w-66 {width:66.666667%}
+.w-20 {width:20%}
+.w-80 {width:80%}
 
 /*position*/
 .position-static {  position:static !important}
@@ -287,5 +297,11 @@ label { font-weight: bold; }
   width:auto;
   height:auto;
   clip:auto
+}
+
+/*markdown editor*/
+textarea.markdown {
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+  font-size: 0.9rem !important;
 }
 
