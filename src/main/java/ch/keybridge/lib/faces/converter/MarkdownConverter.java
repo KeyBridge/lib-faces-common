@@ -44,7 +44,7 @@ public class MarkdownConverter implements Converter {
     if (modelValue == null) {
       return "";
     }
-    return new Markdown().toHtml(String.valueOf(modelValue));
+    return Markdown.process(String.valueOf(modelValue));
   }
 
   /**

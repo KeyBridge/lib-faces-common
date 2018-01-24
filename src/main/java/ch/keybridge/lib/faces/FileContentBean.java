@@ -144,9 +144,7 @@ public class FileContentBean {
    * @throws IOException if the file cannot be opened or read
    */
   private String readContentMD(String filename) throws IOException {
-    String md = readFile(filename);
-    Markdown processor = new Markdown();
-    return processor.toHtml(md);
+    return Markdown.process(readFile(filename));
 
 //    return readFile(filename);
 //    See https://github.com/vsch/flexmark-java
