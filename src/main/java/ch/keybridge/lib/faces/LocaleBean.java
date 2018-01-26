@@ -88,7 +88,7 @@ public class LocaleBean implements Serializable {
    * FacesContext then the system default locale is used.
    */
   @PostConstruct
-  public void init() {
+  public void postConstruct() {
     locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
     /**
      * Null check.
