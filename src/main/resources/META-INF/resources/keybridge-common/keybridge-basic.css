@@ -38,6 +38,9 @@ i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-
   padding: 1.25rem;
 }
 
+/*input group renders below dropdown*/
+.input-group {z-index: 0;}
+
 /*resurrect secondary button style as btn-default*/
 .btn-default {
   color: #292b2c;
