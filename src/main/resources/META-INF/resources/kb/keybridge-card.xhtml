@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+  <!--standard key bridge card-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="header" required="false" type="java.lang.String" default="Key Bridge" displayName="The header"/>
+    <cc:attribute name="subHeader" required="false" type="java.lang.String" default="Spectrum. Simple." displayName="The sub header"/>
+    <cc:attribute name="organizationName" required="false" type="java.lang.String" default="Key Bridge Wireless" displayName="The oraganization name"/>
+    <cc:attribute name="locationName" required="false" type="java.lang.String" default="McLean, VA" displayName="The oraganization location. e.g. [City], [State]"/>
+    <cc:attribute name="emailAddress" required="false" type="java.lang.String" default="info@keybridgewireless.com" displayName="The contact email address"/>
+    <cc:attribute name="url" required="false" type="java.lang.String" default="http://keybridgewireless.com" displayName="The organization url"/>
+    <cc:attribute name="image" required="false" type="java.lang.String" displayName="The fully qualified image URL."/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.id}" class="vcard-container #{cc.attrs.styleClass}">
+      <figure>
+        <ui:fragment rendered="#{cc.attrs.image ne null}">
+          <img src="#{cc.attrs.image}" class="img-fluid"/>
+        </ui:fragment>
+        <ui:fragment rendered="#{cc.attrs.image eq null}">
+          <h:graphicImage url="#{link.images}/logo/kb256.png" styleClass="img-fluid"/>
+        </ui:fragment>
+      </figure>
+
+      <h:outputText value="#{cc.attrs.header}" styleClass="d-block h1"/>
+      <h:outputText value="#{cc.attrs.subHeader}" styleClass="d-block"/>
+      <hr/>
+      <span class="d-block"><i class="mr-2 fa fa-fw fa-id-card"/> #{cc.attrs.organizationName} </span>
+      <span class="d-block"><i class="mr-2 fa fa-fw fa-map-marker"/> #{cc.attrs.locationName} </span>
+      <span class="d-block"><i class="mr-2 fa fa-fw fa-envelope-o"/> <h:outputLink value="mailto://#{cc.attrs.emailAddress}"> #{cc.attrs.emailAddress}</h:outputLink> </span>
+      <span class="d-block"><i class="mr-2 fa fa-fw fa-link"/> <h:outputLink value="#{cc.attrs.url}" rel="nofollow me"> #{cc.attrs.url}</h:outputLink> </span>
+
+    </div>
+
+  </cc:implementation>
+</html>
