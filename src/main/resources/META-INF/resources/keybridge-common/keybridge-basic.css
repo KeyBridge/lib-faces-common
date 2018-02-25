@@ -113,13 +113,15 @@ a:hover{text-decoration: none !important;}
 label { font-weight: bold; }
 
 /*more background colors*/
+.bg-black{ background-color: #000; }
 .bg-inherit { background-color: inherit !important}
 .bg-blue {  background-color:#0366d6 !important}
 /*blue light and orange light are complements*/
 .bg-blue-light {  background-color:#0366d6 !important}
 .bg-orange-light {  background-color:#d67303 !important}
 
-.bg-gray-light {  background-color:#91c4fc !important}
+.bg-steel-light {background-color: #d6dee6 !important}
+.bg-gray-light {  background-color:#fafbfc !important}
 .bg-gray {  background-color:#586069 !important}
 .bg-gray-dark {  background-color:#24292e !important}
 .bg-orange {  background-color:#a04100 !important}
