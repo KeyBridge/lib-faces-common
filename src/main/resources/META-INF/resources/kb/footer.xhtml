@@ -22,11 +22,13 @@
         white-space: nowrap;
       }
     </style>
-    <div id="footer" class="footer mx-2">
-      <h:outputText rendered="#{cc.attrs.version != null}" value="v#{cc.attrs.version}" class="text-smaller text-muted pull-right"/>
-      &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
-      <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
-      <br class="hidden-md-up"/> <h:outputText styleClass="text-smaller text-muted" value="#{cc.resourceBundleMap.all_rights_reserved}"/>
+    <div id="footer" class="footer mx-2 d-flex justify-content-between">
+      <span>
+        &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
+        <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
+        <br class="hidden-md-up"/> <h:outputText styleClass="text-smaller text-muted" value="#{cc.resourceBundleMap.all_rights_reserved}"/>
+      </span>
+      <h:outputText rendered="#{cc.attrs.version != null}" value="v#{cc.attrs.version}" class="text-smaller text-muted"/>
     </div>
   </cc:implementation>
 
