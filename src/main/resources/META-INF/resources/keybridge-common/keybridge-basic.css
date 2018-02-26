@@ -115,9 +115,10 @@ label { font-weight: bold; }
 /*more background colors*/
 .bg-black{ background-color: #000; }
 .bg-inherit { background-color: inherit !important}
+/*bg-blue is cyan*/
 .bg-blue {  background-color:#0366d6 !important}
 /*blue light and orange light are complements*/
-.bg-blue-light {  background-color:#0366d6 !important}
+.bg-blue-light {  background-color:#64acfc !important}
 .bg-orange-light {  background-color:#d67303 !important}
 
 .bg-steel-light {background-color: #d6dee6 !important}
