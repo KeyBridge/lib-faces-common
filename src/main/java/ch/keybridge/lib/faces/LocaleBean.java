@@ -16,7 +16,7 @@ package ch.keybridge.lib.faces;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -64,7 +64,7 @@ import javax.inject.Named;
  * @since v3.0.0 moved 01/15/18 to faces-common
  */
 @Named(value = "localeBean")
-@SessionScoped
+@RequestScoped
 public class LocaleBean implements Serializable {
 
   /**
