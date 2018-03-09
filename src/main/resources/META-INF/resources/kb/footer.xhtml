@@ -28,7 +28,7 @@
         <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
         <br class="hidden-md-up"/> <h:outputText styleClass="text-smaller text-muted" value="#{cc.resourceBundleMap.all_rights_reserved}"/>
       </span>
-      <h:outputText rendered="#{cc.attrs.version != null}" value="v#{cc.attrs.version}" class="text-smaller text-muted"/>
+      <h:outputText rendered="#{cc.attrs.version != null}" value="#{cc.attrs.version}" class="text-smaller text-muted"/>
     </div>
   </cc:implementation>
 
