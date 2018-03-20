@@ -6,6 +6,7 @@
  *            resurrect secondary button style as btn-default
  *            extend border patrol
  * 11/04/17 - add text-code
+ * 03/20/18 - consolidate pixel pushes from various sources into this
  */
 html {
   position: relative;
@@ -20,16 +21,11 @@ body {  word-wrap: break-word;}
 .body-xl {min-width: 1200px; }
 .body-xga {  min-width: 1020px; }
 
-/*a darker background than bs-4 standard*/
-.bg-inverse {   background-color: #222222!important;  }
-a.bg-inverse:focus, a.bg-inverse:hover {  background-color: #1d2124 !important;}        /*nanobar*/
-/*a light gray*/
-.bg-faded {  background-color: #f7f7f7 !important; }
-/*mustard*/
-.bg-pending {  background-color: #dbab09 !important}
-
 /*icons*/
 i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
+
+/*remove abbr right padding*/
+abbr { margin-right: 0px !important; }
 
 /*preserve card-bloc from bs-4 alpha; same as card-body*/
 .card-block {
@@ -67,6 +63,13 @@ i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-
   background-image: none;
   border-color: #adadad;
 }
+
+/*add darker blue buttons*/
+.btn-blue{ background-color: #005f9b; border-color: #005f9b; color: #fff;}
+.btn-blue:hover{ background-color: #1a6da2; border-color: #1a6da2; color: #fff;}
+
+.btn-blue-dark{ background-color: #003f66; border-color: #003f66; color: #fff;}
+.btn-blue-dark:hover{ background-color: #0063a2; border-color: #0063a2; color: #fff;}
 
 /*fix JSF radio selectOneRadio and selectManyCheckbox*/
 [type="radio"] {margin-right: 0.5rem !important;}
@@ -130,6 +133,16 @@ label { font-weight: bold; }
 .bg-purple {  background-color:#6f42c1 !important}
 .bg-white {  background-color:#fff !important}
 .bg-pending {  background-color:#b08800 !important}
+/*bg-midnight = rgb(19,35,82)*/
+.bg-midnight{ background-color: #132352 !important; }
+.bg-blue{ background-color: #005f9b; }
+/*a darker background than bs-4 standard*/
+.bg-inverse {   background-color: #1b1c1d!important;  }
+/*a.bg-inverse:focus, a.bg-inverse:hover {  background-color: #1d2124 !important;}        nanobar*/
+/*a light gray*/
+.bg-faded {  background-color: #f7f7f7 !important; }
+/*mustard*/
+.bg-pending {  background-color: #dbab09 !important}
 
 /*text decorations*/
 .text-italic {font-style: italic !important; }
@@ -165,7 +178,9 @@ label { font-weight: bold; }
 
 /*text colors*/
 .text-inherit {  color:inherit !important}
-.text-blue {  color:#0366d6 !important}
+/*.text-blue {  color:#0366d6 !important}*/
+.text-blue{ color: #005f9b !important; }
+.text-blue-dark{ color: #003f66 !important; }
 .text-red {  color:#cb2431 !important}
 .text-gray-light {  color:#6a737d !important}
 .text-gray {  color:#586069 !important}
@@ -236,6 +251,20 @@ label { font-weight: bold; }
   background-color: #005cb7;
   /*  background-color: #d45c08; orange*/
 }
+
+/*trim padding and add inverse breadcrumb*/
+.breadcrumb {
+  border-radius: 0 !important;
+  padding: 0.5rem 2rem;
+}
+.breadcrumb-dark {
+  color: rgba(255,255,255,0.75);
+  background-color: #1b1c1d;
+}
+.breadcrumb-dark a { color: white; }
+.breadcrumb-dark a:hover { color: #999; }
+
+
 
 /*!
  * GitHub light syntax theme v0.5.0
