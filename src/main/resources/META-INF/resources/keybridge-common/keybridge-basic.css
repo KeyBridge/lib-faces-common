@@ -139,9 +139,11 @@ label { font-weight: bold; }
 .text-indent { padding: 0 2em 0 2em !important; }
 .text-small {font-size: small !important;}
 .text-smaller {font-size: smaller !important;}
+.text-large {font-size: large !important;}
+.text-larger {font-size: larger !important;}
+.text-bold {  font-weight:600 !important}
 .text-bolder {font-weight: bolder !important; }
 .text-normal { font-weight:normal !important}
-.text-bold {  font-weight:600 !important}
 .text-italic {  font-style:italic !important}
 .text-uppercase {  text-transform:uppercase !important}
 .text-lowercase {  text-transform:lowercase !important}
