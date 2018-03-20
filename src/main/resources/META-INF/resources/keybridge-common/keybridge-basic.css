@@ -257,15 +257,11 @@ label { font-weight: bold; }
 /*trim padding and add inverse breadcrumb*/
 .breadcrumb {
   border-radius: 0 !important;
+  background-color: transparent !important;
   padding: 0.5rem 2rem;
 }
-.breadcrumb-dark {
-  color: rgba(255,255,255,0.75);
-  background-color: #1b1c1d;
-}
-.breadcrumb-dark a { color: white; }
-.breadcrumb-dark a:hover { color: #999; }
-
+.breadcrumb-inverse a { color: white !important; }
+.breadcrumb-inverse a:hover { color: #999 !important; }
 
 
 /*!
