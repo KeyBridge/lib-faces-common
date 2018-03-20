@@ -8,6 +8,7 @@
   <cc:interface>
     <cc:attribute name="version" required="false" type="java.lang.String" displayName="The application version number"/>
     <cc:attribute name="border" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the top border"/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
 
   <!--only render if signed in-->
@@ -22,7 +23,7 @@
         white-space: nowrap;
       }
     </style>
-    <div id="footer" class="footer mx-2 d-flex justify-content-between">
+    <div id="footer" class="footer mx-2 d-flex justify-content-between #{cc.attrs.styleClass}">
       <span>
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
         <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
