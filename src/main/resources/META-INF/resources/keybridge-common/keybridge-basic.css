@@ -133,11 +133,9 @@ label { font-weight: bold; }
 .bg-purple {  background-color:#6f42c1 !important}
 .bg-white {  background-color:#fff !important}
 .bg-pending {  background-color:#b08800 !important}
-/*bg-midnight = rgb(19,35,82)*/
-.bg-midnight{ background-color: #132352 !important; }
 .bg-blue{ background-color: #005f9b; }
-/*a darker background than bs-4 standard*/
-.bg-inverse {   background-color: #1b1c1d!important;  }
+/*a darker background than bs-4 standard bg.dark*/
+.bg-midnight {   background-color: #1b1c1d!important;  }
 /*a.bg-inverse:focus, a.bg-inverse:hover {  background-color: #1d2124 !important;}        nanobar*/
 /*a light gray*/
 .bg-faded {  background-color: #f7f7f7 !important; }
@@ -195,13 +193,17 @@ label { font-weight: bold; }
 .text-shadow-light { text-shadow: 1px 1px 2px #fff; }
 .text-shadow-dark { text-shadow: 1px 1px 2px #000; }
 
-.link-gray {  color:#586069 !important}
-.link-gray:hover {  color:#0366d6 !important}
-.link-gray-dark {  color:#24292e !important}
-.link-gray-dark:hover {  color:#0366d6 !important}
-.link-hover-blue:hover {  color:#0366d6 !important}
-.link-muted {  color:#586069 !important}
-.link-muted:hover {  color:#0366d6 !important;  text-decoration:none}
+.link-white { color:#fff !important}
+.link-white:hover { color:#cfcfcf !important}
+.link-light{ color: #868686 !important; }
+.link-light:hover { color: #5c5c5c !important; }
+.link-gray { color:#586069 !important; }
+.link-gray:hover { color:#0366d6 !important;}
+.link-gray-dark { color:#24292e !important;}
+.link-gray-dark:hover { color:#0366d6 !important;}
+.link-hover-blue:hover { color:#0366d6 !important;}
+.link-muted { color:#586069 !important;}
+.link-muted:hover { color:#0366d6 !important; text-decoration:none;}
 
 .text-code, .code {
   font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
