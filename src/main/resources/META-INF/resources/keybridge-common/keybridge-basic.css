@@ -202,6 +202,10 @@ label { font-weight: bold; }
 .link-gray-dark { color:#24292e !important;}
 .link-gray-dark:hover { color:#0366d6 !important;}
 .link-hover-blue:hover { color:#0366d6 !important;}
+
+.link-black { color:#000 !important}
+.link-black:hover { color:#586069 !important}
+
 .link-muted { color:#586069 !important;}
 .link-muted:hover { color:#0366d6 !important; text-decoration:none;}
 
