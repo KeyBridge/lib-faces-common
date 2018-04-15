@@ -66,6 +66,8 @@ public class PrettyZonedDateTimeConverter implements Converter {
     }
     if (modelValue instanceof ZonedDateTime) {
       return new PrettyTime(getLocale(context, component)).format(toDate((ZonedDateTime) modelValue));
+    } else if (modelValue instanceof String) {
+      return new PrettyTime(getLocale(context, component)).format(toDate((String) modelValue));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid ZonedDateTime"));
     }
@@ -154,5 +156,17 @@ public class PrettyZonedDateTimeConverter implements Converter {
   public static Date toDate(ZonedDateTime temporal) {
     Instant instant = temporal.toInstant();
     return Date.from(instant);
+  }
+
+  /**
+   * Convert a String representation of a java.time.ZonedDateTime instance to a
+   * java.util.Date.
+   *
+   * @param temporal the java.lang.String instance
+   * @return the java.util intance
+   */
+  public static Date toDate(String temporal) {
+    ZonedDateTime zdt = ZonedDateTime.parse(temporal);
+    return toDate(zdt);
   }
 }
