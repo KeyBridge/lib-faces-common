@@ -7,6 +7,7 @@
  *            extend border patrol
  * 11/04/17 - add text-code
  * 03/20/18 - consolidate pixel pushes from various sources into this
+ * 05/04/18 - add simple tables
  */
 html {
   position: relative;
@@ -26,6 +27,10 @@ i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-
 
 /*remove abbr right padding*/
 abbr { margin-right: 0px !important; }
+
+/*simple tables*/
+.table-no-border td, .table-no-border th { border: none !important; }
+.table-no-padding td, .table-no-padding th { padding: 0 !important; }
 
 /*preserve card-bloc from bs-4 alpha; same as card-body*/
 .card-block {
