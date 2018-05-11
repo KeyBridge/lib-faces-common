@@ -26,20 +26,18 @@ import javax.inject.Named;
  * throughout the browsing session untill the user specifically changes the
  * locale.
  * <p>
- * To set the current locale of the views, bind it to the <f:view> of your
+ * To set the current locale of the views, bind it to the &lt;f:view&gt; of your
  * master template.
  * <p>
- * <f:view locale="#{localeManager.locale}">
+ * &lt;f:view locale="#{localeManager.locale}"&gt;
  * <p>
- * To change it, bind it to a <h:selectOneMenu> with language options.
+ * To change it, bind it to a &lt;h:selectOneMenu&gt; with language options.
  * <p>
- * <h:form>
- * <h:selectOneMenu value="#{localeManager.language}" onchange="submit()">
- * <f:selectItem itemValue="en" itemLabel="English" />
- * <f:selectItem itemValue="nl" itemLabel="Nederlands" />
- * <f:selectItem itemValue="es" itemLabel="Español" />
- * </h:selectOneMenu>
- * </h:form>
+ * &lt;h:form&gt; &lt;h:selectOneMenu value="#{localeManager.language}"
+ * onchange="submit()"&gt; &lt;f:selectItem itemValue="en" itemLabel="English"
+ * /&gt; &lt;f:selectItem itemValue="nl" itemLabel="Nederlands" /&gt;
+ * &lt;f:selectItem itemValue="es" itemLabel="Español" /&gt;
+ * &lt;/h:selectOneMenu&gt; &lt;/h:form&gt;
  * <p>
  * To improve SEO of your internationalized pages (otherwise it would be marked
  * as duplicate content), bind language to html as well.
