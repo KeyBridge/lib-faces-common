@@ -17,6 +17,8 @@
     <cc:attribute name="url" required="false" type="java.lang.String" default="http://keybridgewireless.com" displayName="The organization url"/>
     <cc:attribute name="image" required="false" type="java.lang.String" displayName="The fully qualified image URL."/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+    <cc:attribute name="renderIcons" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the list icons."/>
+
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
@@ -34,10 +36,10 @@
       <h:outputText value="#{cc.attrs.header}" styleClass="d-block h1"/>
       <h:outputText value="#{cc.attrs.subHeader}" styleClass="d-block"/>
       <hr/>
-      <span class="d-block"><i class="mr-2 fa fa-fw fa-id-card"/> #{cc.attrs.organizationName} </span>
-      <span class="d-block"><i class="mr-2 fa fa-fw fa-map-marker"/> #{cc.attrs.locationName} </span>
-      <span class="d-block"><i class="mr-2 fa fa-fw fa-envelope-o"/> <h:outputLink value="mailto://#{cc.attrs.emailAddress}"> #{cc.attrs.emailAddress}</h:outputLink> </span>
-      <span class="d-block"><i class="mr-2 fa fa-fw fa-link"/> <h:outputLink value="#{cc.attrs.url}" rel="nofollow me"> #{cc.attrs.url}</h:outputLink> </span>
+      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-id-card" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.organizationName} </span>
+      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-map-marker" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.locationName} </span>
+      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-envelope" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="mailto://#{cc.attrs.emailAddress}"> #{cc.attrs.emailAddress}</h:outputLink> </span>
+      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-link" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="#{cc.attrs.url}" rel="nofollow me"> #{cc.attrs.url}</h:outputLink> </span>
 
     </div>
 
