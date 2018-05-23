@@ -571,6 +571,18 @@ button.ui-datepicker-close{
 .ui-slider-handle:before { content: "\f0de"; }
 .ui-slider-handle:hover{ cursor:pointer; }
 
+/*Input Slider without font awesome.*/
+/*.ui-slider-handle{
+  background-color: #2399e5;
+  border-radius: 10px;
+}
+.ui-slider-handle::before {
+  content: "^";
+  color: #fff;
+  margin-left: 5px;
+  font-weight: bold;
+}*/
+
 /*.ui-wizard-nav-next .ui-icon , .ui-wizard-nav-back .ui-icon  {  margin-top: -6px !important;}*/
 /*show the icons*/
 /*.ui-icon {  text-indent: 0px !important;}*/
