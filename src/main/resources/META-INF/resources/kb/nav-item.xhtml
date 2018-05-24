@@ -32,7 +32,7 @@
         <f:passThroughAttribute name="data-placement" value="right"/>
         <f:passThroughAttribute name="data-container" value="body"/>
         <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
-        <h:graphicImage library="#{cc.attrs.library}" name="#{cc.attrs.image}" styleClass="rounded-circle" rendered="#{cc.attrs.image ne null}"/>
+        <h:graphicImage library="#{cc.attrs.library}" name="#{cc.attrs.image}" styleClass="rounded-circle" rendered="#{cc.attrs.image ne null}" styleClass="img-fluid mr-2" style="width:18px;"/>
         <h:outputText value="#{cc.attrs.value}"/>
         <h:outputText value="#{cc.attrs.badge}" rendered="#{cc.attrs.badge ne null and cc.attrs.badge gt 0}" styleClass="ml-1 badge badge-pill badge-light text-dark"/>
       </h:link>
