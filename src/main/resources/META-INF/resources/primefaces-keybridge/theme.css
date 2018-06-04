@@ -555,20 +555,24 @@ button.ui-datepicker-close{
   top: 0 !important;
   margin-left: -.25rem !important;
 }
+.ui-slider{ border: none !important; }
 .ui-slider .ui-slider-handle {
   width: inherit !important;
   height: inherit !important;
 }
 .ui-slider-handle {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: 14px;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
 }
-.ui-slider-handle:before { content: "\f0de"; }
+/*chevron-circle-up*/
+.ui-slider-handle:before { content: "\f139"; }
 .ui-slider-handle:hover{ cursor:pointer; }
 
 /*Input Slider without font awesome.*/
