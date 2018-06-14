@@ -454,6 +454,20 @@ public class FacesUtil {
   }
 
   /**
+   * Shortcut to get the HTTP referer.
+   * <p>
+   * The HTTP referer (originally a misspelling of referrer) is an HTTP header
+   * field that identifies the address of the webpage (i.e. the URI or IRI) that
+   * linked to the resource being requested. By checking the referrer, the new
+   * webpage can see where the request originated
+   *
+   * @return the HTTP referer
+   */
+  public static String getReferer() {
+    return getRequestHeader("referer");
+  }
+
+  /**
    * Debugging and inspection utility to print all HTTP request headers to the
    * console.
    */

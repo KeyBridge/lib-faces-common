@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -40,6 +40,7 @@
     v3.0.0 - add 'kb' widgets, file content and locale beans; upgrade markdown lib
     v3.1.0 - using markdown 2.x processor
     v3.1.1 - support string representations in pretty date time converters
+    v3.1.2 - add getReferer shortcut
 
   </description>
 
