@@ -400,6 +400,22 @@ public class FacesUtil {
   }
 
   /**
+   *
+   * Returns the HTTP request parameter values map. This is a key / value map
+   * encoded as <code>&lt;String, String&gt;</code>.
+   * <p>
+   * Developer note: getRequestParameterMap() returns an immutable Map whose
+   * keys are the set of request parameters names included in the current
+   * request, and whose values (of type String) are the first (or only) value
+   * for each parameter name returned by the underlying request.
+   *
+   * @return The HTTP request parameter values map.
+   */
+  public static Map<String, String> getRequestParameterMap() {
+    return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+  }
+
+  /**
    * Get an HTTP request parameter value based upon its index (or key). Query
    * the FacesContext request parameters included in the current request.
    * <p>
@@ -415,21 +431,25 @@ public class FacesUtil {
      * Developer note: getRequestParameterMap() returns an immutable Map whose
      * keys are the set of request parameters names included in the current
      * request, and whose values (of type String) are the first (or only) value
-     * for each parameter name returned by the underlying request. T
+     * for each parameter name returned by the underlying request.
      */
-    return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(queryKey);
+    return getRequestParameterMap().get(queryKey);
   }
 
   /**
    * Debugging and inspection utility to print all HTTP request parameters to
    * the console.
+   *
+   * @return the request parameters in a pretty print column format
    */
-  public static void dumpRequestParameters() {
-    System.out.println("--------- RequestParameters ----------------------------");
+  public static String dumpRequestParameters() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("--------- RequestParameters ----------------------------\n");
     for (Map.Entry<String, String> entry : FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().entrySet()) {
-      System.out.println(String.format("%50s : %s", entry.getKey(), entry.getValue()));
+      sb.append(entry.getKey()).append(" : ").append(entry.getValue()).append("\n");
     }
-    System.out.println("--------- RequestParameters ----------------------------");
+    sb.append("--------- RequestParameters ----------------------------\n");
+    return sb.toString();
   }
 
   /**
@@ -470,13 +490,17 @@ public class FacesUtil {
   /**
    * Debugging and inspection utility to print all HTTP request headers to the
    * console.
+   *
+   * @return the request headers in a pretty print column format
    */
-  public static void dumpRequestHeaders() {
-    System.out.println("--------- RequestHeaders -------------------------------");
+  public static String dumpRequestHeaders() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("--------- RequestHeaders -------------------------------\n");
     for (Map.Entry<String, String> entry : FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().entrySet()) {
-      System.out.println(String.format("%50s : %s", entry.getKey(), entry.getValue()));
+      sb.append(entry.getKey()).append(" : ").append(entry.getValue()).append("\n");
     }
-    System.out.println("--------- RequestHeaders -------------------------------");
+    sb.append("--------- RequestHeaders -------------------------------\n");
+    return sb.toString();
   }
 
   /**
