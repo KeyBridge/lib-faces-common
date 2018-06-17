@@ -7,7 +7,8 @@
  *            extend border patrol
  * 11/04/17 - add text-code
  * 03/20/18 - consolidate pixel pushes from various sources into this
- * 05/04/18 - add simple tables
+ * v1.0.0 - 05/04/18 - add simple tables
+ * v1.0.1 - 06/17/18 - add underline to h1, h2, h3 headers
  */
 html {
   position: relative;
@@ -24,6 +25,12 @@ body {  word-wrap: break-word;}
 
 /*icons*/
 i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
+
+/*headers since v1.0.1*/
+h1, h2, h3 {
+  border-bottom: 1px solid rgba(0,0,0,.2) !important;
+  margin-bottom: 0.75em;
+}
 
 /*remove abbr right padding*/
 abbr { margin-right: 0px !important; }
