@@ -484,7 +484,12 @@ public class FacesUtil {
    * @return the HTTP referer
    */
   public static String getReferer() {
-    return getRequestHeader("referer");
+    /**
+     * Sometimes the "referer" header is capitalized.
+     */
+    return getRequestHeader("referer") != null
+           ? getRequestHeader("referer")
+           : getRequestHeader("Referer");
   }
 
   /**
