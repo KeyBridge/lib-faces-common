@@ -100,8 +100,7 @@ public class LocalDateTimeConverter implements Converter {
     DateTimeFormatter formatter = pattern == null
                                   ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component))
                                   : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
-    ZoneId zone = getZoneId(component);
-    return (zone != null) ? formatter.withZone(zone) : formatter;
+    return formatter.withZone(getZoneId(component));
   }
 
   /**
@@ -114,7 +113,7 @@ public class LocalDateTimeConverter implements Converter {
    * @return the output pattern.
    */
   private String getPattern(UIComponent component) {
-    return (String) component.getAttributes().get("pattern");
+    return component != null ? (String) component.getAttributes().get("pattern") : null;
   }
 
   /**
@@ -125,10 +124,14 @@ public class LocalDateTimeConverter implements Converter {
    * @return the locale, if provided, otherwise the default locale
    */
   private Locale getLocale(FacesContext context, UIComponent component) {
-    Object locale = component.getAttributes().get("locale");
-    return (locale instanceof Locale) ? (Locale) locale
-           : (locale instanceof String) ? new Locale((String) locale)
-             : context.getViewRoot().getLocale();
+    try {
+      Object locale = component.getAttributes().get("locale");
+      return (locale instanceof Locale) ? (Locale) locale
+             : (locale instanceof String) ? new Locale((String) locale)
+               : context.getViewRoot().getLocale();
+    } catch (Exception e) {
+      return Locale.getDefault();
+    }
   }
 
   /**
@@ -138,7 +141,7 @@ public class LocalDateTimeConverter implements Converter {
    * @return the time zone
    */
   private ZoneId getZoneId(UIComponent component) {
-    Object timeZone = component.getAttributes().get("timeZone");
+    Object timeZone = component != null ? component.getAttributes().get("timeZone") : "UTC";
     return (timeZone instanceof TimeZone) ? ((TimeZone) timeZone).toZoneId()
            : (timeZone instanceof String) ? ZoneId.of((String) timeZone)
              : null;

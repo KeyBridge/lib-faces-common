@@ -19,8 +19,6 @@
 package ch.keybridge.lib.faces.converter;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
@@ -75,42 +73,7 @@ public class PrettyZonedDateTimeConverter implements Converter {
 
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-    if (submittedValue == null || submittedValue.isEmpty()) {
-      return null;
-    }
-    try {
-      return ZonedDateTime.parse(submittedValue, getFormatter(context, component));
-    } catch (DateTimeParseException e) {
-      throw new ConverterException(new FacesMessage(submittedValue + " is not a valid zoned date time"), e);
-    }
-  }
-
-  /**
-   * Build a date time formatter.
-   *
-   * @param context   the context
-   * @param component the parent component
-   * @return a Formatter instnace
-   */
-  private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
-    return DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
-  }
-
-  /**
-   * Extract the converter output pattern provided as a component attribute.
-   * <p>
-   * Example:
-   * {@code &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z"/&gt;}
-   *
-   * @param component the UI component
-   * @return the output pattern.
-   */
-  private String getPattern(UIComponent component) {
-    String pattern = (String) component.getAttributes().get("pattern");
-    if (pattern == null) {
-      throw new IllegalArgumentException("Pattern attribute is required");
-    }
-    return pattern;
+    return null;
   }
 
   /**
@@ -121,10 +84,14 @@ public class PrettyZonedDateTimeConverter implements Converter {
    * @return the locale, if provided, otherwise the default locale
    */
   private Locale getLocale(FacesContext context, UIComponent component) {
-    Object locale = component.getAttributes().get("locale");
-    return (locale instanceof Locale) ? (Locale) locale
-           : (locale instanceof String) ? new Locale((String) locale)
-             : context.getViewRoot().getLocale();
+    try {
+      Object locale = component.getAttributes().get("locale");
+      return (locale instanceof Locale) ? (Locale) locale
+             : (locale instanceof String) ? new Locale((String) locale)
+               : context.getViewRoot().getLocale();
+    } catch (Exception e) {
+      return Locale.getDefault();
+    }
   }
 
   /**

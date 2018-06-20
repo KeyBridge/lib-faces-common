@@ -76,10 +76,14 @@ public class LocalDateConverter implements Converter {
    * @return the locale, if provided, otherwise the default locale
    */
   private Locale getLocale(FacesContext context, UIComponent component) {
-    Object locale = component.getAttributes().get("locale");
-    return (locale instanceof Locale) ? (Locale) locale
-           : (locale instanceof String) ? new Locale((String) locale)
-             : context.getViewRoot().getLocale();
+    try {
+      Object locale = component.getAttributes().get("locale");
+      return (locale instanceof Locale) ? (Locale) locale
+             : (locale instanceof String) ? new Locale((String) locale)
+               : context.getViewRoot().getLocale();
+    } catch (Exception e) {
+      return Locale.getDefault();
+    }
   }
 
 }

@@ -23,7 +23,7 @@ import javax.faces.convert.Converter;
  * @author Key Bridge LLC
  * @since v2.4.1 added 01/31/17
  */
-public abstract class AConverter implements Converter {
+public abstract class AbstractCDIConverter implements Converter {
 
   /**
    * Access to the current container {@code Context &amp; Dependency Injection}
