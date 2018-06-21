@@ -15,7 +15,7 @@
     <cc:attribute name="locationName" required="false" type="java.lang.String" default="McLean, VA" displayName="The oraganization location. e.g. [City], [State]"/>
     <cc:attribute name="emailAddress" required="false" type="java.lang.String" default="info@keybridgewireless.com" displayName="The contact email address"/>
     <cc:attribute name="url" required="false" type="java.lang.String" default="http://keybridgewireless.com" displayName="The organization url"/>
-    <cc:attribute name="image" required="false" type="java.lang.String" displayName="The fully qualified image URL."/>
+    <cc:attribute name="image" required="false" type="java.lang.String" default="https://s3.amazonaws.com/keybridge-cdn/assets/kb/media/1.0.0/kb-256.png" displayName="The fully qualified image URL to kb-256.png."/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
     <cc:attribute name="renderIcons" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the list icons."/>
 
@@ -25,12 +25,7 @@
   <cc:implementation>
     <div id="#{cc.id}" class="vcard-container #{cc.attrs.styleClass}">
       <figure>
-        <ui:fragment rendered="#{cc.attrs.image ne null}">
-          <img src="#{cc.attrs.image}" class="img-fluid"/>
-        </ui:fragment>
-        <ui:fragment rendered="#{cc.attrs.image eq null}">
-          <h:graphicImage url="#{link.images}/logo/kb256.png" styleClass="img-fluid"/>
-        </ui:fragment>
+        <img src="#{cc.attrs.image}" class="img-fluid"/>
       </figure>
 
       <h:outputText value="#{cc.attrs.header}" styleClass="d-block h1"/>

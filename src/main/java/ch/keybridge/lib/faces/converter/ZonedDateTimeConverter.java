@@ -18,11 +18,13 @@
  */
 package ch.keybridge.lib.faces.converter;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.TimeZone;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -93,8 +95,8 @@ public class ZonedDateTimeConverter implements Converter {
   private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
     String pattern = getPattern(component);
     return pattern == null
-           ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component))
-           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component));
+           ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component)).withZone(getZoneId(component))
+           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component)).withZone(getZoneId(component));
   }
 
   /**
@@ -126,6 +128,19 @@ public class ZonedDateTimeConverter implements Converter {
     } catch (Exception e) {
       return Locale.getDefault();
     }
+  }
+
+  /**
+   * Extract the time zone id provided as a component attribute
+   *
+   * @param component the component
+   * @return the time zone
+   */
+  private ZoneId getZoneId(UIComponent component) {
+    Object timeZone = component != null ? component.getAttributes().get("timeZone") : "UTC";
+    return (timeZone instanceof TimeZone) ? ((TimeZone) timeZone).toZoneId()
+           : (timeZone instanceof String) ? ZoneId.of((String) timeZone)
+             : null;
   }
 
 }
