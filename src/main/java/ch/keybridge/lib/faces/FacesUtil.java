@@ -625,6 +625,21 @@ public class FacesUtil {
   }
 
   /**
+   * Return the portion of the request URI that identifies the web application
+   * context for this request. Servlet: This is the value returned by the
+   * javax.servlet.http.HttpServletRequest method getContextPath().
+   * <p>
+   * For example, the application "gis" URL
+   * "<strong>http://127.0.01:8080/gis</strong>/documentation/boundary.xhtml"
+   * will return "/gis".
+   *
+   * @return the current application context root
+   */
+  public static String getContextRoot() {
+    return FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+  }
+
+  /**
    * Returns true if the user is signed in.
    *
    * @return TRUE if the current user is signed in
@@ -742,6 +757,23 @@ public class FacesUtil {
   }
 
   /**
+   * Build a simple HTTP cookie using the default configuration.
+   * <p>
+   * This returns a cookie with: any http connection, no domain, no path, no
+   * comment. The cookie is set to expire when the browser is closed.
+   *
+   * @param name  the name of the cookie per RFC 2109
+   * @param value the value of the cookie
+   * @return an HTTP version 1 cookie.
+   */
+  public static Cookie buildCookie(String name, String value) {
+    /**
+     * The cookie max age is about one day.
+     */
+    return buildCookie(name, value, -1, false, null, null, null);
+  }
+
+  /**
    * Build a HTTP new Cookie configuration.
    * <p>
    * The name must conform to RFC 2109. However, vendors may provide a
@@ -766,16 +798,27 @@ public class FacesUtil {
    *
    * @param name    the name of the cookie per RFC 2109
    * @param value   the value of the cookie
-   * @param maxAge  the maximum age in seconds for this Cookie. Default is
-   *                Integer.MAX_VALUE =~ 30 days.
+   * @param maxAge  the maximum age in seconds for this Cookie. A negative value
+   *                means that the cookie is not stored persistently and will be
+   *                deleted when the Web browser exits.
+   * @param secure  Indicates to the browser whether the cookie should only be
+   *                sent using a secure protocol, such as HTTPS or SSL. The
+   *                default value is false.
    * @param domain  the domain name within which this cookie is visible; form is
-   *                according to RFC 2109
+   *                according to RFC 2109. May be a domain (e.g. ".example.com"
+   *                or a host (e.g. "www.example.com"). (default null) Do not
+   *                set when testing. For production, specify the entire domain
+   *                within which this cookie should be presented. e.g.
+   *                ".keybridgewireless.com"
+   * @param path    the application path (i.e. context root) under which the
+   *                client should return the cookie. (default is all
+   *                applications: "/")
    * @param comment Specifies a comment that describes a cookie's purpose. The
    *                comment is useful if the browser presents the cookie to the
    *                user.
    * @return an HTTP version 1 cookie.
    */
-  public static Cookie buildCookie(String name, String value, Integer maxAge, String domain, String comment) {
+  public static Cookie buildCookie(String name, String value, int maxAge, boolean secure, String domain, String path, String comment) {
     /**
      * Developer note: This method cannot be included in the Session entity
      * object as the HTTP Cookie class is not compatible with JAXB marshalling /
@@ -787,12 +830,12 @@ public class FacesUtil {
      * code, and may therefore help mitigate certain kinds of cross-site
      * scripting attacks
      */
-    cookie.setHttpOnly(true);
+    cookie.setHttpOnly(secure);
     /**
      * Indicates to the browser whether the cookie should only be sent using a
      * secure protocol, such as HTTPS or SSL. The default value is false.
      */
-    cookie.setSecure(true);
+    cookie.setSecure(secure);
     /**
      * Do not set a null cookie domain value; throws NPE. Also, do not set when
      * testing. For production, specify the entire domain within which this
@@ -804,14 +847,25 @@ public class FacesUtil {
     if (comment != null) {
       cookie.setComment(comment);
     }
+    /**
+     * Specifies a path for the cookie to which the client should return the
+     * cookie. The cookie is visible to all the pages in the directory you
+     * specify, and all the pages in that directory's subdirectories. If not
+     * specified set the cookie to respond to all applications.
+     */
+    cookie.setPath(path != null ? path : "/");
+    /**
+     * Sets the version of the cookie protocol that this Cookie complies with.
+     * Version 1 complies with RFC 2109.
+     */
     cookie.setVersion(1);
     /**
-     * Set the cookie to respond to all applications.
-     */
-    cookie.setPath("/");
-    /**
-     * Set the max age to ~30 days; (30days) x (24hrs/1day) x (60min/1hrs) x
-     * (60sec/1min) x (1000ms/1sec) = 2,592,000,000 ms =~ Integer.MAX_VALUE.
+     * Sets the maximum age in seconds for this Cookie. A positive value
+     * indicates that the cookie will expire after that many seconds have
+     * passed. Note that the value is the maximum age when the cookie will
+     * expire, not the cookie's current age. A negative value means that the
+     * cookie is not stored persistently and will be deleted when the Web
+     * browser exits. A zero value causes the cookie to be deleted.
      */
     cookie.setMaxAge(maxAge);
     return cookie;

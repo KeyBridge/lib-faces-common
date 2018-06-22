@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.2.0</version>
+  <version>3.3.0</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -42,6 +42,7 @@
     v3.1.1 - support string representations in pretty date time converters
     v3.1.2 - add getReferer shortcut
     v3.2.0 - add locale converter, rename abstract cdi converter; fix NPE in temporal converters
+    v3.3.0 - add more cookie control
 
   </description>
 
