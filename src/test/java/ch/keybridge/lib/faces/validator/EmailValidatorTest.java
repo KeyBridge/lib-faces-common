@@ -13,24 +13,30 @@
  */
 package ch.keybridge.lib.faces.validator;
 
+import javax.faces.validator.ValidatorException;
 import org.junit.Test;
 
 /**
  *
  * @author Key Bridge
  */
-public class EmailAddressValidatorTest {
+public class EmailValidatorTest {
 
-  public EmailAddressValidatorTest() {
+  public EmailValidatorTest() {
   }
 
   @Test
   public void testEmailValidator() {
 
-    EmailAddressValidator validator = new EmailAddressValidator();
+    EmailValidator validator = new EmailValidator();
     for (String email : new String[]{"\"Fred Bloggs\"@example.com", "user@.invalid.com", "Chuck Norris <gmail@chucknorris.com>", "webmaster@müller.de", "matteo@78.47.122.114"}) {
 
-      System.out.println("  " + email + " is valid " + validator.isValidEmailAddress(email));
+      try {
+        validator.validate(null, null, email);
+        System.out.println("  " + email + " is valid ");
+      } catch (ValidatorException validatorException) {
+        System.out.println("  " + email + " is NOT valid ");
+      }
 
     }
 
