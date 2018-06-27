@@ -9,6 +9,7 @@
  * 03/20/18 - consolidate pixel pushes from various sources into this
  * v1.0.0 - 05/04/18 - add simple tables
  * v1.0.1 - 06/17/18 - add underline to h1, h2, h3 headers
+ *        - 06/26/18 - add list group side tabs
  */
 html {
   position: relative;
@@ -257,8 +258,7 @@ label { font-weight: bold; }
   border-bottom-color: #005cb7 !important;
   border-width: 0px 0px 2px !important;
 }
-
-/*list-group nav items*/
+/*nav tabs selected item*/
 .list-nav-item .selected{
   position: absolute;
   top: 0;
@@ -268,6 +268,22 @@ label { font-weight: bold; }
   content: "";
   background-color: #005cb7;
   /*  background-color: #d45c08; orange*/
+}
+/*side tabs list group items*/
+.list-group-item.selected {
+  font-weight: 600;
+  color: #24292e;
+  cursor: default;
+  background-color: #fff;
+}
+.list-group-item.selected::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  content: "";
+  background-color: #005cb7;
 }
 
 /*trim padding and add inverse breadcrumb*/
