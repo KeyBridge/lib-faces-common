@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.3.0</version>
+  <version>3.5.0</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -43,7 +43,8 @@
     v3.1.2 - add getReferer shortcut
     v3.2.0 - add locale converter, rename abstract cdi converter; fix NPE in temporal converters
     v3.3.0 - add more cookie control
-
+    v3.4.0 - change primefaces to version 6.2; remove primfaces-extensions
+    v3.5.0 - rename filecontent and markdown with output prefix
   </description>
 
   <organization>
@@ -62,9 +63,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.primefaces.extensions</groupId>
-      <artifactId>primefaces-extensions</artifactId>
-      <version>6.1.1</version>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>org.ocpsoft.prettytime</groupId>

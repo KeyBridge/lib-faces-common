@@ -26,7 +26,7 @@ import javax.faces.validator.ValidatorException;
  * @see <a href="https://www.ietf.org/rfc/rfc0822.txt">rfc0822</a>
  * @author jesse
  * @since v2.5.0 rewritten 08/08/17 to use REGEX instead of javax.mail
- * @since v2.7.0 rename 12/13/17 to EmailAddressValidator
+ * @since v2.7.0 rename 12/13/17 to emailValidator
  * @since v3.3.0 rename 06/26/18 to EmailValidator
  */
 @FacesValidator("emailValidator")
@@ -50,9 +50,8 @@ public class EmailValidator extends AValidator {
    */
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    if (!RFC822.matcher(String.valueOf(value)).matches()) {
-      throwErrorException("E-mail validation failed.",
-                          value + " does not appear to be a valid email address");
+    if (value != null && !RFC822.matcher(String.valueOf(value)).matches()) {
+      throwErrorException("E-mail validation failed.", value + " does not appear to be a valid email address");
     }
   }
 
@@ -62,14 +61,13 @@ public class EmailValidator extends AValidator {
    * @param emailAddress the email address to validate
    * @return TRUE if the email address conforms with the syntax rules of RFC 822
    */
-  private boolean isValidEmailAddress(String emailAddress) {
-    /**
-     * Ignore null or empty values.
-     */
-    if (emailAddress == null || emailAddress.isEmpty()) {
-      return true;
-    }
-    return RFC822.matcher(emailAddress).matches();
+//  private boolean isValidEmailAddress(String emailAddress) {
+  /**
+   * Ignore null or empty values.
+   */
+//    if (emailAddress == null || emailAddress.isEmpty()) {
+//      return true;
+//    }
 //    try {
 //      InternetAddress internetAddress = new InternetAddress(emailAddress);      internetAddress.validate();      return true;
 //    } catch (AddressException ex) {
@@ -77,5 +75,5 @@ public class EmailValidator extends AValidator {
 //                          emailAddress + " does not appear to be a valid email address");
 //    }
 //    return false;
-  }
+//  }
 }
