@@ -70,6 +70,8 @@ public class LocalDateTimeConverter implements Converter {
 
     if (modelValue instanceof LocalDateTime) {
       return getFormatter(context, component).format(ZonedDateTime.of((LocalDateTime) modelValue, ZoneOffset.UTC));
+    } else if (modelValue instanceof String) {
+      return getFormatter(context, component).format(ZonedDateTime.of(LocalDateTime.parse((CharSequence) modelValue), ZoneOffset.UTC));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid LocalDateTime"));
     }

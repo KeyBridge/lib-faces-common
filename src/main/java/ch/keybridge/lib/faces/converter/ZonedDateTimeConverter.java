@@ -67,6 +67,8 @@ public class ZonedDateTimeConverter implements Converter {
 
     if (modelValue instanceof ZonedDateTime) {
       return getFormatter(context, component).format((ZonedDateTime) modelValue);
+    } else if (modelValue instanceof String) {
+      return getFormatter(context, component).format(ZonedDateTime.parse((CharSequence) modelValue));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid ZonedDateTime"));
     }

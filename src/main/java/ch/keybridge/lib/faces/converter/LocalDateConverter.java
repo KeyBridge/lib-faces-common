@@ -18,8 +18,8 @@
  */
 package ch.keybridge.lib.faces.converter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -59,8 +59,15 @@ public class LocalDateConverter implements Converter {
     if (modelValue == null) {
       return "";
     }
+    LocalDate localDate = null;
+    if (modelValue instanceof LocalDate) {
+      localDate = (LocalDate) modelValue;
+    } else if (modelValue instanceof String) {
+      localDate = LocalDate.parse((CharSequence) modelValue);
+    }
+
     DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withLocale(getLocale(context, component));
-    return formatter.format((TemporalAccessor) modelValue);
+    return formatter.format(localDate);
   }
 
   @Override
