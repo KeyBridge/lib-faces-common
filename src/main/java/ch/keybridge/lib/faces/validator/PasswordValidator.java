@@ -35,7 +35,7 @@ import javax.faces.validator.ValidatorException;
  * @since v2.8.0 rename 12/13/17 ValidatePassword to PasswordValidator
  */
 @FacesValidator("passwordValidator")
-public class PasswordValidator extends AValidator {
+public class PasswordValidator extends AbstractValidator {
 
   /**
    * Password matching expression. Password must be at least 4 characters, no

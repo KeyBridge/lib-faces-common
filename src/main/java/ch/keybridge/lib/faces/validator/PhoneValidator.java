@@ -39,7 +39,7 @@ import javax.faces.validator.ValidatorException;
  * @since v2.8.0 created 12/13/17
  */
 @FacesValidator("phoneValidator")
-public class PhoneValidator extends AValidator {
+public class PhoneValidator extends AbstractValidator {
 
   private static final int REQUIRED_DIGITS = 7;
 

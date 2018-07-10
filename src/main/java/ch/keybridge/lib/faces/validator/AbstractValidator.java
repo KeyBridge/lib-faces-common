@@ -25,7 +25,7 @@ import javax.faces.validator.ValidatorException;
  *
  * @author Jesse Caulfield
  */
-public abstract class AValidator implements Validator {
+public abstract class AbstractValidator implements Validator {
 
   /**
    * Access to the current container {@code Context &amp; Dependency Injection}

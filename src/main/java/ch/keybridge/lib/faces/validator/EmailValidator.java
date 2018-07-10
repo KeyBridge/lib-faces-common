@@ -30,7 +30,7 @@ import javax.faces.validator.ValidatorException;
  * @since v3.3.0 rename 06/26/18 to EmailValidator
  */
 @FacesValidator("emailValidator")
-public class EmailValidator extends AValidator {
+public class EmailValidator extends AbstractValidator {
 
   /**
    * RFC822 compliant regex adapted for Java. The regex is taken from this post:
