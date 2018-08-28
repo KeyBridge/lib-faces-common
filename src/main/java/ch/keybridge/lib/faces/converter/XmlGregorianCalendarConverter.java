@@ -28,20 +28,20 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * A JSF converter for handling XMLGregorianCalendar DATE objects.
+ * A JSF converter for handling XMLGregorianCalendar DATETIME objects.
  * XMLGregorianCalendar objects are passed by some SOAP web services.
  * <p>
  * This class is designed only to be used as a text converter for
- * pretty-printing DATE values, not for marshalling/unmarshalling in a
+ * pretty-printing DATE + TIME values, not for marshalling/unmarshalling in a
  * selection.
  * <p>
- * The output is formatted as: MM/dd/yy. e.g. "8/28/18"
+ * The output is formatted as: MMMM dd, yyyy. e.g. "August 28, 2018"
  *
  * @author jesse
- * @since v3.6.1 - rename FacesConverter value
+ * @since v3.6.1 - created
  */
-@FacesConverter(value = "xmlGregorianCalendarDateConverter")
-public class XmlGregorianCalendarDateConverter implements Converter {
+@FacesConverter(value = "xmlGregorianCalendarConverter")
+public class XmlGregorianCalendarConverter implements Converter {
 
   /**
    * Convert from a pretty-print string to an XMLGregorian calendar.
@@ -58,7 +58,7 @@ public class XmlGregorianCalendarDateConverter implements Converter {
      */
     try {
       GregorianCalendar calendar = new GregorianCalendar();
-      calendar.setTime(SimpleDateFormat.getDateInstance(DateFormat.SHORT).parse(value));
+      calendar.setTime(SimpleDateFormat.getDateInstance(DateFormat.LONG).parse(value));
       return DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
     } catch (ParseException | DatatypeConfigurationException | NullPointerException ex) {
 //      Logger.getLogger(ConvertXMLGregorianCalendar.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +78,7 @@ public class XmlGregorianCalendarDateConverter implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     if (value instanceof XMLGregorianCalendar) {
-      return SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(((XMLGregorianCalendar) value).toGregorianCalendar().getTime());
+      return SimpleDateFormat.getDateInstance(DateFormat.LONG).format(((XMLGregorianCalendar) value).toGregorianCalendar().getTime());
     }
     return "";
   }

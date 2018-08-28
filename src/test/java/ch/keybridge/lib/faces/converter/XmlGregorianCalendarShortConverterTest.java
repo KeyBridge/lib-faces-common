@@ -29,16 +29,16 @@ import org.junit.Test;
  *
  * @author Key Bridge
  */
-public class XmlGregorianCalendarDateConverterTest {
+public class XmlGregorianCalendarShortConverterTest {
 
-  private XmlGregorianCalendarDateConverter converter;
+  private XmlGregorianCalendarShortConverter converter;
 
-  public XmlGregorianCalendarDateConverterTest() {
+  public XmlGregorianCalendarShortConverterTest() {
   }
 
   @Before
   public void setUp() {
-    this.converter = new XmlGregorianCalendarDateConverter();
+    this.converter = new XmlGregorianCalendarShortConverter();
   }
 
   @Test
