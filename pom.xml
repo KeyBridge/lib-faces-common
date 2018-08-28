@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.6.0</version>
+  <version>3.6.1</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -46,7 +46,7 @@
     v3.4.0 - change primefaces to version 6.2; remove primfaces-extensions
     v3.5.0 - rename filecontent and markdown with output prefix
     v3.6.0 - make primefaces dependency transitive
-
+    v3.6.1 - update xml gregorian calendar converters
   </description>
 
   <organization>

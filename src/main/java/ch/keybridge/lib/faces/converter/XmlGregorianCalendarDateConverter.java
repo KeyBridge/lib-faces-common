@@ -28,16 +28,20 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * A JSF converter for handling XMLGregorianCalendar objects.
+ * A JSF converter for handling XMLGregorianCalendar DATE objects.
  * XMLGregorianCalendar objects are passed by some SOAP web services.
  * <p>
  * This class is designed only to be used as a text converter for
- * pretty-printing the values, not for marshalling/unmarshalling in a selection.
+ * pretty-printing DATE values, not for marshalling/unmarshalling in a
+ * selection.
+ * <p>
+ * The output is formatted as: MM/dd/yy. e.g. "8/28/18"
  *
  * @author jesse
+ * @since v3.6.1 - rename FacesConverter value
  */
-@FacesConverter(value = "convertXMLGregorianCalendar")
-public class XMLGregorianCalendarConverter implements Converter {
+@FacesConverter(value = "xmlGregorianCalendarDateConverter")
+public class XmlGregorianCalendarDateConverter implements Converter {
 
   /**
    * Convert from a pretty-print string to an XMLGregorian calendar.
