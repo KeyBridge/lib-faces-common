@@ -51,7 +51,7 @@ public class EmailValidator extends AbstractValidator {
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
     if (value != null && !RFC822.matcher(String.valueOf(value)).matches()) {
-      throwErrorException("E-mail validation failed.", value + " does not appear to be a valid email address");
+      throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");
     }
   }
 
