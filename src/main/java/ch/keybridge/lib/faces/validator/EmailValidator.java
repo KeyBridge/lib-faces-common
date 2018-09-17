@@ -28,6 +28,7 @@ import javax.faces.validator.ValidatorException;
  * @since v2.5.0 rewritten 08/08/17 to use REGEX instead of javax.mail
  * @since v2.7.0 rename 12/13/17 to emailValidator
  * @since v3.3.0 rename 06/26/18 to EmailValidator
+ * @since v3.6.1 update 09/14/18 to ignore null or empty input values
  */
 @FacesValidator("emailValidator")
 public class EmailValidator extends AbstractValidator {
@@ -50,9 +51,24 @@ public class EmailValidator extends AbstractValidator {
    */
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    if (value != null && !RFC822.matcher(String.valueOf(value)).matches()) {
-      throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");
+
+    if (value == null) {
+      return;
     }
+
+    if (value instanceof String) {
+      String address = (String) value;
+      if (address.isEmpty()) {
+        return;
+      }
+
+      if (!RFC822.matcher(address).matches()) {
+        throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");
+      }
+
+    }
+
+//    if (value != null && !RFC822.matcher(String.valueOf(value)).matches()) {      throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");    }
   }
 
   /**
