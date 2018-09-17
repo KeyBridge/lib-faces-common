@@ -10,6 +10,7 @@
  * v1.0.0 - 05/04/18 - add simple tables
  * v1.0.1 - 06/17/18 - add underline to h1, h2, h3 headers
  *        - 06/26/18 - add list group side tabs
+ * v1.0.2 - 09/17/18 - add markdown image sizing
  */
 html {
   position: relative;
@@ -402,4 +403,11 @@ textarea.markdown {
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
   font-size: 0.9rem !important;
 }
+
+/*right size markdown images*/
+.markdown img {
+  max-width: 100%;
+  height: auto;
+}
+
 
