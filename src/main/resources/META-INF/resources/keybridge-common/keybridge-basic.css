@@ -11,6 +11,7 @@
  * v1.0.1 - 06/17/18 - add underline to h1, h2, h3 headers
  *        - 06/26/18 - add list group side tabs
  * v1.0.2 - 09/17/18 - add markdown image sizing
+ * v1.0.3 - 10/25/18 - update markdown image; set display:block
  */
 html {
   position: relative;
@@ -408,6 +409,7 @@ textarea.markdown {
 .markdown img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 
