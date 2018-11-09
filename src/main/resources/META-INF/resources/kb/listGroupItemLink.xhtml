@@ -11,10 +11,13 @@
     <cc:attribute name="value" required="true" type="java.lang.String" default="Label" displayName="the link label"/>
     <cc:attribute name="icon" required="false" type="java.lang.String" displayName="the icon css class (e.g. 'icon icon-home' or 'fa fa-user'"/>
     <cc:attribute name="active" required="false" type="java.lang.Boolean" default="false" displayName="true if this is the active page link"/>
-    <cc:attribute name="alert" required="false"  type="java.lang.Boolean" default="false" displayName="true if an alert icon should be rendered"/>
 
+    <cc:attribute name="renderBadge" required="false"  type="java.lang.Boolean" default="false" displayName="true if badge icon should be rendered"/>
     <cc:attribute name="badgeValue" required="false"  type="java.lang.String" displayName="A badge to display"/>
     <cc:attribute name="badgeStyle" required="false"  type="java.lang.String" default="badge-light" displayName="The badge style class"/>
+
+    <cc:attribute name="renderAlert" required="false"  type="java.lang.Boolean" default="false" displayName="true if an alert icon should be rendered"/>
+    <cc:attribute name="alertStyle" required="false"  type="java.lang.String" default="fa fa-fw fa-exclamation-triangle text-warning" displayName="The alert style class"/>
 
     <cc:attribute name="parameterName" required="false" type="java.lang.String" displayName="A link parameter name"/>
     <cc:attribute name="parameterValue" required="false" type="java.lang.String" displayName="A link parameter value"/>
@@ -22,13 +25,15 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:link styleClass="list-group-item list-group-item-action #{cc.attrs.alert?'d-flex justify-content-between align-items-center':''} #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}">
+    <h:link styleClass="list-group-item list-group-item-action d-flex justify-content-between align-items-center #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}">
       <f:param name="#{cc.attrs.parameterName}" value="#{cc.attrs.parameterValue}" rendered="#{cc.attrs.parameterName ne null}"/>
-      <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
-      <h:outputText value="#{cc.attrs.value}"/>
-      <h:outputText styleClass="badge #{cc.attrs.badgeStyle} ml-2" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.badgeValue ne null}"/>
+      <span>
+        <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
+        <h:outputText value="#{cc.attrs.value}"/>
+      </span>
 
-      <h:outputText styleClass="fa fa-fw fa-exclamation-triangle text-warning" rendered="#{cc.attrs.alert}"/>
+      <h:outputText styleClass="badge #{cc.attrs.badgeStyle}" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.renderBadge}"/>
+      <h:outputText styleClass="#{cc.attrs.alertStyle}" rendered="#{cc.attrs.renderAlert}"/>
     </h:link>
   </cc:implementation>
 </html>
