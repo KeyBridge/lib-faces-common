@@ -63,7 +63,7 @@ public class PrettyLocalDateTimeConverter implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
-      return "";
+      return "never";
     }
 
     if (modelValue instanceof LocalDateTime) {

@@ -41,12 +41,13 @@ import org.ocpsoft.prettytime.PrettyTime;
  * absent, the (default) &lt;f:view locale&gt; will be used instead. There is no
  * timeZone attribute for the reason as explained in #1 here above.
  * <p>
- * Example use: {@code &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
- * &lt;f:converter converterId="zonedDateTimeConverter" /&gt;
- * &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
- * &lt;f:attribute name="timeZone" value="Asia/Kolkata" /&gt;
- * &lt;/h:outputText&gt;
- * }
+ * Example use:
+ * <pre>
+ * &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
+ *   &lt;f:converter converterId="zonedDateTimeConverter" /&gt;
+ *   &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
+ *   &lt;f:attribute name="timeZone" value="Asia/Kolkata" /&gt;
+ * &lt;/h:outputText&gt;</pre>
  *
  * @author Key Bridge
  * @since v0.11.0 added 12/05/17 from stackoverflow example
@@ -60,7 +61,7 @@ public class PrettyZonedDateTimeConverter implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
-      return "";
+      return "never";
     }
     if (modelValue instanceof ZonedDateTime) {
       return new PrettyTime(getLocale(context, component)).format(toDate((ZonedDateTime) modelValue));
