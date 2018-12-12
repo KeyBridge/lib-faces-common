@@ -12,6 +12,8 @@
     <cc:attribute name="icon" required="false" type="java.lang.String" displayName="the icon css class (e.g. 'icon icon-home' or 'fa fa-user'"/>
     <cc:attribute name="active" required="false" type="java.lang.Boolean" default="false" displayName="true if this is the active page link"/>
 
+    <cc:attribute name="isDisabled" required="false"  type="java.lang.Boolean" default="false" displayName="true if the link should be disabled"/>
+
     <cc:attribute name="renderBadge" required="false"  type="java.lang.Boolean" default="false" displayName="true if badge icon should be rendered"/>
     <cc:attribute name="badgeValue" required="false"  type="java.lang.String" displayName="A badge to display"/>
     <cc:attribute name="badgeStyle" required="false"  type="java.lang.String" default="badge-light" displayName="The badge style class"/>
@@ -25,7 +27,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:link styleClass="list-group-item list-group-item-action d-flex justify-content-between align-items-center #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}">
+    <h:link styleClass="list-group-item list-group-item-action d-flex justify-content-between align-items-center #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}" disabled="#{cc.attrs.isDisabled}">
       <f:param name="#{cc.attrs.parameterName}" value="#{cc.attrs.parameterValue}" rendered="#{cc.attrs.parameterName ne null}"/>
       <span>
         <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
