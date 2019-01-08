@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.6.1</version>
+  <version>3.6.2</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -47,6 +47,7 @@
     v3.5.0 - rename filecontent and markdown with output prefix
     v3.6.0 - make primefaces dependency transitive
     v3.6.1 - update xml gregorian calendar converters
+    v3.6.2 - make primefaces dependency compiled
   </description>
 
   <organization>
@@ -65,6 +66,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+      <version>6.2</version>
+    </dependency>
+    <dependency>
       <groupId>org.ocpsoft.prettytime</groupId>
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>4.0.1.Final</version>
@@ -75,12 +81,8 @@
       <version>2.0.0</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.primefaces</groupId>
-      <artifactId>primefaces</artifactId>
-      <version>6.2</version>
-      <scope>provided</scope>
-    </dependency>
+
+
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
