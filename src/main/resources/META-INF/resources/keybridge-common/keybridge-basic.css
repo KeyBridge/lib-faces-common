@@ -1,6 +1,12 @@
 /*!
- * BASIC key bridge template configs
- * Released under MIT license. Copyright 2017 Key Bridge.
+ * BASIC key bridge template configs and CSS mods.
+ * Copyright (c) 2006 - 2019 Key Bridge
+ * Released under MIT license.
+ *
+ * Since 1.0.3 includes extracts from GitHub light syntax theme v0.5.0
+ * Copyright (c) 2012 - 2017 GitHub, Inc.
+ * Licensed under MIT (https://github.com/primer/github-syntax-theme-generator/blob/master/LICENSE)
+ * Extracts created on : Sep 27, 2017, 8:43:04 AM
  *
  * 10/25/17 - sync with bs-4 beta
  *            resurrect secondary button style as btn-default
@@ -12,6 +18,7 @@
  *        - 06/26/18 - add list group side tabs
  * v1.0.2 - 09/17/18 - add markdown image sizing
  * v1.0.3 - 10/25/18 - update markdown image; set display:block
+ * v1.0.4 - 01/10/19 - underline from h1, h2, h3 requires .markdown container
  */
 html {
   position: relative;
@@ -28,12 +35,6 @@ body {  word-wrap: break-word;}
 
 /*icons*/
 i, icon {display: inline-block;font-family: FontAwesome;font-style: normal;font-weight: normal;line-height: 1;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;min-width: 16px;}
-
-/*headers since v1.0.1*/
-h1, h2, h3 {
-  border-bottom: 1px solid rgba(0,0,0,.2) !important;
-  margin-bottom: 0.75em;
-}
 
 /*remove abbr right padding*/
 abbr { margin-right: 0px !important; }
@@ -298,12 +299,6 @@ label { font-weight: bold; }
 .breadcrumb-inverse a:hover { color: #999 !important; }
 
 
-/*!
- * GitHub light syntax theme v0.5.0
- * Copyright (c) 2012 - 2017 GitHub, Inc.
- * Licensed under MIT (https://github.com/primer/github-syntax-theme-generator/blob/master/LICENSE)
- * Extracts created on : Sep 27, 2017, 8:43:04 AM
- */
 
 /*container see BS4 grid options */
 .container-sm {
@@ -397,6 +392,13 @@ label { font-weight: bold; }
   width:auto;
   height:auto;
   clip:auto
+}
+
+
+/*markdown headers since v1.0.4*/
+.markdown h1, .markdown h2, .markdown h3 {
+  border-bottom: 1px solid rgba(0,0,0,.2) !important;
+  margin-bottom: 0.75em;
 }
 
 /*markdown editor*/
