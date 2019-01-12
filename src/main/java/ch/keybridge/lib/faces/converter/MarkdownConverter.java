@@ -18,7 +18,14 @@
  */
 package ch.keybridge.lib.faces.converter;
 
-import ch.keybridge.lib.markdown.Markdown;
+import com.vladsch.flexmark.ext.gfm.tables.TablesExtension;
+import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
+import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.options.MutableDataSet;
+import java.util.Arrays;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -36,21 +43,51 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("markdownConverter")
 public class MarkdownConverter implements Converter {
 
+  private final HtmlRenderer renderer;
+  private final Parser parser;
+
+  public MarkdownConverter() {
+    /**
+     * Set extensions.
+     * <p>
+     * TablesExtension enables tables using pipes. <br>
+     * GitLabExtension parses and renders GitLab Flavoured Markdown including
+     * math (via Katex) and charts (via Mermaid). <br>
+     * TaskListExtension renders check boxes in lists (cute).
+     */
+    MutableDataSet options = new MutableDataSet();
+    options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
+                                                 GitLabExtension.create(),
+                                                 TaskListExtension.create()));
+    this.parser = Parser.builder(options).build();
+    this.renderer = HtmlRenderer.builder(options).build();
+  }
+
   /**
    * {@inheritDoc}
+   * <p>
+   * Convert markdown text to HTML.
    */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
       return "";
     }
-    return Markdown.process(String.valueOf(modelValue));
+    /**
+     * Cast the object to String since we only expect this converter to be used
+     * in a text widget.
+     */
+    Node node = parser.parse((String) modelValue);
+    return renderer.render(node);
   }
 
   /**
    * {@inheritDoc}
    * <p>
    * RETURNS NULL.
+   * <p>
+   * TODO: html to markdown converter. See
+   * https://github.com/domchristie/turndown as a potential candidate.
    */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>3.6.2</version>
+  <version>4.0.0</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -48,6 +48,9 @@
     v3.6.0 - make primefaces dependency transitive
     v3.6.1 - update xml gregorian calendar converters
     v3.6.2 - make primefaces dependency compiled
+    v4.0.0 - rewrite and reorganize markdown resources using flexmark library  (01/12/19)
+
+
   </description>
 
   <organization>
@@ -58,8 +61,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <additionalparam>-Xdoclint:none</additionalparam>
-    <pfextensions.version>6.1.1</pfextensions.version>
-    <omnifaces.version>2.2</omnifaces.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -75,13 +76,25 @@
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>4.0.1.Final</version>
     </dependency>
+
     <dependency>
-      <groupId>keybridge.lib</groupId>
-      <artifactId>markdown</artifactId>
-      <version>2.0.0</version>
+      <!--since 4.0.0 for rendering tables-->
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-gfm-tables</artifactId>
+      <version>0.40.4</version>
     </dependency>
-
-
+    <dependency>
+      <!--since 4.0.0 for rendering various gitlab extensions-->
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-gitlab</artifactId>
+      <version>0.40.4</version>
+    </dependency>
+    <dependency>
+      <!--since 4.0.0 for rendering task lists-->
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-gfm-tasklist</artifactId>
+      <version>0.40.4</version>
+    </dependency>
 
     <dependency>
       <groupId>javax</groupId>

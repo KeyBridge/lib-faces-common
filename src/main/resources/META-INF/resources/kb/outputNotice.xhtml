@@ -6,7 +6,7 @@
 
   <!-- INTERFACE -->
   <cc:interface>
-    <cc:attribute name="fileContent" required="true" type="java.lang.String" displayName="The file name (no extension)"/>
+    <cc:attribute name="value" required="true" type="java.lang.String" displayName="The notice text"/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
@@ -18,7 +18,7 @@
           <icon class="fa fa-info-circle fa-fw fa-2x mt-1 text-muted" aria-hidden="true"/>
         </div>
         <div class="p-2 text-small">
-          <h:outputText value="#{fileContent.readContent(cc.attrs.fileContent)}" escape="false"/>
+          <h:outputText value="#{cc.attrs.value}" escape="false"/>
         </div>
       </div>
     </div>

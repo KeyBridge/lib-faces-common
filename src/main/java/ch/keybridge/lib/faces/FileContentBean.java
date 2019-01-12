@@ -13,8 +13,19 @@
  */
 package ch.keybridge.lib.faces;
 
-import ch.keybridge.lib.markdown.Markdown;
+import com.vladsch.flexmark.ext.gfm.tables.TablesExtension;
+import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
+import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.options.MutableDataSet;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -33,6 +44,7 @@ import javax.inject.Named;
  * @author Key Bridge
  * @since v0.3.0 created 03/26/17 to support translated page content.
  * @since v3.0.0 moved 01/15/18 to faces-common
+ * @since v4.0.0 rewrite to use flexmark markdown parser
  */
 @Named(value = "fileContent")
 @RequestScoped
@@ -48,6 +60,11 @@ public class FileContentBean {
    * ".md". The markdown file extension.
    */
   private static final String MD = ".md";
+  /**
+   * ".txt". Alternate markdown file extension.
+   */
+  private static final String TEXT = ".txt";
+
   /**
    * ".xhtml". The HTML file extension.
    */
@@ -81,12 +98,12 @@ public class FileContentBean {
      * always XHTML, and Markdown content is converted.
      */
     try {
-      String filename = findContentFile(label);
+      Path filename = findContentFile(label);
       return filename.endsWith(XHTML)
              ? readContentXHTML(filename)
              : readContentMD(filename);
-    } catch (Exception exception) {
-      LOGGER.log(Level.SEVERE, "{0} FILE content not found for \"{1}\"", new Object[]{localeBean.getLanguage().toUpperCase(), label});
+    } catch (IOException | URISyntaxException exception) {
+      LOGGER.log(Level.SEVERE, "Error reading file \"{0}\".  {1}", new Object[]{label, exception.getMessage()});
       return null;
     }
   }
@@ -99,30 +116,30 @@ public class FileContentBean {
    * @param label the file based name without language or extension
    * @return the language translated file name, if it exists.
    */
-  private String findContentFile(String label) throws FileNotFoundException {
+  private Path findContentFile(String label) throws URISyntaxException, IOException {
     String language = localeBean.getLanguage();
     /**
      * Search for the language specific file.
      */
-    for (String extension : new String[]{XHTML, MD}) {
+    for (String extension : new String[]{MD, TEXT, XHTML}) {
       String path = CONTENT + label + "." + language + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
-        return path;
+        return Paths.get(getClass().getClassLoader().getResource(path).toURI());
       }
     }
     /**
      * Search for a default file with no language indicator.
      */
-    for (String extension : new String[]{XHTML, MD}) {
+    for (String extension : new String[]{MD, TEXT, XHTML}) {
       String path = CONTENT + label + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
-        return path;
+        return Paths.get(getClass().getClassLoader().getResource(path).toURI());
       }
     }
     /**
      * FAIL - NO file found.
      */
-    throw new FileNotFoundException(label + " not found.");
+    throw new IOException(localeBean.getLanguage().toUpperCase() + " FILE content not found for " + label + ".");
   }
 
   /**
@@ -132,8 +149,8 @@ public class FileContentBean {
    * @return the file content, converted to XHTML
    * @throws IOException if the file cannot be opened or read
    */
-  private String readContentXHTML(String filename) throws IOException {
-    return readFile(filename);
+  private String readContentXHTML(Path filename) throws IOException {
+    return new String(Files.readAllBytes(filename));
   }
 
   /**
@@ -143,26 +160,33 @@ public class FileContentBean {
    * @return the file content, converted to XHTML
    * @throws IOException if the file cannot be opened or read
    */
-  private String readContentMD(String filename) throws IOException {
-    return Markdown.process(readFile(filename));
-
-//    return readFile(filename);
-//    See https://github.com/vsch/flexmark-java
-//    MutableDataSet options = new MutableDataSet();
-    // uncomment to set optional extensions
-    //options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(), StrikethroughExtension.create()));
-    // uncomment to convert soft-breaks to hard breaks
-    //options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");
-//    Parser parser = Parser.builder(options).build();
-//    HtmlRenderer renderer = HtmlRenderer.builder(options).build();
-//    String md = readFile(filename);
-//    Node document = parser.parse(md);
-//    String html = renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
-//    return html;
+  private String readContentMD(Path filename) throws IOException {
+    /**
+     * Set extensions.
+     * <p>
+     * TablesExtension enables tables using pipes. <br>
+     * GitLabExtension parses and renders GitLab Flavoured Markdown including
+     * math (via Katex) and charts (via Mermaid). <br>
+     * TaskListExtension renders check boxes in lists (cute).
+     */
+    MutableDataSet options = new MutableDataSet();
+    options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
+                                                 GitLabExtension.create(),
+                                                 TaskListExtension.create()));
+    /**
+     * Optionally to convert soft-breaks to hard breaks. Disabled by default.
+     */
+    //      options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");
+    Parser parser = Parser.builder(options).build();
+    HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+    Node document = parser.parseReader(new FileReader(filename.toFile()));
+    return renderer.render(document);  // The file rendered to HTML
   }
 
   /**
-   * Simple method to read a text file that is available as a resource stream
+   * @deprecated replaced with Java7 FileReader.
+   *
+   * Internal method to read a text file that is available as a resource stream
    * from this class.
    *
    * @param filename the fully qualified file name
