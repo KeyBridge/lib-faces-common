@@ -49,6 +49,7 @@
     v3.6.1 - update xml gregorian calendar converters
     v3.6.2 - make primefaces dependency compiled
     v4.0.0 - rewrite and reorganize markdown resources using flexmark library  (01/12/19)
+    -- add default wadl bean, moved from web app template to this
 
 
   </description>
@@ -63,37 +64,52 @@
     <additionalparam>-Xdoclint:none</additionalparam>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+
+    <lib.primefaces.version>6.2</lib.primefaces.version>
+    <lib.prettytime.version>4.0.1.Final</lib.prettytime.version>
+    <lib.flexmark.version>0.40.4</lib.flexmark.version>
+    <lib.wadl.version>0.5.3</lib.wadl.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
-      <version>6.2</version>
+      <version>${lib.primefaces.version}</version>
     </dependency>
+
     <dependency>
+      <!--for pretty time conversion-->
       <groupId>org.ocpsoft.prettytime</groupId>
       <artifactId>prettytime-integration-jsf</artifactId>
-      <version>4.0.1.Final</version>
+      <version>${lib.prettytime.version}</version>
     </dependency>
+
 
     <dependency>
       <!--since 4.0.0 for rendering tables-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gfm-tables</artifactId>
-      <version>0.40.4</version>
+      <version>${lib.flexmark.version}</version>
     </dependency>
     <dependency>
       <!--since 4.0.0 for rendering various gitlab extensions-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gitlab</artifactId>
-      <version>0.40.4</version>
+      <version>${lib.flexmark.version}</version>
     </dependency>
     <dependency>
       <!--since 4.0.0 for rendering task lists-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gfm-tasklist</artifactId>
-      <version>0.40.4</version>
+      <version>${lib.flexmark.version}</version>
+    </dependency>
+
+    <dependency>
+      <!--since 4.0.0 for rendering WADL API documentation-->
+      <groupId>keybridge.lib</groupId>
+      <artifactId>wadl</artifactId>
+      <version>${lib.wadl.version}</version>
     </dependency>
 
     <dependency>
