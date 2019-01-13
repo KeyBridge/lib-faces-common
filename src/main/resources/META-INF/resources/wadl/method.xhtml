@@ -8,6 +8,7 @@
   <!--xmlns:a="http://xmlns.jcp.org/jsf/passthrough"-->
   <!--WADL component. Requires a WADL bean.-->
   <!--updated 01/12/19 to properly handle form encoded representations-->
+  <!--updated 01/13/19 to support conditional collapsibility, render short path in header-->
 
   <!-- INTERFACE -->
   <cc:interface>
@@ -16,15 +17,12 @@
     <cc:attribute name="title" required="false" default="Rest Resource" type="java.lang.String" displayName="The resource label"/>
     <cc:attribute name="icon" required="false" default="glyphicon glyphicon-cloud" type="java.lang.String" displayName="A FA icon to display in the header."/>
     <cc:attribute name="collapsible" required="false" default="true" type="java.lang.Boolean" displayName="Whether the panel body is collapsible."/>
-
-    <cc:attribute name="labelProvider" required="true" shortDescription="A backing bean supporting WADL text processing."/>
-
+    <cc:attribute name="renderPath"  required="false" default="true" type="java.lang.Boolean" displayName="Render the path in the header."/>
+    <cc:attribute name="wadlBean" required="true" shortDescription="A backing bean supporting WADL text processing."/>
     <cc:attribute name="verbose" required="false" default="false" type="java.lang.Boolean" displayName="Whether to log warnings when a label is not found."/>
   </cc:interface>
 
-  <!--you must add the following CSS somewhere in your app.-->
-  <!--.rest-button { position: absolute; top: 0; left: 0; height: 100%; padding: .75em !important; width: 6em; color: #fff !important; }-->
-  <!--.rest-label{ margin-left: 6em; }-->
+  <!--NOTE: to use this widget you must add the WADL CSS somewhere in your app!-->
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
@@ -34,35 +32,44 @@
 
         <div class="card border-#{wadlBean.buildCSSType(cc.attrs.method.name)} mb-3">
           <div class="wadl card-header" role="tab" id="#{cc.attrs.method.id}" style="position: relative; border-bottom: none;">
-            <a data-toggle="collapse" data-target="method-#{cc.attrs.method.id}" href="#method-#{cc.attrs.method.id}" aria-expanded="true" aria-controls="method-#{cc.attrs.method.id}">
+            <h:panelGroup rendered="#{cc.attrs.collapsible}">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse#{cc.attrs.method.id}" aria-expanded="true" aria-controls="collapse#{cc.attrs.method.id}">
+                <div class="wadl-button bg-#{wadlBean.buildCSSType(cc.attrs.method.name)}">  <h:outputText value="#{cc.attrs.method.name}"/> </div>
+                <h:outputText value="#{cc.attrs.wadlBean.parseMethodId(cc.attrs.method.id)}" styleClass="wadl-label"/>
+              </a>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{not cc.attrs.collapsible}">
               <div class="wadl-button bg-#{wadlBean.buildCSSType(cc.attrs.method.name)}">  <h:outputText value="#{cc.attrs.method.name}"/> </div>
-              <h:outputText value="#{cc.attrs.labelProvider.parseMethodId(cc.attrs.method.id)}" styleClass="wadl-label"/>
-            </a>
+              <h:outputText value="#{cc.attrs.wadlBean.parseMethodId(cc.attrs.method.id)}" styleClass="wadl-label"/>
+            </h:panelGroup>
+
+            <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.parent.path)}" escape="false" styleClass="text-small float-right" rendered="#{cc.attrs.renderPath}"/>
           </div>
 
-          <div id="method-#{cc.attrs.method.id}" class="#{cc.attrs.collapsible?'collapse':''}" role="tabpanel" aria-labelledby="headingOne">
+          <div id="collapse#{cc.attrs.method.id}" class="#{cc.attrs.collapsible?'collapse':''}" role="tabpanel" aria-labelledby="headingOne">
             <div class="card-body">
 
               <!--method uri-->
-              <h:outputText value="#{wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
+              <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
 
               <!--method description-->
-              <h:outputText value="#{cc.attrs.labelProvider.getMethodDescription(cc.attrs.method.id)}" escape="false" styleClass="card-text d-block mb-3"/>
+              <h:outputText value="#{cc.attrs.wadlBean.getMethodDescription(cc.attrs.method.id)}" escape="false" styleClass="card-text d-block mb-3"/>
 
-              <h:panelGroup rendered="#{wadlBean.findMethodParameters(cc.attrs.method).size() > 0}">
+              <h:panelGroup rendered="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method).size() > 0}">
                 <!--request query params-->
                 <hr/>
                 <p class="text-bold text-small">Request parameters</p>
-                <ui:repeat value="#{wadlBean.findMethodParameters(cc.attrs.method)}" var="p">
+                <ui:repeat value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p">
 
-                  <div class="d-flex flex-row w-100 mb-2">
+                  <div class="wadl-var d-flex flex-row w-100 mb-2">
                     <div class="align-items-start">
                       <span class="text-bold"> #{p.name} </span>
                       <span class="text-code text-small text-success text-capitalize mx-2">#{p.type.localPart}</span>
                       <h:outputText value="#{p.path}" styleClass="text-code text-small mx-3" rendered="#{p.path ne null}"/>
                     </div>
                     <div class="align-items-start">
-                      <h:outputText value="#{cc.attrs.labelProvider.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="w-100"/>
+                      <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var w-100"/>
                       <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
                     </div>
                     <div class="align-items-start">
@@ -73,15 +80,15 @@
 
               </h:panelGroup>
 
-              <h:panelGroup rendered="#{wadlBean.isPutOrPost(cc.attrs.method)}">
+              <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}">
                 <!--request post parameters-->
                 <hr/>
                 <!--Request objects are only valid for PUT or POST operations-->
                 <p class="text-bold text-small">Post parameters</p>
 
-                <h:panelGroup rendered="#{not empty wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}">
+                <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}">
 
-                  <ui:repeat value="#{wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
+                  <ui:repeat value="#{cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
                     <p>
                       Parameters encoded as <h:outputText value="#{mvmap.key.mediaType}" styleClass="text-code text-small"/>.
                     </p>
@@ -94,7 +101,7 @@
                           <h:outputText value="#{p.path}" styleClass="text-code text-small mx-3" rendered="#{p.path ne null}"/>
                         </div>
                         <div class="align-items-start">
-                          <h:outputText value="#{cc.attrs.labelProvider.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="w-100"/>
+                          <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var w-100"/>
                           <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
                         </div>
                         <div class="align-items-start">
@@ -106,35 +113,36 @@
                   </ui:repeat>
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{not empty wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}">
+                <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}">
                   <!--request post objects-->
-                  <ui:repeat value="#{wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
+                  <ui:repeat value="#{cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
                     <div>
                       <span class="text-bold"> #{mvmap.key} </span>
                       <ui:repeat value="#{mvmap.value}" var="rep">
-                        <span class="text-small mx-2">#{rep.mediaType}</span>
+                        <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mx-2">#{rep.mediaType}</span>
                       </ui:repeat>
                     </div>
-                    <h:outputText value="#{cc.attrs.labelProvider.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false"/>
+                    <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
                   </ui:repeat>
                 </h:panelGroup>
 
               </h:panelGroup>
 
               <hr/>
+
               <p class="text-bold text-small">Response parameters</p>
 
               <ui:repeat value="#{cc.attrs.method.response}" var="r">
-                <ui:repeat value="#{wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap">
+                <ui:repeat value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap">
                   <div>
                     <span class="text-bold"> HTTP #{r.status.size() == 0? '200' : r.status} </span>
 
                     <ui:repeat value="#{mvmap.value}" var="rep">
-                      <span class="text-small mx-2">#{rep.mediaType}</span>
+                      <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mx-2">#{rep.mediaType}</span>
                     </ui:repeat>
                   </div>
 
-                  <h:outputText value="#{cc.attrs.labelProvider.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false"/>
+                  <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
                 </ui:repeat>
               </ui:repeat>
 
