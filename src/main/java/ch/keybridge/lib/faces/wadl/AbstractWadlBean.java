@@ -443,24 +443,42 @@ public abstract class AbstractWadlBean implements LabelProvider {
   }
 
   /**
-   * Get the label class type based upon the method name.
+   * Get the label class type based upon the method name. This method assigns a
+   * Bootstrap text color CSS tag for HTTP methods and for HTTP media types.
+   * <p>
+   * Methods supports are: HEAD, OPTIONS, GET, POST, PUT, DELETE. Media types
+   * supported are application/[json, geojson, xml], multipart/form-data and
+   * text/[html, plain, xml]
    *
-   * @param methodName the method name
+   * @param methodName the method name or media type.
    * @return the label class
    */
   public String buildCSSType(String methodName) {
     switch (methodName) {
-      case "GET":
+      case "HEAD":
+      case "OPTIONS":
+      case "application/geojson":
+      case "application/geo+json":
       case MediaType.APPLICATION_JSON:
         return "info";
-      case "HEAD":
+
+      case "GET":
       case MediaType.APPLICATION_XML:
-        return "success";
+        return "primary";
+
       case "POST":
+        return "success";
+
       case "PUT":
         return "warning";
+
       case "DELETE":
+      case MediaType.MULTIPART_FORM_DATA:
         return "danger";
+
+      case MediaType.TEXT_HTML:
+      case MediaType.TEXT_PLAIN:
+      case MediaType.TEXT_XML:
       default:
         return "secondary";
     }
