@@ -1,0 +1,11 @@
+/*WADL css*/
+/*updated 04/30/17*/
+/*updated 01/12/19*/
+.wadl-button { position: absolute; top: 0; left: 0; height: 100%; padding: .2em .5rem .2rem .75rem !important; width: 6em; color: #fff !important; border-bottom-right-radius: 0.25rem; }
+.wadl-label { margin-left: 6em; text-transform: capitalize !important; }
+/*URI is href blue*/
+.wadl-uri { font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+            font-weight: 600 !important;
+            color: #007bff !important; }
+/*params are red*/
+.wadl-param { color: #dc3545 !important; }

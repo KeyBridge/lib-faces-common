@@ -49,7 +49,8 @@
     v3.6.1 - update xml gregorian calendar converters
     v3.6.2 - make primefaces dependency compiled
     v4.0.0 - rewrite and reorganize markdown resources using flexmark library  (01/12/19)
-    -- add default wadl bean, moved from web app template to this
+    -- add wadl support, moved from lib-wadl to this
+
 
 
   </description>
@@ -68,7 +69,7 @@
     <lib.primefaces.version>6.2</lib.primefaces.version>
     <lib.prettytime.version>4.0.1.Final</lib.prettytime.version>
     <lib.flexmark.version>0.40.4</lib.flexmark.version>
-    <lib.wadl.version>0.5.3</lib.wadl.version>
+    <lib.wadl.version>1.0.0</lib.wadl.version>
   </properties>
 
   <dependencies>
