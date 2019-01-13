@@ -103,7 +103,7 @@ public class FileContentBean {
              ? readContentXHTML(filename)
              : readContentMD(filename);
     } catch (IOException | URISyntaxException exception) {
-      LOGGER.log(Level.SEVERE, "Error reading file \"{0}\".  {1}", new Object[]{label, exception.getMessage()});
+      LOGGER.log(Level.INFO, "Error reading file \"{0}\".  {1}", new Object[]{label, exception.getMessage()});
       return null;
     }
   }
