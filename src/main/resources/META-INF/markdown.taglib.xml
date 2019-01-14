@@ -1,0 +1,11 @@
+<facelet-taglib version="2.2"
+                xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
+  
+  <description>Key Bridge common JSF UI components.</description>
+  <namespace>http://keybridge.ch/markdown</namespace>
+  <short-name>markdown</short-name>
+
+
+</facelet-taglib>
