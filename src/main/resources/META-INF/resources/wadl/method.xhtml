@@ -10,6 +10,10 @@
   <!--updated 01/12/19 to properly handle form encoded representations-->
   <!--updated 01/13/19 to support conditional collapsibility, render short path in header-->
 
+  <!--  USAGE-->
+  <!--Must include the wadl.css file. e.g.-->
+  <!--<link rel="stylesheet" type="text/css" href=" https://s3.amazonaws.com/keybridge-cdn/assets/kb/css/1.0.4/wadl.css"/>-->
+
   <!-- INTERFACE -->
   <cc:interface>
     <cc:attribute name="method" required="true" type="net.java.dev.wadl.Method" displayName="The method ID"/>
@@ -27,7 +31,6 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="wadl-method">
-
       <h:panelGroup rendered="#{cc.attrs.method !=null}">
 
         <div class="card border-#{wadlBean.buildCSSType(cc.attrs.method.name)} mb-3">
