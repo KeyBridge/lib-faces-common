@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Markdown editor component.-->
+  <!--01/23/18 - created-->
+  <!--01/15/19 - move to faces-common-->
+
+
+  <!--How to use:-->
+  <!--<script src="https://s3.amazonaws.com/keybridge-cdn/assets/plugin/markdown/1.2.0/jquery-markdown.js"/>-->
+  <!--<widget:markdownEditor value="#{editorBean.comment}"/>-->
+  <!--IMPORTANT: the markdown text is posted directly to the server (outside of JSF)-->
+  <!--and must be manually picked up with the query parameter "markdown"-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" type="java.lang.String" displayName="The text field to edit"/>
+    <cc:attribute name="renderMessage" required="false" type="java.lang.Boolean" default="true" displayName="If a markdown enabled message should be rendered."/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
+      <div class="card">
+        <!--EDIT-->
+        <div class="card-header edit-commands">
+          <span class="btn-group">
+            <span title="Bold" onclick="$('##{cc.id}-edit').mdBold({default: '  '});" class="btn btn-sm btn-default fa fa-bold"/>
+            <span title="Italic" onclick="$('##{cc.id}-edit').mdItalic({default: '  '});" class="btn btn-sm btn-default fa fa-italic"/>
+          </span>
+          <span class="btn-group">
+            <span title="Header 1" onclick="$('##{cc.id}-edit').mdHeader({number: 1, default: ' '});" class="btn btn-sm btn-default fa fa-heading"/>
+            <span title="Header 2" onclick="$('##{cc.id}-edit').mdHeader({number: 2, default: ' '});" class="btn btn-sm btn-default fa fa-heading text-small"/>
+            <span title="Header 3" onclick="$('##{cc.id}-edit').mdHeader({number: 3, default: ' '});" class="btn btn-sm btn-default fa fa-heading" style="font-size: 10px;"/>
+          </span>
+          <span class="btn-group">
+            <span title="Link" onclick="$('##{cc.id}-edit').mdLink({default: '  '});" class="btn btn-sm btn-default fa fa-link"/>
+            <span title="Block quote" onclick="$('##{cc.id}-edit').mdQuote({default: '  '});" class="btn btn-sm btn-default fa fa-quote-left"/>
+            <span title="Code" onclick="$('##{cc.id}-edit').mdCode({default: 'code block  '});" class="btn btn-sm btn-default fa fa-code"/>
+            <span title="Inline Code" onclick="$('##{cc.id}-edit').mdCodeInline({default: '  '});" class="btn btn-sm btn-default fa fa-code text-small"/>
+            <span title="Numbered list" onclick="$('##{cc.id}-edit').mdNumberedList({default: '  '});" class="btn btn-sm btn-default fa fa-list-ol"/>
+            <span title="Bullet list" onclick="$('##{cc.id}-edit').mdBulletList({default: '  '});" class="btn btn-sm btn-default fa fa-list-ul"/>
+          </span>
+        </div>
+        <textarea id="#{cc.id}-edit" name="markdown" rows="10" placeholder="#{cc.resourceBundleMap.textarea_placeholder}" class="form-control border-none markdown" data-provide="markdown">#{cc.attrs.value}</textarea>
+      </div>
+      <h:panelGroup rendered="#{cc.attrs.renderMessage}" styleClass="text-small d-block m-1"><icon class="fa fa-file-text-o"/> #{cc.resourceBundleMap.memo_markdown_supported}</h:panelGroup>
+    </div>
+  </cc:implementation>
+</html>
