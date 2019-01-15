@@ -30,6 +30,8 @@ import javax.faces.convert.FacesConverter;
 import org.ocpsoft.prettytime.PrettyTime;
 
 /**
+ * @deprecated use PrettyDateTimeConverter
+ *
  * ZonedDateTime JSF converter.
  * <p>
  * When using ZonedDateTime with an appropriate TIMESTAMP WITH TIME ZONE DB
@@ -41,8 +43,7 @@ import org.ocpsoft.prettytime.PrettyTime;
  * absent, the (default) &lt;f:view locale&gt; will be used instead. There is no
  * timeZone attribute for the reason as explained in #1 here above.
  * <p>
- * Example use:
- * <pre>
+ * Example use:  <pre>
  * &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
  *   &lt;f:converter converterId="zonedDateTimeConverter" /&gt;
  *   &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
@@ -55,6 +56,7 @@ import org.ocpsoft.prettytime.PrettyTime;
  * <a href="https://stackoverflow.com/questions/34883270/how-to-use-java-time-zoneddatetime-localdatetime-in-pcalendar">Dealing
  * with LocalDateTime in JSF</a>
  */
+@Deprecated
 @FacesConverter("prettyZonedDateTimeConverter")
 public class PrettyZonedDateTimeConverter implements Converter {
 
@@ -65,6 +67,8 @@ public class PrettyZonedDateTimeConverter implements Converter {
     }
     if (modelValue instanceof ZonedDateTime) {
       return new PrettyTime(getLocale(context, component)).format(toDate((ZonedDateTime) modelValue));
+    } else if (modelValue instanceof Date) {
+      return new PrettyTime(getLocale(context, component)).format((Date) modelValue);
     } else if (modelValue instanceof String) {
       return new PrettyTime(getLocale(context, component)).format(toDate((String) modelValue));
     } else {

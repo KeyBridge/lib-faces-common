@@ -30,6 +30,8 @@ import javax.faces.convert.FacesConverter;
 import org.ocpsoft.prettytime.PrettyTime;
 
 /**
+ * @deprecated use PrettyDateTimeConverter
+ *
  * LocalDateTime JSF converter.
  * <p>
  * When using UTC based LocalDateTime with an appropriate UTC based TIMESTAMP
@@ -42,8 +44,7 @@ import org.ocpsoft.prettytime.PrettyTime;
  * of the input string (when the pattern doesn't contain a time zone), and the
  * time zone of the output string.
  * <p>
- * Example use:
- * <pre>
+ * Example use:  <pre>
  * &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
  *   &lt;f:converter converterId="prettyLocalDateTimeConverter" /&gt;
  *   &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
@@ -57,6 +58,7 @@ import org.ocpsoft.prettytime.PrettyTime;
  * <a href="https://stackoverflow.com/questions/34883270/how-to-use-java-time-zoneddatetime-localdatetime-in-pcalendar">Dealing
  * with LocalDateTime in JSF</a>
  */
+@Deprecated
 @FacesConverter("prettyLocalDateTimeConverter")
 public class PrettyLocalDateTimeConverter implements Converter {
 
@@ -68,6 +70,8 @@ public class PrettyLocalDateTimeConverter implements Converter {
 
     if (modelValue instanceof LocalDateTime) {
       return new PrettyTime(getLocale(context, component)).format(toDate((LocalDateTime) modelValue));
+    } else if (modelValue instanceof Date) {
+      return new PrettyTime(getLocale(context, component)).format((Date) modelValue);
     } else if (modelValue instanceof String) {
       return new PrettyTime(getLocale(context, component)).format(toDate((String) modelValue));
     } else {
