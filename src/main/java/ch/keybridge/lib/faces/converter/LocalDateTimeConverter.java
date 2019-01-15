@@ -25,6 +25,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import javax.faces.application.FacesMessage;
@@ -62,6 +63,9 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("localDateTimeConverter")
 public class LocalDateTimeConverter implements Converter {
 
+  private static final ZoneId ZONE_ID = ZoneId.systemDefault();
+  private static final ZoneId UTC = ZoneOffset.UTC;
+
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
@@ -70,6 +74,8 @@ public class LocalDateTimeConverter implements Converter {
 
     if (modelValue instanceof LocalDateTime) {
       return getFormatter(context, component).format(ZonedDateTime.of((LocalDateTime) modelValue, ZoneOffset.UTC));
+    } else if (modelValue instanceof Date) {
+      return getFormatter(context, component).format(toZonedDateTime((Date) modelValue, UTC));
     } else if (modelValue instanceof String) {
       return getFormatter(context, component).format(ZonedDateTime.of(LocalDateTime.parse((CharSequence) modelValue), ZoneOffset.UTC));
     } else {
@@ -147,6 +153,28 @@ public class LocalDateTimeConverter implements Converter {
     return (timeZone instanceof TimeZone) ? ((TimeZone) timeZone).toZoneId()
            : (timeZone instanceof String) ? ZoneId.of((String) timeZone)
              : null;
+  }
+
+  /**
+   * Convert Date to a LocalDateTime. Gets the ZonedDateTime part of this
+   * date-time. This returns a ZonedDateTime with the same year, month and day
+   * as this date-time.
+   * <p>
+   * If the ZoneId is null then the default (system) zone is used.
+   *
+   * @param date the Date instance
+   * @param zone the time zone
+   * @return a ZonedDateTime instance in the indicated time zone
+   */
+  public static ZonedDateTime toZonedDateTime(java.util.Date date, ZoneId zone) {
+    if (date == null) {
+      return null;
+    }
+    if (date instanceof java.sql.Timestamp) {
+      return ((java.sql.Timestamp) date).toLocalDateTime().atZone(zone != null ? zone : ZONE_ID);
+    } else {
+      return date.toInstant().atZone(zone != null ? zone : ZONE_ID);
+    }
   }
 
 }

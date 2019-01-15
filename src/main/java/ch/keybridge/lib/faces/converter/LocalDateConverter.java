@@ -19,8 +19,10 @@
 package ch.keybridge.lib.faces.converter;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -63,6 +65,8 @@ public class LocalDateConverter implements Converter {
     TemporalAccessor localDate = null;
     if (modelValue instanceof LocalDate) {
       localDate = (TemporalAccessor) modelValue;
+    } else if (modelValue instanceof Date) {
+      localDate = toLocalDate((Date) modelValue);
     } else if (modelValue instanceof String) {
       localDate = LocalDate.parse((CharSequence) modelValue);
     }
@@ -96,6 +100,27 @@ public class LocalDateConverter implements Converter {
                : context.getViewRoot().getLocale();
     } catch (Exception e) {
       return Locale.getDefault();
+    }
+  }
+
+  private static final ZoneId ZONE_ID = ZoneId.systemDefault();
+
+  /**
+   * Convert Date to a LocalDate. Gets the LocalDate part of this date-time.
+   * This returns a LocalDate with the same year, month and day as this
+   * date-time. Returns: the date part of this date-time, not null
+   *
+   * @param date the Date instance
+   * @return a LocalDate instance in the default (system) time zone.
+   */
+  public static LocalDate toLocalDate(java.util.Date date) {
+    if (date == null) {
+      return null;
+    }
+    if (date instanceof java.sql.Date) {
+      return ((java.sql.Date) date).toLocalDate();
+    } else {
+      return date.toInstant().atZone(ZONE_ID).toLocalDate();
     }
   }
 
