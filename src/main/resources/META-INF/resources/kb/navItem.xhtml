@@ -9,6 +9,8 @@
   <!--this template provides a standard bootstrap nav item and a standard iconav
   menu template with an icon or image is provided-->
 
+  <!--01/18/19 - add renderAsOutputLink option-->
+
   <!-- INTERFACE -->
   <cc:interface>
     <cc:attribute name="id" required="false" type="java.lang.String" default="${cc.id}" displayName="the component id"/>
@@ -22,12 +24,14 @@
     <cc:attribute name="active" required="false" type="java.lang.Boolean" displayName="true if this is the active page link"/>
     <cc:attribute name="disabled" required="false" type="java.lang.Boolean" displayName="true if this link is disabled"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+
+    <cc:attribute name="renderAsOutputLink" required="false" type="java.lang.Boolean" default="false" displayName="Whether the link should be rendered as a fully qualified vs. internal link."/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <li id="#{cc.attrs.id}" class="nav-item #{cc.attrs.styleClass}">
-      <h:link styleClass="nav-link #{cc.attrs.active?'active':''}" outcome="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}">
+      <h:link styleClass="nav-link #{cc.attrs.active?'active':''}" outcome="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}" rendered="#{not cc.attrs.renderAsOutputLink}">
         <f:passThroughAttribute name="data-toggle" value="tooltip"/>
         <f:passThroughAttribute name="data-placement" value="right"/>
         <f:passThroughAttribute name="data-container" value="body"/>
@@ -36,6 +40,15 @@
         <h:outputText value="#{cc.attrs.value}"/>
         <h:outputText value="#{cc.attrs.badge}" rendered="#{cc.attrs.badge ne null and cc.attrs.badge gt 0}" styleClass="ml-1 badge badge-pill badge-light text-dark"/>
       </h:link>
+      <h:outputLink styleClass="nav-link #{cc.attrs.active?'active':''}" value="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}" rendered="#{cc.attrs.renderAsOutputLink}">
+        <f:passThroughAttribute name="data-toggle" value="tooltip"/>
+        <f:passThroughAttribute name="data-placement" value="right"/>
+        <f:passThroughAttribute name="data-container" value="body"/>
+        <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
+        <h:graphicImage library="#{cc.attrs.library}" name="#{cc.attrs.image}" styleClass="img-fluid mr-2" rendered="#{cc.attrs.image ne null}" style="width:18px;"/>
+        <h:outputText value="#{cc.attrs.value}"/>
+        <h:outputText value="#{cc.attrs.badge}" rendered="#{cc.attrs.badge ne null and cc.attrs.badge gt 0}" styleClass="ml-1 badge badge-pill badge-light text-dark"/>
+      </h:outputLink>
     </li>
   </cc:implementation>
 </html>
