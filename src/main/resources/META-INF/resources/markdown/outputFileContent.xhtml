@@ -12,7 +12,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div class="#{cc.attrs.styleClass}">
+    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
       <h:outputText value="#{fileContent.readContent(cc.attrs.name)}" escape="false"/>
     </div>
   </cc:implementation>
