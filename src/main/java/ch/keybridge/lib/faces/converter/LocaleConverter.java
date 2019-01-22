@@ -40,7 +40,7 @@ public class LocaleConverter implements Converter {
 
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
-    return value != null ? ((Locale) value).toLanguageTag() : null;
+    return value != null ? ((Locale) value).getLanguage() : null;
   }
 
 }
