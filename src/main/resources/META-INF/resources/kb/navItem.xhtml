@@ -30,7 +30,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <li id="#{cc.attrs.id}" class="nav-item #{cc.attrs.styleClass}">
+    <li id="#{cc.clientId}" class="nav-item #{cc.attrs.styleClass}">
       <h:link styleClass="nav-link #{cc.attrs.active?'active':''}" outcome="#{cc.attrs.outcome}" title="#{cc.attrs.label}" disabled="#{cc.attrs.disabled}" rendered="#{not cc.attrs.renderAsOutputLink}">
         <f:passThroughAttribute name="data-toggle" value="tooltip"/>
         <f:passThroughAttribute name="data-placement" value="right"/>
