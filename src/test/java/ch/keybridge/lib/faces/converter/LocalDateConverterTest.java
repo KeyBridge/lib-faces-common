@@ -19,7 +19,10 @@
 package ch.keybridge.lib.faces.converter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.ChronoField;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,6 +47,32 @@ public class LocalDateConverterTest {
     LocalDateConverter converter = new LocalDateConverter();
 
     System.out.println("as String: " + converter.getAsString(null, null, LocalDate.now()));
+  }
+
+  @Test
+  public void testPrettyPrint() {
+
+    LocalDate now = LocalDate.now();
+
+    System.out.println("now: " + now);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withLocale(Locale.getDefault());
+
+    System.out.println("format " + formatter.format(now));
+
+    formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
+    System.out.println("format full  " + formatter.format(now));
+    formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+    System.out.println("format md    " + formatter.format(now));
+    formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+    System.out.println("format short " + formatter.format(now));
+
+    int month = now.get(ChronoField.MONTH_OF_YEAR);
+    System.out.println("  month " + month);
+
+    formatter = DateTimeFormatter.ofPattern("MMM", Locale.CANADA_FRENCH);
+    System.out.println("format MMM  " + formatter.format(now));
+
   }
 
 }
