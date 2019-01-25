@@ -34,10 +34,8 @@ public class UuidValidator extends AbstractValidator {
       if (uuid.length() != 36) {
         throwErrorException("Invalid token",
                             "This does not appear to be a valid token. "
-                            + "Security tokens are exactly 36 characters long and formated like "
-                            + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'. "
-                            + "Did you copy the token exactly as it was sent? "
-                            + "Are there any extra white space characters?");
+                            + "Tokens are formated like "
+                            + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.");
       }
     }
   }
