@@ -21,6 +21,7 @@ package ch.keybridge.lib.faces.converter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Locale;
@@ -83,6 +84,33 @@ public class LocalDateConverter implements Converter {
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
     return null;
+  }
+
+  /**
+   * Build a date time formatter.
+   *
+   * @param context   the context
+   * @param component the parent component
+   * @return a Formatter instnace
+   */
+  private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
+    String pattern = getPattern(component);
+    return pattern == null
+           ? DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(getLocale(context, component)).withZone(ZONE_ID)
+           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component)).withZone(ZONE_ID);
+  }
+
+  /**
+   * Extract the converter output pattern provided as a component attribute.
+   * <p>
+   * Example:
+   * {@code &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z"/&gt;}
+   *
+   * @param component the UI component
+   * @return the output pattern.
+   */
+  private String getPattern(UIComponent component) {
+    return component != null ? (String) component.getAttributes().get("pattern") : null;
   }
 
   /**
