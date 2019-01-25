@@ -21,10 +21,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
- * Session scoped managed bean to support user locale selection. Detects the
- * locale for an application based on the initial browser request and use it
- * throughout the browsing session untill the user specifically changes the
- * locale.
+ * Dependent scoped managed bean to support user locale selection. Detects the
+ * locale for an application based on the initial browser request.
  * <p>
  * To set the current locale of the views, bind it to the &lt;f:view&gt; of your
  * master template.
@@ -39,8 +37,8 @@ import javax.inject.Named;
  * &lt;f:selectItem itemValue="es" itemLabel="Español" /&gt;
  * &lt;/h:selectOneMenu&gt; &lt;/h:form&gt;
  * <p>
- * To improve SEO of your internationalized pages (otherwise it would be marked
- * as duplicate content), bind language to html as well.
+ * To improve SEO of internationalized pages (otherwise it would be marked as
+ * duplicate content), bind language to html as well.
  * <p>
  * &lt;html lang="#{localeManager.language}"&gt;
  * <p>
@@ -49,7 +47,7 @@ import javax.inject.Named;
  * code. For example {@code 'en'} for English or {@code 'fr'} for French. e.g.
  * {@code &lt;h:commandLink action="#{localeBean.setLanguage('fr')}"&gt;FR&lt;/h:commandLink&gt;}
  * <p>
- * This is based upon Balusc's excellent explanation at
+ * This implementation is based upon Balusc's excellent explanation at
  * http://stackoverflow.com/questions/5388426/jsf-2-0-set-locale-throughout-session-from-browser-and-programmatically
  * and
  * <a href="http://jdevelopment.nl/internationalization-jsf-utf8-encoded-properties-files/">jdevelopment</a>
@@ -60,6 +58,8 @@ import javax.inject.Named;
  * @author Key Bridge
  * @since v0.2.0 created 03/08/17 to support French Canada translation
  * @since v3.0.0 moved 01/15/18 to faces-common
+ * @see
+ * <a href="https://www.oracle.com/technetwork/java/javase/javase7locales-334809.html">Locales</a>
  */
 @Named(value = "localeBean")
 @Dependent
