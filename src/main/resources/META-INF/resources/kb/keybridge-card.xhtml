@@ -16,6 +16,7 @@
     <cc:attribute name="url" required="false" type="java.lang.String" default="http://keybridgewireless.com" displayName="The organization url"/>
     <cc:attribute name="image" required="false" type="java.lang.String" default="https://s3.amazonaws.com/keybridge-cdn/assets/kb/media/1.0.0/kb-256.png" displayName="The fully qualified image URL to kb-256.png."/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+    <cc:attribute name="renderDetail" required="false" type="java.lang.Boolean" default="true" displayName="To display the detail list of name, location and links."/>
     <cc:attribute name="renderIcons" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the list icons."/>
 
   </cc:interface>
@@ -29,11 +30,14 @@
 
       <h:outputText value="#{cc.attrs.header}" styleClass="d-block h1"/>
       <h:outputText value="#{cc.attrs.subHeader}" styleClass="d-block"/>
-      <hr/>
-      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-id-card" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.organizationName} </span>
-      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-map-marker" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.locationName} </span>
-      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-envelope" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="mailto://#{cc.attrs.emailAddress}"> #{cc.attrs.emailAddress}</h:outputLink> </span>
-      <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-link" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="#{cc.attrs.url}" rel="nofollow me"> #{cc.attrs.url}</h:outputLink> </span>
+
+      <h:panelGroup rendered="#{cc.attrs.renderDetail}">
+        <hr/>
+        <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-id-card" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.organizationName} </span>
+        <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-map-marker" rendered="#{cc.attrs.renderIcons}"/> #{cc.attrs.locationName} </span>
+        <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-envelope" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="mailto://#{cc.attrs.emailAddress}"> #{cc.attrs.emailAddress}</h:outputLink> </span>
+        <span class="d-block"><h:outputText styleClass="mr-2 text-muted fa fa-fw fa-link" rendered="#{cc.attrs.renderIcons}"/> <h:outputLink value="#{cc.attrs.url}" rel="nofollow me"> #{cc.attrs.url}</h:outputLink> </span>
+      </h:panelGroup>
 
     </div>
 
