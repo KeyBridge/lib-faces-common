@@ -16,6 +16,7 @@ package ch.keybridge.lib.faces.validator;
 
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
@@ -26,6 +27,19 @@ import javax.faces.validator.ValidatorException;
  * @author Jesse Caulfield
  */
 public abstract class AbstractValidator implements Validator {
+
+  /**
+   * The JSF styleclass tag.
+   */
+  protected static final String STYLECLASS = "styleClass";
+  /**
+   * "is-invalid". The BS4 css marking an invalid form input.
+   */
+  protected static final String INVALID_CSS = "is-invalid";
+  /**
+   * "is-valid". The BS4 css marking a valid form input.
+   */
+  protected static final String VALID_CSS = "is-valid";
 
   /**
    * Access to the current container {@code Context &amp; Dependency Injection}
@@ -45,6 +59,26 @@ public abstract class AbstractValidator implements Validator {
    */
   protected final <U> U CDISelect(Class<U> namedBean) {
     return CDI.current().select(namedBean).get();
+  }
+
+  /**
+   * Add CSS to the indicated (form input) component marking it as valid or
+   * invalid. This method adds a BS4 form validation CSS to indicate valid
+   * (green) or invalid (red).
+   *
+   * @param component the form component
+   * @param isValid   the validity status.
+   * @since v4.0.0 added 01/28/19
+   */
+  protected void setValidityStatus(UIComponent component, boolean isValid) {
+    /**
+     * Get and clear the current styleclass, then add the validity status.
+     */
+    String styleClass = (String) component.getAttributes().get(STYLECLASS);
+    styleClass = styleClass.replaceAll(INVALID_CSS, "");
+    styleClass = styleClass.replaceAll(VALID_CSS, "");
+    styleClass += " " + (isValid ? VALID_CSS : INVALID_CSS);
+    component.getAttributes().put(STYLECLASS, styleClass);
   }
 
   /**
