@@ -33,11 +33,17 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("localeConverter")
 public class LocaleConverter implements Converter {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
-    return Locale.forLanguageTag(value);
+    return value == null ? null : Locale.forLanguageTag(value);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     return value != null ? ((Locale) value).getLanguage() : null;
