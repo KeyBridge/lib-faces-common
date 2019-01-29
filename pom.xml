@@ -51,6 +51,7 @@
     v4.0.0 - rewrite and reorganize markdown resources using flexmark library  (01/12/19)
     -- add wadl support, moved from lib-wadl to this
     -- add http link validator
+    -- update markdown processor config for improved tables, macro support
 
 
   </description>
@@ -88,11 +89,12 @@
 
 
     <dependency>
-      <!--since 4.0.0 for rendering tables-->
+      <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
       <groupId>com.vladsch.flexmark</groupId>
-      <artifactId>flexmark-ext-gfm-tables</artifactId>
+      <artifactId>flexmark-ext-tables</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+
     <dependency>
       <!--since 4.0.0 for rendering various gitlab extensions-->
       <groupId>com.vladsch.flexmark</groupId>
@@ -105,6 +107,15 @@
       <artifactId>flexmark-ext-gfm-tasklist</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+    <dependency>
+      <!--since 4.0.0 for complex MD macro content-->
+      <!--see https://github.com/vsch/flexmark-java/wiki/Macros-Extension-->
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-macros</artifactId>
+      <version>${lib.flexmark.version}</version>
+    </dependency>
+
+
 
     <dependency>
       <!--since 4.0.0 for rendering WADL API documentation-->

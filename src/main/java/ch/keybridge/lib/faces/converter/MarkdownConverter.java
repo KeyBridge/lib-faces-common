@@ -18,11 +18,12 @@
  */
 package ch.keybridge.lib.faces.converter;
 
-import com.vladsch.flexmark.ext.gfm.tables.TablesExtension;
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.KeepType;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.options.MutableDataSet;
 import java.util.Arrays;
@@ -43,7 +44,13 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("markdownConverter")
 public class MarkdownConverter implements Converter {
 
+  /**
+   * The HTML renderer.
+   */
   private final HtmlRenderer renderer;
+  /**
+   * The Markdown processor.
+   */
   private final Parser parser;
 
   public MarkdownConverter() {
@@ -59,6 +66,22 @@ public class MarkdownConverter implements Converter {
     options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
                                                  GitLabExtension.create(),
                                                  TaskListExtension.create()));
+    /**
+     * Parser.REFERENCES_KEEP defines the behavior of references when duplicate
+     * references are defined in the source. In this case it is configured to
+     * keep the last value, whereas the default behavior is to keep the first
+     * value.
+     * <p>
+     * TablesExtension added for full GFM table compatibility.
+     */
+    options.set(Parser.REFERENCES_KEEP, KeepType.LAST)
+      .set(HtmlRenderer.INDENT_SIZE, 2)
+      .set(HtmlRenderer.PERCENT_ENCODE_URLS, true)
+      .set(TablesExtension.CLASS_NAME, "table")
+      .set(TablesExtension.COLUMN_SPANS, false)
+      .set(TablesExtension.APPEND_MISSING_COLUMNS, true)
+      .set(TablesExtension.DISCARD_EXTRA_COLUMNS, true)
+      .set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, true);
     this.parser = Parser.builder(options).build();
     this.renderer = HtmlRenderer.builder(options).build();
   }
@@ -86,8 +109,10 @@ public class MarkdownConverter implements Converter {
    * <p>
    * RETURNS NULL.
    * <p>
-   * TODO: html to markdown converter. See
-   * https://github.com/domchristie/turndown as a potential candidate.
+   * TODO: html to markdown converter. See Html To Markdown in
+   * flexmark-html-parser.
+   * <p>
+   * See also https://github.com/domchristie/turndown as a potential candidate.
    */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {

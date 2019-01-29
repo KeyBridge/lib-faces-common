@@ -13,11 +13,13 @@
  */
 package ch.keybridge.lib.faces;
 
-import com.vladsch.flexmark.ext.gfm.tables.TablesExtension;
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
+import com.vladsch.flexmark.ext.macros.MacrosExtension;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.KeepType;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.options.MutableDataSet;
 import java.io.*;
@@ -168,11 +170,33 @@ public class FileContentBean {
      * GitLabExtension parses and renders GitLab Flavoured Markdown including
      * math (via Katex) and charts (via Mermaid). <br>
      * TaskListExtension renders check boxes in lists (cute).
+     * <p>
+     * Macro Definitions are block elements which can contain any markdown
+     * element(s) but can be expanded in a block or inline context, allowing
+     * block elements to be used where only inline elements are permitted by the
+     * syntax. See https://github.com/vsch/flexmark-java/wiki/Macros-Extension
      */
     MutableDataSet options = new MutableDataSet();
     options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
                                                  GitLabExtension.create(),
-                                                 TaskListExtension.create()));
+                                                 TaskListExtension.create(),
+                                                 MacrosExtension.create()));
+    /**
+     * Parser.REFERENCES_KEEP defines the behavior of references when duplicate
+     * references are defined in the source. In this case it is configured to
+     * keep the last value, whereas the default behavior is to keep the first
+     * value.
+     * <p>
+     * TablesExtension added for full GFM table compatibility.
+     */
+    options.set(Parser.REFERENCES_KEEP, KeepType.LAST)
+      .set(HtmlRenderer.INDENT_SIZE, 2)
+      .set(HtmlRenderer.PERCENT_ENCODE_URLS, true)
+      .set(TablesExtension.CLASS_NAME, "table")
+      .set(TablesExtension.COLUMN_SPANS, false)
+      .set(TablesExtension.APPEND_MISSING_COLUMNS, true)
+      .set(TablesExtension.DISCARD_EXTRA_COLUMNS, true)
+      .set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, true);
     /**
      * Optionally to convert soft-breaks to hard breaks. Disabled by default.
      */
