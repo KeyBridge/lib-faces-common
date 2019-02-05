@@ -15,7 +15,7 @@
     <cc:attribute name="isDisabled" required="false"  type="java.lang.Boolean" default="false" displayName="true if the link should be disabled"/>
 
     <cc:attribute name="renderBadge" required="false"  type="java.lang.Boolean" default="false" displayName="true if badge icon should be rendered"/>
-    <cc:attribute name="badgeValue" required="false"  type="java.lang.String" displayName="A badge to display"/>
+    <cc:attribute name="badgeValue" required="false"  type="java.lang.String" default=" " displayName="A badge to display. Add the badge class to display an actual badge."/>
     <cc:attribute name="badgeStyle" required="false"  type="java.lang.String" default="badge-light" displayName="The badge style class"/>
 
     <cc:attribute name="renderAlert" required="false"  type="java.lang.Boolean" default="false" displayName="true if an alert icon should be rendered"/>
@@ -34,7 +34,7 @@
         <h:outputText value="#{cc.attrs.value}"/>
       </span>
 
-      <h:outputText styleClass="badge #{cc.attrs.badgeStyle}" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.renderBadge}"/>
+      <h:outputText styleClass="#{cc.attrs.badgeStyle}" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.renderBadge}"/>
       <h:outputText styleClass="#{cc.attrs.alertStyle}" rendered="#{cc.attrs.renderAlert}"/>
     </h:link>
   </cc:implementation>
