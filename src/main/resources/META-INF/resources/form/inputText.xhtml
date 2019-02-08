@@ -18,8 +18,13 @@
 
     <cc:attribute name="maxlength" default="256" displayName="The maximum input length. Default is 255 characters"/>
 
+    <cc:attribute name="readOnly" default="false" type="java.lang.Boolean" displayName="If the input is not editable"/>
+    <cc:attribute name="readOnlyPlainText" default="false" type="java.lang.Boolean" displayName="Use only if readOnly; render as plain text"/>
+
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
+    <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
     <cc:editableValueHolder name="text" targets="text"/>
   </cc:interface>
 
@@ -29,9 +34,10 @@
     <div id="#{cc.clientId}" class="form-group">
       <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
+                   readonly="#{cc.attrs.readOnly}"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
-                   styleClass="form-control #{component.valid ?'':'is-invalid'}"/>
+                   styleClass="#{cc.attrs.readOnly and cc.attrs.readOnlyPlainText ?'form-control-plaintext':'form-control'} #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
       <span class="d-block">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
         <h:message for="text" styleClass="text-small text-danger float-right" rendered="#{!text.valid and cc.attrs.requiredMessage ne null}"/>
