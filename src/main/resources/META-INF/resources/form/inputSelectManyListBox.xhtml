@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <!--Decorated h:selectManyListbox form component-->
+  <!--@since - created 02/07/19-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" type="java.util.Collection" displayName="The input value bean reference" />
+    <cc:attribute name="selectItems" required="true" type="java.util.Map" displayName="A Map of String:String value:label entries" />
+    <cc:attribute name="size" default="5" type="java.lang.Integer" displayName="The number of entry lines to show."/>
+
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+
+    <cc:attribute name="smallSelect" default="false" type="java.lang.Boolean" displayName="Render the select as a small item"/>
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
+    <cc:editableValueHolder name="selectMany" targets="selectMany"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
+    <div id="#{cc.clientId}" class="form-group">
+      <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
+                           size="#{cc.attrs.size}"
+                           required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                           styleClass="custom-select #{cc.attrs.smallSelect?'custom-select-sm':''} #{component.valid ?'':'is-invalid'}">
+        <f:selectItems transient="true" value="#{cc.attrs.selectItems.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}"/>
+      </h:selectManyListbox>
+      <span class="d-block">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+        <h:message for="selectMany" styleClass="text-small text-danger float-right" rendered="#{!selectMany.valid and cc.attrs.requiredMessage ne null}"/>
+      </span>
+    </div>
+  </cc:implementation>
+</html>

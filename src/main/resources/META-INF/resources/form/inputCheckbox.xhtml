@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Decorated h:selectBooleanCheckbox form component-->
+  <!--@since - created 02/07/19-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" type="java.lang.Boolean"  displayName="The input value bean reference" />
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+
+    <cc:editableValueHolder name="check" targets="check"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.clientId}" class="d-block">
+      <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}"
+                               styleClass="#{component.valid ?'':'is-invalid'}"/>
+      <h:outputLabel for="check" value="#{cc.attrs.label}"/>
+      <span class="d-block">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+        <h:message for="text" styleClass="text-small text-danger float-right" rendered="#{!text.valid}"/>
+      </span>
+    </div>
+  </cc:implementation>
+</html>

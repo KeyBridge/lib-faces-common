@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Decorated h:inputText form component-->
+  <!--@since - created 02/07/19-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" displayName="The input value bean reference" />
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="type" default="text" displayName="One of: date, datetime, email, month, number, range, search, tel, time, url, week" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+    <cc:attribute name="placeholder" displayName="Example text shown in the input" />
+
+    <cc:attribute name="maxlength" default="256" displayName="The maximum input length. Default is 255 characters"/>
+
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+    <cc:editableValueHolder name="text" targets="text"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
+    <div id="#{cc.clientId}" class="form-group">
+      <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
+                   a:placeholder="#{cc.attrs.placeholder}"
+                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                   maxlength="#{cc.attrs.maxlength}"
+                   styleClass="form-control #{component.valid ?'':'is-invalid'}"/>
+      <span class="d-block">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+        <h:message for="text" styleClass="text-small text-danger float-right" rendered="#{!text.valid and cc.attrs.requiredMessage ne null}"/>
+      </span>
+    </div>
+  </cc:implementation>
+</html>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Decorated h:inputText numerical range slider form component-->
+  <!--@since - created 02/07/19-->
+
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" type="java.lang.Integer" displayName="The input value bean reference" />
+    <cc:attribute name="min" type="java.lang.Integer" default="0" displayName="The input minimum value" />
+    <cc:attribute name="max" type="java.lang.Integer" default="10" displayName="The input minimum value" />
+    <cc:attribute name="step" type="java.lang.Integer" default="1" displayName="The input minimum value" />
+
+
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+    <cc:attribute name="placeholder" displayName="Example text shown in the input" />
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+    <cc:attribute name="maxlength" default="256" displayName="The maximum input length. Default is 255 characters"/>
+
+    <cc:editableValueHolder name="range" targets="range"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
+    <div id="#{cc.clientId}" class="form-group">
+      <div class="d-flex align-items-center">
+
+        <h:inputText id="range" value="#{cc.attrs.value}"
+                     a:type="range"
+                     a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
+                     required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                     style="width: calc(100% - 80px);"
+                     styleClass="mr-2 #{component.valid ?'':'is-invalid'}"/>
+        <span id="#{cc.clientId}:value"> #{cc.attrs.value} </span>
+      </div>
+      <span class="d-block">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+        <h:message for="range" styleClass="text-small text-danger float-right" rendered="#{!range.valid and cc.attrs.requiredMessage ne null}"/>
+      </span>
+    </div>
+    <script type="text/javascript">
+      document.getElementById("#{cc.clientId}:range").oninput = function () {
+        document.getElementById("#{cc.clientId}:value").innerHTML = this.value;
+      };
+    </script>
+  </cc:implementation>
+</html>

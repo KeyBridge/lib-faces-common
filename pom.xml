@@ -52,7 +52,7 @@
     -- add wadl support, moved from lib-wadl to this
     -- add http link validator
     -- update markdown processor config for improved tables, macro support
-
+    -- add "form" family of bootstrap-4 components
 
   </description>
 
