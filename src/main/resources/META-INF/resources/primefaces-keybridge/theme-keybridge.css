@@ -10,7 +10,7 @@
   04/26/17 - merge in rebootstrap css
   10/25/17 - excise all non-PF content, placed in keybridge-basic.css
              match growl colors with bs-4 alerts
-  02/07/19 - fix date / calendar picker to work with bs4 (again))
+  02/07/19 - fix date / calendar picker to work with bs4 (again)); match ui-state-error css with bs4
 
   About:
 
@@ -37,6 +37,7 @@
 /*html {height: 100%;}*/
 /*body {height: 100% !important; margin: 0; padding: 0;}*/
 
+/*# ##############################################################################*/
 /* Component containers----------------------------------*/
 /*.ui-widget{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}*/
 /*.ui-widget .ui-widget{font-size:1em;}*/
@@ -45,6 +46,11 @@
 .ui-widget-content a{color:#333333;}
 .ui-widget-header{border:1px solid #eeeeee;background:#f5f5f5;color:#333333;font-weight:bold;}
 .ui-widget-header a{color:#333333;}
+
+/*form validation*/
+/*change border to red for errored components to match bs4 is-invalid css*/
+.ui-state-error {  border: 1px solid #dc3545;  border-radius: .25rem;}
+
 /* Interaction states ----------------------------------*/
 /*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{color:#333333;cursor:pointer;background-color:#f5f5f5;*background-color:#e6e6e6;background-image:-ms-linear-gradient(top, #ffffff, #e6e6e6);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));background-image:-webkit-linear-gradient(top, #ffffff, #e6e6e6);background-image:-o-linear-gradient(top, #ffffff, #e6e6e6);background-image:linear-gradient(top, #ffffff, #e6e6e6);background-image:-moz-linear-gradient(top, #ffffff, #e6e6e6);background-repeat:repeat-x;border:1px solid #cccccc;*border:0;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);filter:progid:dximagetransform.microsoft.gradient(enabled=false);*zoom:1;}*/
 /*.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{background-color:#e6e6e6;*background-color:#d9d9d9;}*/
@@ -63,6 +69,7 @@
 /*.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary{font-weight:bold;}*/
 /*.ui-priority-secondary, .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary{opacity:.7;filter:Alpha(Opacity=70);font-weight:normal;}*/
 /*.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{opacity:.35;filter:Alpha(Opacity=35);background-image:none;}*/
+/*# ##############################################################################*/
 /* Icons----------------------------------*/
 /* states and images */
 .ui-icon{width:16px;height:16px;margin-right:2px;background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
@@ -73,7 +80,7 @@
 .ui-state-active .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
 .ui-state-highlight .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_ffffff_256x240.png']}");}
 .ui-state-error .ui-icon, .ui-state-error-text .ui-icon{background-image:url("#{resource['primefaces-keybridge:images/ui-icons_333333_256x240.png']}");}
-/* positioning */
+/* query icon positioning */
 .ui-icon-carat-1-n{background-position:0 0;}
 .ui-icon-carat-1-ne{background-position:-16px 0;}
 .ui-icon-carat-1-e{background-position:-32px 0;}
@@ -250,6 +257,7 @@
 .ui-icon-gripsmall-diagonal-se{background-position:-64px -224px;}
 .ui-icon-grip-diagonal-se{background-position:-80px -224px;}
 
+/*# ##############################################################################*/
 /* Misc visuals----------------------------------*/
 /* Corner radius */
 /*.ui-corner-tl{-moz-border-radius-topleft:4px;-webkit-border-top-left-radius:4px;border-top-left-radius:4px;}
@@ -265,9 +273,11 @@
 .ui-widget-overlay{background:#000000;opacity:.80;filter:Alpha(Opacity=80);}
 .ui-widget-shadow{margin:-7px 0 0 -7px;padding:7px;background:#000000;opacity:.30;filter:Alpha(Opacity=30);}
 /* PrimeFaces Extensions */
-.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{cursor:text;background:none #ffffff;}
-.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{outline:0;outline:thin dotted \9;}
-.ui-inputfield.ui-state-error, .ui-widget-header .ui-inputfield.ui-state-error, .ui-widget-content .ui-inputfield.ui-state-error{color:#333333;}
+/*extend width to match bs4.form-control*/
+.ui-inputfield {cursor:text; width: 100%; }
+/*.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{cursor:text;background:none #ffffff; width: 100%; }*/
+/*.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{outline:0;outline:thin dotted \9;}*/
+/*.ui-inputfield.ui-state-error, .ui-widget-header .ui-inputfield.ui-state-error, .ui-widget-content .ui-inputfield.ui-state-error{color:#333333;}*/
 /** TabView **/
 .ui-tabs.ui-widget-content{background:transparent none;border:0;border-radius:0;}
 .ui-tabs .ui-tabs-nav.ui-widget-header{background:transparent none;border-radius:0;}
@@ -355,6 +365,7 @@
 /*.ui-menu.ui-menubar{padding-right:20px;padding-left:10px;background-color:#fafafa;background-image:-moz-linear-gradient(top, #ffffff, #f2f2f2);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));background-image:-webkit-linear-gradient(top, #ffffff, #f2f2f2);background-image:-o-linear-gradient(top, #ffffff, #f2f2f2);background-image:linear-gradient(to bottom, #ffffff, #f2f2f2);background-repeat:repeat-x;border:1px solid #d4d4d4;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);box-shadow:0 1px 4px rgba(0, 0, 0, 0.065);}*/
 /*.ui-menu.ui-menubar .ui-menu-parent .ui-menu-child{padding:5px 0;}*/
 
+/*# ##############################################################################*/
 /*Primefaces TWEAKS AND FIXES*/
 /*Make PF buttons look like Bootstrap btn */
 .ui-button { padding: 0.5rem 1rem !important; }
@@ -415,6 +426,7 @@
 /*remove borders and padding if the ui-spinner has styleClass form-control*/
 .form-group .ui-spinner {border: none !important;padding: 0  !important;}
 
+/*# ##############################################################################*/
 /*REBOOTSTRAP*/
 /*primefaces bootstrap modifications to match bootstrap 4*/
 
@@ -479,8 +491,9 @@
   border-radius: 0.2rem;
 }
 
+/*# ##############################################################################*/
 /*DATEPICKER*/
-#ui-datepicker-div  {
+.ui-datepicker  {
   background: #fff !important;
   border: 1px solid #ced4da;
   margin-top: 0.25em;
@@ -492,8 +505,6 @@
   margin-top: 0.25em;
   border-radius: 4px;
 }
-/*<span class="ui-icon ui-icon-circle-triangle-e">Next</span>*/
-
 /*.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {  display:none;}*/
 /*.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {  font: normal normal normal 14px/1 FontAwesome; top: 3px; padding-top: 6px; padding-left: 6px; }*/
 /*.ui-datepicker .ui-datepicker-prev:hover, .ui-datepicker .ui-datepicker-next:hover { background-color: #aaa; }*/
@@ -501,6 +512,8 @@
 .ui-datepicker .ui-datepicker-next::before { font-family: "Font Awesome 5 Free"; content: "\f101";}
 /*.ui-datepicket-prev > .ui-icon {display: none;}*/
 /*.ui-datepicket-next > .ui-icon {display: none;}*/
+/*# ##############################################################################*/
+/*datepicker buttons*/
 button.ui-datepicker-current{
   color: #292b2c;
   background-color: #fff;
@@ -551,41 +564,40 @@ button.ui-datepicker-close{
   border-radius: .25rem;
   transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+/*the current day is bold*/
 .ui-datepicker-today .ui-state-highlight {
   font-weight: bold;
   color: black;
 }
+/*the selected day is red*/
 .ui-datepicker-current-day .ui-state-highlight,
 .ui-datepicker-current-day .ui-state-default {
   color: red;
 }
+/*clean up the time sliders*/
 .ui_tpicker_time_input { border: none !important; }
-
 .ui-timepicker-div dl dt {  font-size: small;}
 .ui-timepicker-div dl dd { margin: 0 0 0.5em 40%; padding-top: 5px; }
 .ui_tpicker_time_label{ padding-top: 2px; }
 /*.ui_tpicker_time_input{ font-size: small; }*/
 .ui_tpicker_time {padding: 0 !important; margin-bottom: 0 !important; }
 
+/*# ##############################################################################*/
 /*DATETIME PICKER SLIDER*/
 .ui-slider-horizontal .ui-slider-handle {
   top: 0 !important;
   margin-left: -.25rem !important;
 }
-
 .ui-slider-horizontal {
   border-bottom: 1px solid #ced4da;
 }
+/*use FA clock as the time slider handle*/
 .ui-slider-horizontal .ui-slider-handle::before {
   font-family: "Font Awesome 5 Free"; content: "\f017";
   color: #007bff;
   cursor:pointer;
 }
 
-.ui-state-error {
-  border-color: #dc3545;
-  border-radius: .25rem;
-}
 
 /*Input Slider without font awesome.*/
 /*.ui-slider-handle{
@@ -608,6 +620,7 @@ button.ui-datepicker-close{
 .selectOneRadio td { padding: 0 0.5rem; white-space: nowrap; }
 
 /*transform all PF selects to look normal*/
+/*# ##############################################################################*/
 /*SELECT*/
 /*.ui-widget select {*/
 .ui-selectonemenu {
@@ -682,6 +695,7 @@ button.ui-datepicker-close{
 }
 
 
+/*# ##############################################################################*/
 /*make messages look like alerts*/
 /*remove internal margin from alerts*/
 .ui-messages-info-detail, .ui-messages-warn-detail, .ui-messages-error-detail, .ui-messages-fatal-detail, .ui-message-info-detail, .ui-message-warn-detail, .ui-message-error-detail, .ui-message-fatal-detail {
@@ -695,6 +709,7 @@ button.ui-datepicker-close{
 }
 
 
+/*# ##############################################################################*/
 /*GROWL customization*/
 /*make growl resemble normal alerts with darker borders */
 /*shift the growl messages below the topbar*/
@@ -751,56 +766,3 @@ button.ui-datepicker-close{
   border-radius: 3px;
   color: #586069 !important;
 }
-
-/*datepicker buttons*/
-button.ui-datepicker-current{
-  color: #292b2c;
-  background-color: #fff;
-  border-color: #ccc;
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 1px solid transparent;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: .25rem;
-  transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-button.ui-datepicker-close{
-  color: #fff;
-  background-color: #868e96;
-  border-color: #868e96;
-
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 1px solid transparent;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: .25rem;
-  transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
