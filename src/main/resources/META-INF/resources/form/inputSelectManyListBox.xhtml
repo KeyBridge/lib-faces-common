@@ -17,10 +17,10 @@
     <cc:attribute name="label"  displayName="The component label displayed above the input" />
     <cc:attribute name="description" displayName="A bried description displayed below the input" />
 
-    <cc:attribute name="smallSelect" default="false" type="java.lang.Boolean" displayName="Render the select as a small item"/>
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
+    <cc:attribute name="styleClass" displayName="Additional form control css. [custom-select-sm, custom-select-lg]"/>
     <cc:editableValueHolder name="selectMany" targets="selectMany"/>
   </cc:interface>
 
@@ -31,7 +31,7 @@
       <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                           styleClass="custom-select #{cc.attrs.smallSelect?'custom-select-sm':''} #{component.valid ?'':'is-invalid'}">
+                           styleClass="custom-select #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}">
         <f:selectItems transient="true" value="#{cc.attrs.selectItems.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}"/>
       </h:selectManyListbox>
       <span class="d-block">

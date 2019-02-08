@@ -13,12 +13,13 @@
     <cc:attribute name="label"  displayName="The component label displayed above the input" />
     <cc:attribute name="description" displayName="A bried description displayed below the input" />
 
+    <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
     <cc:editableValueHolder name="check" targets="check"/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="d-block">
+    <div id="#{cc.clientId}" class="d-block #{cc.attrs.styleClass} ">
       <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}"
                                styleClass="#{component.valid ?'':'is-invalid'}"/>
       <h:outputLabel for="check" value="#{cc.attrs.label}"/>

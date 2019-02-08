@@ -21,6 +21,7 @@
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
+    <cc:attribute name="styleClass" displayName="Additional form control css. [custom-select-sm, custom-select-lg]"/>
     <cc:editableValueHolder name="selectOne" targets="selectOne"/>
   </cc:interface>
 
@@ -30,7 +31,7 @@
     <div id="#{cc.clientId}" class="form-group">
       <h:selectOneMenu id="selectOne" value="#{cc.attrs.value}"
                        required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                       styleClass="custom-select #{cc.attrs.smallSelect?'custom-select-sm':''} #{component.valid ?'':'is-invalid'}">
+                       styleClass="custom-select #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}">
         <f:selectItem transient="true" itemLabel="#{cc.attrs.placeholder}" itemValue="" rendered="#{cc.attrs.placeholder ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}"/>
       </h:selectOneMenu>
