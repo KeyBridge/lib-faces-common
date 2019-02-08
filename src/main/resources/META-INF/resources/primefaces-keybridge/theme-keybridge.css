@@ -10,6 +10,7 @@
   04/26/17 - merge in rebootstrap css
   10/25/17 - excise all non-PF content, placed in keybridge-basic.css
              match growl colors with bs-4 alerts
+  02/07/19 - fix date / calendar picker to work with bs4 (again))
 
   About:
 
@@ -479,12 +480,25 @@
 }
 
 /*DATEPICKER*/
-#ui-datepicker-div  { background: #eee !important; }
+#ui-datepicker-div  {
+  background: #fff !important;
+  border: 1px solid #ced4da;
+  margin-top: 0.25em;
+  border-radius: 4px;
+}
+.ui-datepicker-inline {
+  background: #fff !important;
+  border: 1px solid #ced4da;
+  margin-top: 0.25em;
+  border-radius: 4px;
+}
+/*<span class="ui-icon ui-icon-circle-triangle-e">Next</span>*/
+
 /*.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {  display:none;}*/
 /*.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {  font: normal normal normal 14px/1 FontAwesome; top: 3px; padding-top: 6px; padding-left: 6px; }*/
 /*.ui-datepicker .ui-datepicker-prev:hover, .ui-datepicker .ui-datepicker-next:hover { background-color: #aaa; }*/
-/*.ui-datepicker .ui-datepicker-prev::before {  content: "\f060";}*/
-/*.ui-datepicker .ui-datepicker-next::before {  content: "\f061";}*/
+.ui-datepicker .ui-datepicker-prev::before { font-family: "Font Awesome 5 Free"; content: "\f100";}
+.ui-datepicker .ui-datepicker-next::before { font-family: "Font Awesome 5 Free"; content: "\f101";}
 /*.ui-datepicket-prev > .ui-icon {display: none;}*/
 /*.ui-datepicket-next > .ui-icon {display: none;}*/
 button.ui-datepicker-current{
@@ -537,43 +551,41 @@ button.ui-datepicker-close{
   border-radius: .25rem;
   transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
-.ui-datepicker-current-day .ui-state-highlight,
-.ui-datepicker-current-day .ui-state-default,
 .ui-datepicker-today .ui-state-highlight {
   font-weight: bold;
   color: black;
 }
+.ui-datepicker-current-day .ui-state-highlight,
+.ui-datepicker-current-day .ui-state-default {
+  color: red;
+}
+.ui_tpicker_time_input { border: none !important; }
 
 .ui-timepicker-div dl dt {  font-size: small;}
-.ui-timepicker-div dl dd { margin: 0 10px 1em 40%; padding-top: 5px; }
-.ui_tpicker_time_label{padding-top: 2px; }
-.ui_tpicker_time {padding-top: 0 !important; }
+.ui-timepicker-div dl dd { margin: 0 0 0.5em 40%; padding-top: 5px; }
+.ui_tpicker_time_label{ padding-top: 2px; }
+/*.ui_tpicker_time_input{ font-size: small; }*/
+.ui_tpicker_time {padding: 0 !important; margin-bottom: 0 !important; }
 
 /*DATETIME PICKER SLIDER*/
 .ui-slider-horizontal .ui-slider-handle {
   top: 0 !important;
   margin-left: -.25rem !important;
 }
-.ui-slider{ border: none !important; }
-.ui-slider .ui-slider-handle {
-  width: inherit !important;
-  height: inherit !important;
+
+.ui-slider-horizontal {
+  border-bottom: 1px solid #ced4da;
 }
-.ui-slider-handle {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
+.ui-slider-horizontal .ui-slider-handle::before {
+  font-family: "Font Awesome 5 Free"; content: "\f017";
+  color: #007bff;
+  cursor:pointer;
 }
-/*chevron-circle-up*/
-.ui-slider-handle:before { content: "\f139"; }
-.ui-slider-handle:hover{ cursor:pointer; }
+
+.ui-state-error {
+  border-color: #dc3545;
+  border-radius: .25rem;
+}
 
 /*Input Slider without font awesome.*/
 /*.ui-slider-handle{
