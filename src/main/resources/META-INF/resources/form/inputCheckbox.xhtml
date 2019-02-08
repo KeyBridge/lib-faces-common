@@ -14,15 +14,17 @@
     <cc:attribute name="description" displayName="A bried description displayed below the input" />
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
-    <cc:editableValueHolder name="check" targets="check"/>
+
+    <cc:editableValueHolder name="value" targets="check"/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="d-block #{cc.attrs.styleClass} ">
-      <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}"
-                               styleClass="#{component.valid ?'':'is-invalid'}"/>
-      <h:outputLabel for="check" value="#{cc.attrs.label}"/>
+      <div style="padding: .375rem .75rem .375rem 0;">
+        <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}" styleClass="#{component.valid ?'':'is-invalid'}"/>
+        <h:outputLabel for="check" value="#{cc.attrs.label}" styleClass="mb-0"/>
+      </div>
       <span class="d-block">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
         <h:message for="text" styleClass="text-small text-danger float-right" rendered="#{!text.valid}"/>
