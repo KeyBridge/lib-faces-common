@@ -55,6 +55,13 @@ public class LinkValidator extends AbstractValidator {
    */
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+    if (value == null) {
+      return;
+    }
+    String url = (String) value;
+    if (url.isEmpty()) {
+      return;
+    }
     try {
       Response response = ClientBuilder.newClient().target((String) value).request()
         .header(HttpHeaders.USER_AGENT, MOZILLA)
