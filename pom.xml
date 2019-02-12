@@ -6,6 +6,12 @@
   <version>4.0.0</version>
   <packaging>jar</packaging>
 
+  <parent>
+    <groupId>keybridge.lib</groupId>
+    <artifactId>faces</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
   <name>lib-faces-common</name>
   <description>A set of common JSF utilities and libraries to streamline JSF page
     and backing bean development.
@@ -53,21 +59,11 @@
     -- add http link validator
     -- update markdown processor config for improved tables, macro support
     -- add "form" family of bootstrap-4 components
+    -- update POM to inherit from keybridge.lib.faces master (02/11/19)
 
   </description>
 
-  <organization>
-    <name>Key Bridge</name>
-    <url>http://keybridge.ch</url>
-  </organization>
-
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <additionalparam>-Xdoclint:none</additionalparam>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-
-    <lib.primefaces.version>6.2</lib.primefaces.version>
     <lib.prettytime.version>4.0.1.Final</lib.prettytime.version>
     <lib.flexmark.version>0.40.4</lib.flexmark.version>
     <lib.wadl.version>1.0.0</lib.wadl.version>
@@ -77,7 +73,6 @@
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
-      <version>${lib.primefaces.version}</version>
     </dependency>
 
     <dependency>
@@ -86,7 +81,6 @@
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>${lib.prettytime.version}</version>
     </dependency>
-
 
     <dependency>
       <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
@@ -115,8 +109,6 @@
       <version>${lib.flexmark.version}</version>
     </dependency>
 
-
-
     <dependency>
       <!--since 4.0.0 for rendering WADL API documentation-->
       <groupId>keybridge.lib</groupId>
@@ -124,28 +116,6 @@
       <version>${lib.wadl.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>7.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-
-
-  <distributionManagement>
-    <repository>
-      <id>${repository.name}</id>
-      <url>${repository.url}</url>
-    </repository>
-  </distributionManagement>
-
 
 </project>
