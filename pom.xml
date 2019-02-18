@@ -13,11 +13,10 @@
   </parent>
 
   <name>lib-faces-common</name>
-  <description>A set of common JSF utilities and libraries to streamline JSF page
-    and backing bean development.
+  <description>A set of common JSF utilities and libraries to streamline site development.
 
     Includes compile dependencies for common JSF libraries such as
-    Primefaces, Onmifaces, keybridge-CSS, etc.
+    Primefaces, Omnifaces, keybridge-CSS, etc.
 
     History:
     v1.0.0 - collect common utilities into single JAR
