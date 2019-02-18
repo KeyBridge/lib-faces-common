@@ -20,6 +20,7 @@ package ch.keybridge.lib.faces.converter;
 
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
+import com.vladsch.flexmark.ext.macros.MacrosExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
@@ -38,7 +39,8 @@ import javax.faces.convert.FacesConverter;
  * Converts Markdown encoded text to HTML.
  *
  * @author Key Bridge
- * @since 3.0.0 added 01/16/18
+ * @since v3.0.0 added 01/16/18
+ * @since v4.0.0 extended 02/18/19 to include MacrosExtension
  * @see <a href="https://daringfireball.net/projects/markdown/">Markdown</a>
  */
 @FacesConverter("markdownConverter")
@@ -61,11 +63,17 @@ public class MarkdownConverter implements Converter {
      * GitLabExtension parses and renders GitLab Flavoured Markdown including
      * math (via Katex) and charts (via Mermaid). <br>
      * TaskListExtension renders check boxes in lists (cute).
+     * <p>
+     * Macro Definitions are block elements which can contain any markdown
+     * element(s) but can be expanded in a block or inline context, allowing
+     * block elements to be used where only inline elements are permitted by the
+     * syntax. See https://github.com/vsch/flexmark-java/wiki/Macros-Extension
      */
     MutableDataSet options = new MutableDataSet();
     options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
                                                  GitLabExtension.create(),
-                                                 TaskListExtension.create()));
+                                                 TaskListExtension.create(),
+                                                 MacrosExtension.create()));
     /**
      * Parser.REFERENCES_KEEP defines the behavior of references when duplicate
      * references are defined in the source. In this case it is configured to
