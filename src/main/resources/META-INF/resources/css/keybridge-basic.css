@@ -19,6 +19,7 @@
  * v1.0.2 - 09/17/18 - add markdown image sizing
  * v1.0.3 - 10/25/18 - update markdown image; set display:block
  * v1.0.4 - 01/10/19 - underline from h1, h2, h3 requires .markdown container
+ * v1.0.5 - 02/10/19 - list-group-item.selected plain text (no longer bold)
  */
 html {
   position: relative;
@@ -274,7 +275,7 @@ label { font-weight: bold; }
 }
 /*side tabs list group items*/
 .list-group-item.selected {
-  font-weight: 600;
+  /*font-weight: 600;*/
   color: #24292e;
   cursor: default;
   background-color: #fff;
