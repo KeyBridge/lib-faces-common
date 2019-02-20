@@ -57,7 +57,9 @@ public class PasswordValidator extends AbstractValidator {
       return; // Let required="true" do its job.
     }
     if (!Pattern.compile(PASSWORD_PATTERN).matcher(password).matches()) {
+      setValidityStatus(component, false);
       throwErrorException("Invalid password", "Password must be between six and 32 characters and include at least one upper case letter, one lower case letter and one numeric digit.");
     }
+    setValidityStatus(component, true);
   }
 }

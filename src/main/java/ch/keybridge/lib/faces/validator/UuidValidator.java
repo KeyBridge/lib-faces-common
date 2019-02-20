@@ -32,6 +32,7 @@ public class UuidValidator extends AbstractValidator {
     String uuid = value.toString().trim();
     if (uuid != null) {
       if (uuid.length() != 36) {
+        setValidityStatus(component, false);
         throwErrorException("Invalid token",
                             "This does not appear to be a valid token. "
                             + "Tokens are formated like "
