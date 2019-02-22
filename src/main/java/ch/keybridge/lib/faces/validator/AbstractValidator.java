@@ -74,11 +74,13 @@ public abstract class AbstractValidator implements Validator {
     /**
      * Get and clear the current styleclass, then add the validity status.
      */
-    String styleClass = (String) component.getAttributes().get(STYLECLASS);
-    styleClass = styleClass.replaceAll(INVALID_CSS, "");
-    styleClass = styleClass.replaceAll(VALID_CSS, "");
-    styleClass += " " + (isValid ? VALID_CSS : INVALID_CSS);
-    component.getAttributes().put(STYLECLASS, styleClass);
+    if (component != null) {
+      String styleClass = (String) component.getAttributes().get(STYLECLASS);
+      styleClass = styleClass.replaceAll(INVALID_CSS, "");
+      styleClass = styleClass.replaceAll(VALID_CSS, "");
+      styleClass += " " + (isValid ? VALID_CSS : INVALID_CSS);
+      component.getAttributes().put(STYLECLASS, styleClass);
+    }
   }
 
   /**
