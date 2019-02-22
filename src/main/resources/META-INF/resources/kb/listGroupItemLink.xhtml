@@ -27,13 +27,12 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:link styleClass="list-group-item list-group-item-action d-flex justify-content-between align-items-center #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}" disabled="#{cc.attrs.isDisabled}">
+    <h:link id="#{cc.clientId}" styleClass="list-group-item list-group-item-action d-flex justify-content-between align-items-center #{cc.attrs.active?'selected':''}" outcome="#{cc.attrs.outcome}" disabled="#{cc.attrs.isDisabled}">
       <f:param name="#{cc.attrs.parameterName}" value="#{cc.attrs.parameterValue}" rendered="#{cc.attrs.parameterName ne null}"/>
       <span>
         <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
         <h:outputText value="#{cc.attrs.value}"/>
       </span>
-
       <h:outputText styleClass="#{cc.attrs.badgeStyle}" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.renderBadge}"/>
       <h:outputText styleClass="#{cc.attrs.alertStyle}" rendered="#{cc.attrs.renderAlert}"/>
     </h:link>

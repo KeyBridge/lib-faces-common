@@ -52,19 +52,15 @@
 
           <div id="collapse#{cc.attrs.method.id}" class="#{cc.attrs.collapsible?'collapse':''}" role="tabpanel" aria-labelledby="headingOne">
             <div class="card-body">
-
               <!--method uri-->
               <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
-
               <!--method description-->
               <h:outputText value="#{cc.attrs.wadlBean.getMethodDescription(cc.attrs.method.id)}" escape="false" styleClass="card-text d-block mb-3"/>
-
               <h:panelGroup rendered="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method).size() > 0}">
                 <!--request query params-->
                 <hr/>
                 <p class="text-bold text-small">Request parameters</p>
                 <ui:repeat value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p">
-
                   <div class="wadl-var d-flex flex-row w-100 mb-2">
                     <div class="align-items-start">
                       <span class="text-bold"> #{p.name} </span>
@@ -80,22 +76,17 @@
                     </div>
                   </div>
                 </ui:repeat>
-
               </h:panelGroup>
-
               <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}">
                 <!--request post parameters-->
                 <hr/>
                 <!--Request objects are only valid for PUT or POST operations-->
                 <p class="text-bold text-small">Post parameters</p>
-
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}">
-
                   <ui:repeat value="#{cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
                     <p>
                       Parameters encoded as <h:outputText value="#{mvmap.key.mediaType}" styleClass="text-code text-small"/>.
                     </p>
-
                     <ui:repeat value="#{mvmap.value}" var="p">
                       <div class="d-flex flex-row w-100 mb-2">
                         <div class="align-items-start">
@@ -112,10 +103,8 @@
                         </div>
                       </div>
                     </ui:repeat>
-
                   </ui:repeat>
                 </h:panelGroup>
-
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}">
                   <!--request post objects-->
                   <ui:repeat value="#{cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
@@ -128,33 +117,23 @@
                     <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
                   </ui:repeat>
                 </h:panelGroup>
-
               </h:panelGroup>
-
               <hr/>
-
               <p class="text-bold text-small">Response parameters</p>
-
               <ui:repeat value="#{cc.attrs.method.response}" var="r">
                 <ui:repeat value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap">
                   <div>
                     <span class="text-bold"> HTTP #{r.status.size() == 0? '200' : r.status} </span>
-
                     <ui:repeat value="#{mvmap.value}" var="rep">
                       <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mx-2">#{rep.mediaType}</span>
                     </ui:repeat>
                   </div>
-
                   <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
                 </ui:repeat>
               </ui:repeat>
-
             </div>
-
           </div>
         </div>
-
-
       </h:panelGroup>
     </div>
   </cc:implementation>
