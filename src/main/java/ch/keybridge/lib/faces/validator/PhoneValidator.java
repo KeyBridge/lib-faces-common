@@ -53,7 +53,6 @@ public class PhoneValidator extends AbstractValidator {
       setValidityStatus(component, false);
       throwErrorException("Invalid number", "The phone number does not match any recognized dialing sequence.");
     }
-    setValidityStatus(component, true);
   }
 
 }

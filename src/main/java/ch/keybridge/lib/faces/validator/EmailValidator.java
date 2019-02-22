@@ -66,7 +66,6 @@ public class EmailValidator extends AbstractValidator {
         setValidityStatus(component, false);
         throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");
       }
-      setValidityStatus(component, true);
     }
 
 //    if (value != null && !RFC822.matcher(String.valueOf(value)).matches()) {      throwErrorException("E-mail validation failed.", "The email does not appear to be a valid address");    }

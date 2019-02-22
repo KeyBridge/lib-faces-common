@@ -66,9 +66,6 @@ public class LinkValidator extends AbstractValidator {
       Response response = ClientBuilder.newClient().target((String) value).request()
         .header(HttpHeaders.USER_AGENT, MOZILLA)
         .get();
-      if (response.getStatus() == 200) {
-        setValidityStatus(component, true);
-      }
     } catch (Exception e) {
       setValidityStatus(component, false);
       throwErrorException("Not available", "This resource is not available. " + e.getMessage());
