@@ -5,25 +5,16 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+  <!--FOOTER widget-->
+
   <cc:interface>
     <cc:attribute name="version" required="false" type="java.lang.String" displayName="The application version number"/>
     <cc:attribute name="border" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the top border"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
 
-  <!--only render if signed in-->
   <cc:implementation>
-    <style type="text/css">
-      .footer{
-        margin-top: 3em;
-        padding: 0 1em 0 1em;
-        font-size: 0.8em;
-        line-height: 2em; /* Vertically center the text there */
-        border-top: #{cc.attrs.border ? 'solid rgba(0,0,0,.1) thin' : 'none'} ;
-        white-space: nowrap;
-      }
-    </style>
-    <div id="footer" class="footer mx-2 d-flex justify-content-between #{cc.attrs.styleClass}">
+    <div id="#{cc.clientId}" class="ws-nowrap py-2 mt-3 mx-2 d-flex justify-content-between #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
       <span>
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
         <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
@@ -33,5 +24,15 @@
     </div>
   </cc:implementation>
 
+  <!--  <style type="text/css">
+      .footer{
+        margin-top: 3em;
+        padding: 0 1em 0 1em;
+        font-size: 0.8em;
+        line-height: 2em; /* Vertically center the text there */
+        border-top: #{cc.attrs.border ? 'solid rgba(0,0,0,.1) thin' : 'none'} ;
+        white-space: nowrap;
+      }
+    </style>-->
 </html>
 
