@@ -27,8 +27,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="date" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:inputText id="date" value="#{cc.attrs.value}"
                    a:type="date"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"

@@ -29,8 +29,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="autocomplete" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:inputText id="autocomplete" value="#{cc.attrs.value}"
                    a:list="#{cc.clientId}:datalist"
                    a:placeholder="#{cc.attrs.placeholder}"

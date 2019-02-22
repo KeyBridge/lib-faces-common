@@ -25,8 +25,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="textArea" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:inputTextarea id="textArea" value="#{cc.attrs.value}"
                        a:placeholder="#{cc.attrs.placeholder}"
                        rows="#{cc.attrs.rows}"

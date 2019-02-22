@@ -31,8 +31,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="text" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
                    readonly="#{cc.attrs.readOnly}"

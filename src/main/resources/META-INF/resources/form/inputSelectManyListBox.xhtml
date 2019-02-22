@@ -26,8 +26,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="selectMany" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"

@@ -30,8 +30,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputLabel for="input" value="#{cc.attrs.label}" styleClass="d-block"/>
     <div id="#{cc.clientId}" class="form-group">
+      <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block"/>
       <div class="d-flex align-items-center">
         <h:inputText id="range" value="#{cc.attrs.value}"
                      a:type="range"
