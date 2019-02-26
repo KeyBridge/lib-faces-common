@@ -14,7 +14,6 @@
  */
 package ch.keybridge.lib.faces.validator;
 
-import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.validator.Validator;
@@ -25,6 +24,7 @@ import javax.faces.validator.ValidatorException;
  * shortcuts for implementing a Faces validator.
  *
  * @author Jesse Caulfield
+ * @since v4.0.0 02/27/19 remove CDISelect() method; clashes with multi-WAR apps
  */
 public abstract class AbstractValidator implements Validator {
 
@@ -57,10 +57,7 @@ public abstract class AbstractValidator implements Validator {
    *                  {@code @Named}
    * @return an instance of the required type
    */
-  protected final <U> U CDISelect(Class<U> namedBean) {
-    return CDI.current().select(namedBean).get();
-  }
-
+//  protected final <U> U CDISelect(Class<U> namedBean) {    return CDI.current().select(namedBean).get();  }
   /**
    * Add CSS to the indicated (form input) component marking it as valid or
    * invalid. This method adds a BS4 form validation CSS to indicate valid
