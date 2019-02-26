@@ -16,13 +16,13 @@ package ch.keybridge.lib.faces;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
- * Dependent scoped managed bean to support user locale selection. Detects the
- * locale for an application based on the initial browser request.
+ * SessionScoped scoped managed bean to support user locale selection. Detects
+ * the locale for an application based on the initial browser request.
  * <p>
  * To set the current locale of the views, bind it to the &lt;f:view&gt; of your
  * master template.
@@ -62,7 +62,7 @@ import javax.inject.Named;
  * <a href="https://www.oracle.com/technetwork/java/javase/javase7locales-334809.html">Locales</a>
  */
 @Named(value = "localeBean")
-@Dependent
+@SessionScoped
 public class LocaleBean implements Serializable {
 
   /**
