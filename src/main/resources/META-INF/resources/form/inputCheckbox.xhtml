@@ -25,9 +25,9 @@
         <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}" styleClass="#{component.valid ?'':'is-invalid'}"/>
         <h:outputLabel for="check" value="#{cc.attrs.label}" styleClass="mb-0"/>
       </div>
-      <span class="d-block">
+      <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="text" styleClass="text-small text-danger float-right" rendered="#{!text.valid}"/>
+        <h:message for="text" styleClass="text-small text-danger" rendered="#{!text.valid}"/>
       </span>
     </div>
   </cc:implementation>

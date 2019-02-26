@@ -35,9 +35,9 @@
         <f:selectItem transient="true" itemLabel="#{cc.attrs.placeholder}" itemValue="" rendered="#{cc.attrs.placeholder ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}"/>
       </h:selectOneMenu>
-      <span class="d-block">
+      <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="selectOne" styleClass="text-small text-danger float-right" rendered="#{!selectOne.valid and cc.attrs.requiredMessage ne null}"/>
+        <h:message for="selectOne" styleClass="text-small text-danger" rendered="#{!selectOne.valid ne null}"/>
       </span>
     </div>
   </cc:implementation>

@@ -41,9 +41,9 @@
                      styleClass="mr-2 #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
         <span id="#{cc.clientId}:value"> #{cc.attrs.value} </span>
       </div>
-      <span class="d-block">
+      <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="range" styleClass="text-small text-danger float-right" rendered="#{!range.valid and cc.attrs.requiredMessage ne null}"/>
+        <h:message for="range" styleClass="text-small text-danger" rendered="#{!range.valid ne null}"/>
       </span>
     </div>
     <script type="text/javascript">

@@ -33,9 +33,9 @@
       <p:calendar id="datetime" value="#{cc.attrs.value}"
                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                   pattern="#{cc.attrs.pattern}" mode="#{cc.attrs.mode}"/>
-      <span class="d-block">
+      <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="datetime" styleClass="text-small text-danger float-right" rendered="#{!datetime.valid and cc.attrs.requiredMessage ne null}"/>
+        <h:message for="datetime" styleClass="text-small text-danger" rendered="#{!datetime.valid ne null}"/>
       </span>
     </div>
   </cc:implementation>

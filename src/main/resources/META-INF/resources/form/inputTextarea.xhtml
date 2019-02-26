@@ -32,9 +32,9 @@
                        rows="#{cc.attrs.rows}"
                        required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                        styleClass="form-control #{component.valid ?'':'is-invalid'} #{cc.attrs.smallText?'text-small':''}"/>
-      <span class="d-block">
+      <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="textArea" styleClass="text-small text-danger float-right" rendered="#{!textArea.valid and cc.attrs.requiredMessage ne null}"/>
+        <h:message for="textArea" styleClass="text-small text-danger" rendered="#{!textArea.valid ne null}"/>
       </span>
     </div>
   </cc:implementation>
