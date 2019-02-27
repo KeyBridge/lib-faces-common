@@ -37,6 +37,11 @@ public class WadlBean extends AbstractWadlBean {
   private static final Logger LOG = Logger.getLogger(WadlBean.class.getName());
 
   /**
+   * The default context root - localhost.
+   */
+  private static final String CONTEXT_DEFAULT = "http://127.0.0.1:8080";
+
+  /**
    * A markdown to HTML text converter.
    */
   private MarkdownConverter markdownConverter;
@@ -73,25 +78,28 @@ public class WadlBean extends AbstractWadlBean {
      * copied from FacesUtil.getContextPath() and excludes common port numbers
      * from the URI when present.
      */
-    ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
     String contextRoot = new StringBuilder()
-      .append(context.getRequestScheme())
+      .append(externalContext.getRequestScheme())
       .append("://")
-      .append(context.getRequestServerName())
-      .append((context.getRequestServerPort() != 80 && context.getRequestServerPort() != 443)
-              ? ":" + context.getRequestServerPort()
+      .append(externalContext.getRequestServerName())
+      .append((externalContext.getRequestServerPort() != 80 && externalContext.getRequestServerPort() != 443)
+              ? ":" + externalContext.getRequestServerPort()
               : "")
-      .append(context.getRequestContextPath())
+      .append(externalContext.getRequestContextPath())
       .toString();
     /**
      * Try to load the WADL from various commonly used JAXRS contexts. If the
-     * application declares a custom context is must be specified.
+     * application declares a custom context is must be specified. Try to
+     * connect to the localhost. If that fails then try the currently declared
+     * URL host.
      */
-    for (String restContext : new String[]{"api", "rest", "resource", "resources", "webresources"}) {
-      load(buildWadlUrl(contextRoot, restContext));
-//      load(contextRoot + "/" + restContext + "/application.wadl"); // sets the wadlUrl field.
-      if (wadl != null) {
-        break;
+    for (String context : new String[]{CONTEXT_DEFAULT, contextRoot}) {
+      for (String restContext : new String[]{"api", "rest", "resource", "resources", "webresources"}) {
+        load(buildWadlUrl(context, restContext));
+        if (wadl != null) {
+          break;
+        }
       }
     }
   }
