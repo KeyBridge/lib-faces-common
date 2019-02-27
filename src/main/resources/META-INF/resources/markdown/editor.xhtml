@@ -18,13 +18,20 @@
   <!-- INTERFACE -->
   <cc:interface>
     <cc:attribute name="value" required="true" type="java.lang.String" displayName="The text field to edit"/>
-    <cc:attribute name="renderMessage" required="false" type="java.lang.Boolean" default="true" displayName="If a markdown enabled message should be rendered."/>
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="description" default="#{cc.resourceBundleMap.memo_markdown_supported}" displayName="A bried description displayed below the input" />
+    <cc:attribute name="renderDescription" required="false" type="java.lang.Boolean" default="true" displayName="If a markdown enabled message should be rendered."/>
+    <cc:attribute name="rows" default="10" displayName="The number of text rows"/>
+    <cc:attribute name="placeholder" displayName="Example text shown in the input" />
+    <cc:attribute name="smallText" default="false" type="java.lang.Boolean" displayName="Render the text font smaller"/>
+
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
+    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass} form-group">
+      <h:outputLabel for="#{cc.id}-edit" value="#{cc.attrs.label}" rendered="#{cc.attrs.label ne null}" styleClass="d-block"/>
       <div class="card">
         <!--EDIT-->
         <div class="card-header edit-commands">
@@ -46,9 +53,14 @@
             <span title="Bullet list" onclick="$('##{cc.id}-edit').mdBulletList({default: '  '});" class="btn btn-sm btn-default fa fa-list-ul"/>
           </span>
         </div>
-        <textarea id="#{cc.id}-edit" name="markdown" rows="10" placeholder="#{cc.resourceBundleMap.textarea_placeholder}" class="form-control border-none markdown" data-provide="markdown">#{cc.attrs.value}</textarea>
+        <textarea id="#{cc.id}-edit" name="markdown" rows="#{cc.attrs.rows}"
+                  placeholder="#{cc.attrs.placeholder}"
+                  class="form-control border-none markdown #{cc.attrs.smallText?'text-small':''}"
+                  data-provide="markdown">#{cc.attrs.value}</textarea>
       </div>
-      <h:panelGroup rendered="#{cc.attrs.renderMessage}" styleClass="text-small d-block m-1"><icon class="fa fa-file-text-o"/> #{cc.resourceBundleMap.memo_markdown_supported}</h:panelGroup>
+      <span class="d-block my-1 d-flex justify-content-between">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.renderDescription}"/>
+      </span>
     </div>
   </cc:implementation>
 </html>
