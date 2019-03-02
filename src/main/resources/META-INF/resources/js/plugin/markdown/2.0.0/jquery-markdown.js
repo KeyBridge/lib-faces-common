@@ -338,7 +338,7 @@ $.fn.mdNumberedList = function (options) {
 };
 
 /**
- * Bullet list.
+ * Bullet list. Unordered list can use asterisks - Or minuses + Or pluses.
  */
 $.fn.mdBulletList = function (options) {
   var settings = $.extend({
@@ -348,7 +348,7 @@ $.fn.mdBulletList = function (options) {
     selected: function (code) {
       lines = code.split('\n');
       if (lines.length === 1) {
-        return '- ' + code + '\n';
+        return '* ' + code + '\n';
       } else {
         final_code = "\n";
         for (i = 0; i < lines.length; i++) {
@@ -359,7 +359,7 @@ $.fn.mdBulletList = function (options) {
       }
     },
     no_selection: function () {
-      return '- ' + settings.default + '\n';
+      return '* ' + settings.default + '\n';
     }
   });
 };
