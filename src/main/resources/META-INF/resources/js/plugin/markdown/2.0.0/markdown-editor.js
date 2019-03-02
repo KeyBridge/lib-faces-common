@@ -1,17 +1,13 @@
 /**
- * jQuery Markdown is a jQuery Plugin that provides necessary functions for a markdown editor
+ * Markdown editor is a jQuery Plugin that provides necessary functions for a markdown editor
  *
- * jQuery Markdown provides necessary wrapper functions for a markdown editor so
+ * Markdown editor provides necessary wrapper functions for a markdown editor so
  * anybody can create his/her own markdown editor using this plugin.
  *
- * jquery-markdown 1.1.0
+ * Forked from jquery-markdown v1.1.0
  *
- * @author Can Geliş (original) ca 2013
  * @author Key Bridge since 2018
- * @license License file must be attached with the source code (MIT License)
- * @see https://github.com/cangelis/jquery-markdown  (original)
- *
- * @since v2.0.0 created 03/02/19 add text formatting functions, tables
+ * @since v2.0.0 rewrite 03/02/19 with many extensions including tables, math, mermaid
  */
 
 /**
