@@ -28,7 +28,7 @@
     <cc:attribute name="placeholder" displayName="Example text shown in the input" />
     <cc:attribute name="smallText" default="false" type="java.lang.Boolean" displayName="Render the text font smaller"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
-    <cc:attribute name="renderExtendedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
+    <cc:attribute name="enableExtendedFunctions" type="java.lang.Boolean" default="false" displayName="Show extended function buttons."/>
     <!--fileUploadToken is a JWT identifying the sending application and possibly the user-->
     <cc:attribute name="fileUploadToken" type="java.lang.String" displayName="An upload token, presented by the sending web service on behalf of the user"/>
     <cc:attribute name="fileUploadUrl" type="java.lang.String" displayName="i0i0 file upload endpoint"/>
@@ -45,7 +45,7 @@
             <span title="Bold" onclick="$('##{cc.id}-edit').mdBold();" class="btn btn-sm btn-default fa fa-bold"/>
             <span title="Italic" onclick="$('##{cc.id}-edit').mdItalic();" class="btn btn-sm btn-default fa fa-italic"/>
             <span title="Underline" onclick="$('##{cc.id}-edit').mdUnderline();" class="btn btn-sm btn-default fa fa-underline"/>
-            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
               <span title="Strike" onclick="$('##{cc.id}-edit').mdStrikethrough();" class="btn btn-sm btn-default fa fa-strikethrough"/>
               <span title="Superscript" onclick="$('##{cc.id}-edit').mdSuperscript();" class="btn btn-sm btn-default fa fa-superscript"/>
               <span title="Subscript" onclick="$('##{cc.id}-edit').mdSubscript();" class="btn btn-sm btn-default fa fa-subscript"/>
@@ -55,7 +55,7 @@
 
           <span class="btn-group">
             <span title="Header 1" onclick="$('##{cc.id}-edit').mdHeader({number: 1, default: ' '});" class="btn btn-sm btn-default fa fa-heading"/>
-            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
               <span title="Header 2" onclick="$('##{cc.id}-edit').mdHeader({number: 2, default: ' '});" class="btn btn-sm btn-default fa fa-heading text-small"/>
               <span title="Header 3" onclick="$('##{cc.id}-edit').mdHeader({number: 3, default: ' '});" class="btn btn-sm btn-default fa fa-heading" style="font-size: 10px;"/>
             </h:panelGroup>
@@ -65,7 +65,7 @@
             <span title="Bullet list" onclick="$('##{cc.id}-edit').mdBulletList();" class="btn btn-sm btn-default fa fa-list-ul"/>
             <span title="Numbered list" onclick="$('##{cc.id}-edit').mdNumberedList();" class="btn btn-sm btn-default fa fa-list-ol"/>
             <span title="Block quote" onclick="$('##{cc.id}-edit').mdQuote();" class="btn btn-sm btn-default fa fa-quote-left"/>
-            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
               <span title="Table" onclick="$('##{cc.id}-edit').mdTable();" class="btn btn-sm btn-default fa fa-table"/>
             </h:panelGroup>
           </span>
@@ -77,7 +77,7 @@
             </h:outputLabel>
           </span>
 
-          <h:panelGroup styleClass="btn-group" rendered="#{cc.attrs.renderExtendedFunctions}">
+          <h:panelGroup styleClass="btn-group" rendered="#{cc.attrs.enableExtendedFunctions}">
             <span title="Inline Code" onclick="$('##{cc.id}-edit').mdCodeInline();" class="btn btn-sm btn-default fa fa-code"/>
             <span title="Code block" onclick="$('##{cc.id}-edit').mdCode();" class="btn btn-sm btn-default fa fa-file-code"/>
             <span title="Macro" onclick="$('##{cc.id}-edit').mdMacro();" class="btn btn-sm btn-default fa fa-magic"/>
