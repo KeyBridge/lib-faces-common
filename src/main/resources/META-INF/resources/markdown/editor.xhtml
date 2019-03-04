@@ -7,7 +7,7 @@
   <!--Markdown editor component.-->
   <!--01/23/18 - created-->
   <!--01/15/19 - move to faces-common-->
-  <!--03/02/19 - v2.0.0 add extended MD features, file upload support -->
+  <!--03/02/19 - v2.0.0 add file upload capability, extended MD features -->
 
   <!--How to use:-->
   <!--Requires-->
@@ -28,7 +28,7 @@
     <cc:attribute name="placeholder" displayName="Example text shown in the input" />
     <cc:attribute name="smallText" default="false" type="java.lang.Boolean" displayName="Render the text font smaller"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
-    <cc:attribute name="enableExtendedFunctions" type="java.lang.Boolean" default="false" displayName="Show extended function buttons."/>
+    <cc:attribute name="renderExtendedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
     <!--fileUploadToken is a JWT identifying the sending application and possibly the user-->
     <cc:attribute name="fileUploadToken" type="java.lang.String" displayName="An upload token, presented by the sending web service on behalf of the user"/>
     <cc:attribute name="fileUploadUrl" type="java.lang.String" displayName="i0i0 file upload endpoint"/>
@@ -45,7 +45,7 @@
             <span title="Bold" onclick="$('##{cc.id}-edit').mdBold();" class="btn btn-sm btn-default fa fa-bold"/>
             <span title="Italic" onclick="$('##{cc.id}-edit').mdItalic();" class="btn btn-sm btn-default fa fa-italic"/>
             <span title="Underline" onclick="$('##{cc.id}-edit').mdUnderline();" class="btn btn-sm btn-default fa fa-underline"/>
-            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
               <span title="Strike" onclick="$('##{cc.id}-edit').mdStrikethrough();" class="btn btn-sm btn-default fa fa-strikethrough"/>
               <span title="Superscript" onclick="$('##{cc.id}-edit').mdSuperscript();" class="btn btn-sm btn-default fa fa-superscript"/>
               <span title="Subscript" onclick="$('##{cc.id}-edit').mdSubscript();" class="btn btn-sm btn-default fa fa-subscript"/>
@@ -55,7 +55,7 @@
 
           <span class="btn-group">
             <span title="Header 1" onclick="$('##{cc.id}-edit').mdHeader({number: 1, default: ' '});" class="btn btn-sm btn-default fa fa-heading"/>
-            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
               <span title="Header 2" onclick="$('##{cc.id}-edit').mdHeader({number: 2, default: ' '});" class="btn btn-sm btn-default fa fa-heading text-small"/>
               <span title="Header 3" onclick="$('##{cc.id}-edit').mdHeader({number: 3, default: ' '});" class="btn btn-sm btn-default fa fa-heading" style="font-size: 10px;"/>
             </h:panelGroup>
@@ -65,7 +65,7 @@
             <span title="Bullet list" onclick="$('##{cc.id}-edit').mdBulletList();" class="btn btn-sm btn-default fa fa-list-ul"/>
             <span title="Numbered list" onclick="$('##{cc.id}-edit').mdNumberedList();" class="btn btn-sm btn-default fa fa-list-ol"/>
             <span title="Block quote" onclick="$('##{cc.id}-edit').mdQuote();" class="btn btn-sm btn-default fa fa-quote-left"/>
-            <h:panelGroup rendered="#{cc.attrs.enableExtendedFunctions}">
+            <h:panelGroup rendered="#{cc.attrs.renderExtendedFunctions}">
               <span title="Table" onclick="$('##{cc.id}-edit').mdTable();" class="btn btn-sm btn-default fa fa-table"/>
             </h:panelGroup>
           </span>
@@ -77,7 +77,7 @@
             </h:outputLabel>
           </span>
 
-          <h:panelGroup styleClass="btn-group" rendered="#{cc.attrs.enableExtendedFunctions}">
+          <h:panelGroup styleClass="btn-group" rendered="#{cc.attrs.renderExtendedFunctions}">
             <span title="Inline Code" onclick="$('##{cc.id}-edit').mdCodeInline();" class="btn btn-sm btn-default fa fa-code"/>
             <span title="Code block" onclick="$('##{cc.id}-edit').mdCode();" class="btn btn-sm btn-default fa fa-file-code"/>
             <span title="Macro" onclick="$('##{cc.id}-edit').mdMacro();" class="btn btn-sm btn-default fa fa-magic"/>
@@ -101,10 +101,11 @@
       .dotted { border: dashed 2px  #007bff; }
       .undotted {  border: solid 2px transparent; }
     </style>
+    <script type="text/javascript" src="#{cc.resourceBundleMap.makdown_editor_min}"/>
     <h:outputScript rendered="#{cc.attrs.fileUploadUrl ne null}">
       //  <![CDATA[
-      var totalBytesToUpload=0,totalBytesUploaded=0;function uploadFiles(e,t){totalBytesToUpload=0,totalBytesUploaded=0;for(var o=0;o<t.length;o++)totalBytesToUpload+=t[o].size;for(o=0;o<t.length;o++)console.debug("uploading file",t[o]),uploadOneFile(t[o],e)}function insertUrlIntoText(e,t,o){const n=e.selectionStart,a=e.value.substring(0,n),d=e.value.substring(n);var l="\n"+(isImageFile(t)?"![":"[")+t+"]("+o+")\n";e.value=a+l+d,e.focus(),e.selectionStart=n,e.selectionEnd=n+l.length}function isImageFile(e){return(e=e.toLowerCase()).endsWith("jpg")||e.endsWith("jpeg")||e.endsWith("png")||e.endsWith("gif")||e.endsWith("svg")}function uploadProgressCallback(e,t){console.debug("Upload progress for "+e.name,t.loaded/t.total*100,"(%)"),totalBytesUploaded+=t.loaded,nanobar.go(Math.ceil(100*Math.min(totalBytesUploaded/totalBytesToUpload,1)))}function handleIoioServerResponse(e,t,o){insertUrlIntoText(t,o,JSON.parse(e).url)}function uploadOneFile(e,t){var o=new FormData;o.append("file",e),o.append("contentType",e.type),o.append("size",e.size),o.append("token","#{cc.attrs.fileUploadToken}");var n=new XMLHttpRequest;n.open("POST","#{cc.attrs.fileUploadUrl}"),n.upload.onprogress=function(t){uploadProgressCallback(e,t)},n.onload=function(o){handleIoioServerResponse(n.response,t,e.name)},n.send(o)}document.getElementById("#{cc.id}-file-input").onchange=function(e){console.debug("event=change",e,this.files),uploadFiles(document.getElementById("#{cc.id}-edit"),this.files)},document.getElementById("#{cc.id}-edit").ondrop=function(e){e.preventDefault(),uploadFiles(document.getElementById("#{cc.id}-edit"),e.dataTransfer.files),e.target.classList.add("undotted"),e.target.classList.remove("dotted")},document.getElementById("#{cc.id}-edit").ondragover=function(e){e.preventDefault(),e.target.classList.remove("undotted"),e.target.classList.add("dotted")},document.getElementById("#{cc.id}-edit").ondragleave=function(e){e.target.classList.add("undotted"),e.target.classList.remove("dotted")};
-        //      ]]>
-  </h:outputScript>
-</cc:implementation>
+      function uploadOneFile(e, t){var d = new FormData; d.append("file", e), d.append("contentType", e.type), d.append("size", e.size), d.append("token", "#{cc.attrs.fileUploadToken}"); var n = new XMLHttpRequest; n.open("POST", "#{cc.attrs.fileUploadUrl}"), n.upload.onprogress = function(t){uploadProgressCallback(e, t)}, n.onload = function(d){handleIoioServerResponse(n.response, t, e.name)}, n.send(d)}document.getElementById("#{cc.id}-file-input").onchange = function(e){console.debug("event=change", e, this.files), uploadFiles(document.getElementById("#{cc.id}-edit"), this.files)}, document.getElementById("#{cc.id}-edit").ondrop = function(e){e.preventDefault(), uploadFiles(document.getElementById("#{cc.id}-edit"), e.dataTransfer.files), e.target.classList.add("undotted"), e.target.classList.remove("dotted")}, document.getElementById("#{cc.id}-edit").ondragover = function(e){e.preventDefault(), e.target.classList.remove("undotted"), e.target.classList.add("dotted")}, document.getElementById("#{cc.id}-edit").ondragleave = function(e){e.target.classList.add("undotted"), e.target.classList.remove("dotted")};
+      //      ]]>
+    </h:outputScript>
+  </cc:implementation>
 </html>

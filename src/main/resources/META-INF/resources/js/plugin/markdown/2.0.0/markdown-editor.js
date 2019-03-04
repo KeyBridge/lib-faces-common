@@ -1,13 +1,17 @@
 /**
- * Markdown editor is a jQuery Plugin that provides necessary functions for a markdown editor
+ * jQuery Markdown is a jQuery Plugin that provides necessary functions for a markdown editor
  *
- * Markdown editor provides necessary wrapper functions for a markdown editor so
+ * jQuery Markdown provides necessary wrapper functions for a markdown editor so
  * anybody can create his/her own markdown editor using this plugin.
  *
- * Forked from jquery-markdown v1.1.0
+ * jquery-markdown 1.1.0
  *
+ * @author Can Geliş (original) ca 2013
  * @author Key Bridge since 2018
- * @since v2.0.0 rewrite 03/02/19 with many extensions including tables, math, mermaid
+ * @license License file must be attached with the source code (MIT License)
+ * @see https://github.com/cangelis/jquery-markdown  (original)
+ *
+ * @since v2.0.0 created 03/02/19 add text formatting functions, tables
  */
 
 /**
@@ -15,6 +19,9 @@
  * @param {type} options the options, determines default text
  * @returns {undefined}
  */
+
+//  <![CDATA[
+
 $.fn.textReplace = function (options) {
   var settings = $.extend({
     selected: function () {
@@ -548,14 +555,13 @@ $.fn.mdEquation = function (options) {
   }, options);
   $(this).textReplace({
     selected: function (text) {
-      return "\n```math\n" + text + "```\n";
+      return "\n```math\n" + text + "\n```\n";
     },
     no_selection: function () {
       return "\n```math\n" + settings.default + "\n```\n";
     }
   });
 };
-
 
 /**
  * Mermaid chart.
@@ -581,3 +587,133 @@ $.fn.mdChart = function (options) {
     }
   });
 };
+
+// File upload functions
+
+/**
+ * The total bytes to be uploaded to the server. This is used to evaluate 100%
+ * in the upload progress.
+ * @type Number
+ */
+var totalBytesToUpload = 0;
+/**
+ * The current count of uploaded bytes. This value is periodically updated
+ * by the browser. It is then used to update the NANOBAR ajax upload status
+ * indicator. See the function "uploadProgressCallback"
+ * @type Number
+ */
+var totalBytesUploaded = 0;
+
+
+/**
+ * Upload the selected files to to the specified upload URL. This
+ * method iterated through the selected file(s) and uploads each. Depending
+ * upon the browser, files may be uploaded one-by-one or in parallel.
+ * Default behavior is parallel upload.
+ *
+ * @param {type} textArea target textArea to which to insert link to uploaded file
+ * @param {type} fileList fileList of files
+ * @returns {undefined}
+ */
+function uploadFiles(textArea, fileList) {
+  /**
+   * Initialize the upload status counters, then calculate total byte count to be uploaded.
+   */
+  totalBytesToUpload = 0;
+  totalBytesUploaded = 0;
+  for (var i = 0; i < fileList.length; i++) {
+    totalBytesToUpload += fileList[i].size;
+  }
+  /**
+   * Iterate over the files and upload each one individually. The totalBytesUploaded
+   * variable is updated inside the uploadOneFile method (by making periodic
+   * calls to "uploadProgressCallback").
+   */
+  for (var i = 0; i < fileList.length; i++) {
+    console.debug('uploading file', fileList[i]);
+    uploadOneFile(fileList[i], textArea);
+  }
+}
+
+/**
+ * Insert an HREF link into a markdown text area. Markdown HREF link format
+ * is "[label](url)". If the link is to an image then an IMG tag presented
+ * by preceeding the HREF link format with an exclamation: "![label](url)".
+ *
+ * @param {type} textArea the input text area editor
+ * @param {type} name the file name
+ * @param {type} url the HREF link url
+ * @returns {undefined}
+ */
+function insertUrlIntoText(textArea, name, url) {
+  const idx = textArea.selectionStart;
+  const textBefore = textArea.value.substring(0, idx);
+  const textAfter = textArea.value.substring(idx);
+  /**
+   * Text is inserted at the current cursor position, with the new HREF inserted
+   * on a new line. Add a "!" character if the file is an image.
+   */
+  var newText = '\n' + (isImageFile(name) ? '![' : '[') + name + '](' + url + ')\n';
+  textArea.value = textBefore + newText + textAfter;
+  /**
+   * Highlight and select the inserted file link reference.
+   */
+  textArea.focus();
+  textArea.selectionStart = idx;
+  textArea.selectionEnd = idx + newText.length;
+
+}
+/**
+ * Inspect a file name and determine if it is an image file.
+ * This matches common image filename extensions.
+ *
+ * @param {type} name the file name
+ * @returns {unresolved}
+ */
+function isImageFile(name) {
+  name = name.toLowerCase();
+  return name.endsWith('jpg') || name.endsWith('jpeg') || name.endsWith('png') || name.endsWith('gif') || name.endsWith('svg');
+}
+
+/**
+ * A stub callback function for upload progress. Will be called around 20 times
+ * per second for a single file. Updates NANOBAR, the default AJAX notification
+ * widget on Key Bridge web pages (and which must be already loaded!)
+ * <pre>
+ * While the request entity body is being uploaded and the upload complete flag
+ * is false, queue a task to fire a progress event named progress at the
+ * XMLHttpRequestUpload object about every 50ms or for every byte transmitted,
+ * whichever is least frequent.
+ * </pre>
+ * @see https://dvcs.w3.org/hg/xhr/raw-file/tip/Overview.html
+ * @param {File} file the File object for which this progress event happened
+ * @param {Event} event an object with two fields: 'loaded' and 'total', containing the uploaded and total bytes of the file, respectively.
+ * @returns {void}
+ */
+function uploadProgressCallback(file, event) {
+  totalBytesUploaded += event.loaded;
+  /**
+   * Developer note: Total bytes uploaded can exceed the size of the original
+   * file (due to form field data) so we cap the ratio at 1.
+   */
+  nanobar.go(Math.ceil(Math.min(totalBytesUploaded / totalBytesToUpload, 1) * 100));
+}
+
+/**
+ * A stub handler of the IOIO server response.
+ *
+ * @param {type} response the string response from the server
+ * @param {type} textArea  the input text area editor
+ * @param {type} fileName the uploading file name
+ * @returns {undefined}
+ */
+function handleIoioServerResponse(response, textArea, fileName) {
+  /**
+   * Developer note: request.response is a JSON string so we have to manually parse it as an object.
+   */
+  const responseObj = JSON.parse(response);
+  insertUrlIntoText(textArea, fileName, responseObj.url);
+}
+
+
+//      ]]>
