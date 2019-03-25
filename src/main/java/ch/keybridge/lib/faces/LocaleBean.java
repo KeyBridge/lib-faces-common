@@ -16,9 +16,10 @@ package ch.keybridge.lib.faces;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
 
 /**
  * SessionScoped scoped managed bean to support user locale selection. Detects
@@ -62,8 +63,10 @@ import javax.inject.Named;
  * <a href="https://www.oracle.com/technetwork/java/javase/javase7locales-334809.html">Locales</a>
  */
 @Named(value = "localeBean")
-@SessionScoped
+@RequestScoped
 public class LocaleBean implements Serializable {
+
+  private static final String LOCALE_COOKIE = ".locale";
 
   /**
    * Reference
@@ -87,13 +90,48 @@ public class LocaleBean implements Serializable {
    */
   @PostConstruct
   public void postConstruct() {
-    locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    /**
+     * Get the locale specified in the user cookie.
+     */
+    Cookie localeCookie = FacesUtil.getCookie(LOCALE_COOKIE);
+    if (localeCookie != null) {
+      /**
+       * Set the locale to the desired language.
+       */
+      locale = new Locale(localeCookie.getValue());
+    } else {
+      /**
+       * Return the preferred Locale in which the client will accept content.
+       */
+      locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    }
     /**
      * Null check.
      */
     if (locale == null) {
       locale = Locale.getDefault();
     }
+    /**
+     * Set the locale cookie if needed.
+     */
+    if (localeCookie == null) {
+      FacesUtil.addCookie(LOCALE_COOKIE, locale.getLanguage());
+    }
+  }
+
+  /**
+   * Parse a locale from a language.
+   *
+   * @param language anISO 639 language code
+   * @return the locale; null if not found
+   */
+  private Locale fromLanguage(String language) {
+    for (Locale availableLocale : Locale.getAvailableLocales()) {
+      if (availableLocale.getLanguage().equals(new Locale(language).getLanguage())) {
+        return availableLocale;
+      }
+    }
+    return null;
   }
 
   /**
