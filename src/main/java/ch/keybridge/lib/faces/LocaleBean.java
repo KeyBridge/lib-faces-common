@@ -150,6 +150,7 @@ public class LocaleBean implements Serializable {
    */
   public void setLocale(Locale locale) {
     this.locale = locale;
+    FacesUtil.addCookie(LOCALE_COOKIE, locale.getLanguage());
     FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
   }
 
