@@ -101,6 +101,9 @@ public class WadlBean extends AbstractWadlBean {
           break;
         }
       }
+      if (wadl == null) {
+        LOG.log(Level.INFO, "Error downloading WADL file.");
+      }
     }
   }
 

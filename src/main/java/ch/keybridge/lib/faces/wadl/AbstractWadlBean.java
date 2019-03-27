@@ -109,7 +109,7 @@ public abstract class AbstractWadlBean implements LabelProvider {
     try {
       downloadWADL(wadlUrl); // sets the wadlUrl field.
     } catch (Exception exception) {
-      LOG.log(Level.INFO, "Error downloading WADL file: {0}", exception.getMessage());
+//      LOG.log(Level.INFO, "Error downloading WADL file: {0}", exception.getMessage());
     }
   }
 
