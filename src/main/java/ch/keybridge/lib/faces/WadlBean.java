@@ -39,7 +39,7 @@ public class WadlBean extends AbstractWadlBean {
   /**
    * The default context root - localhost.
    */
-  private static final String CONTEXT_DEFAULT = "http://127.0.0.1:8080";
+  private static final String CONTEXT_DEFAULT = "http://localhost:8080";
 
   /**
    * A markdown to HTML text converter.
@@ -102,7 +102,7 @@ public class WadlBean extends AbstractWadlBean {
         }
       }
       if (wadl == null) {
-        LOG.log(Level.INFO, "Error downloading WADL file.");
+        LOG.log(Level.FINE, "Error downloading WADL file.");
       }
     }
   }
