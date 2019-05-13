@@ -2,10 +2,114 @@
                 xmlns="http://xmlns.jcp.org/xml/ns/javaee"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
-  
-  <description>Key Bridge common JSF UI components.</description>
+
   <namespace>http://keybridge.ch/markdown</namespace>
   <short-name>markdown</short-name>
+  <description>Key Bridge common JSF UI components.</description>
+
+  <tag>
+    <tag-name>editor</tag-name>
+    <source>resources/markdown/editor.xhtml</source>
+    <attribute>
+      <name>value</name>
+      <description>The text field to edit</description>
+      <required>true</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>label</name>
+      <description>The component label displayed above the input</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>description</name>
+      <description>A brief description displayed below the input. Default is "Format with Markdown is supported"</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>renderDescription</name>
+      <description>If a markdown enabled message should be rendered. Default is TRUE</description>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <name>rows</name>
+      <description>The number of text rows</description>
+      <required>false</required>
+      <type>java.lang.Integer</type>
+    </attribute>
+    <attribute>
+      <name>placeholder</name>
+      <description>Example text shown in the input</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>smallText</name>
+      <description>Render the text font smaller</description>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <name>styleClass</name>
+      <description>Any CSS style class to wrap the file content.</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>renderExtendedFunctions</name>
+      <description>Show extended function buttons</description>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <name>fileUploadToken</name>
+      <description>An upload token, presented by the sending web service on behalf of the user</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>fileUploadUrl</name>
+      <description>i0i0 file upload endpoint</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+
+  <tag>
+    <tag-name>outputFileContent</tag-name>
+    <source>resources/markdown/outputFileContent.xhtml</source>
+    <attribute>
+      <name>name</name>
+      <description>The file name (no extension).</description>
+      <required>true</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>styleClass</name>
+      <description>Any CSS style class to wrap the file content.</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+  <tag>
+    <tag-name>outputText</tag-name>
+    <source>resources/markdown/outputText.xhtml</source>
+    <attribute>
+      <name>value</name>
+      <description>The markdown encoded text</description>
+      <required>true</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>styleClass</name>
+      <description>Any CSS style class to wrap the file content.</description>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
 
 
 </facelet-taglib>

@@ -3,7 +3,6 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
 
-  
   <description>Key Bridge common JSF UI components.</description>
   <namespace>http://keybridge.ch/wadl</namespace>
   <short-name>wadl</short-name>
