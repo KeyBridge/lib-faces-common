@@ -75,6 +75,10 @@ public class FileContentBean {
    */
   private static final String XML = ".xml";
   /**
+   * ".json". The JSON file extension.
+   */
+  private static final String JSON = ".json";
+  /**
    * "en". The default language.
    */
   private static final String ENGLISH = "en";
@@ -126,7 +130,7 @@ public class FileContentBean {
     /**
      * Search for the language specific file.
      */
-    for (String extension : new String[]{MD, TEXT, XHTML, XML}) {
+    for (String extension : new String[]{MD, TEXT, XHTML, XML, JSON}) {
       String path = CONTENT + label + "." + language + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
         return Paths.get(getClass().getClassLoader().getResource(path).toURI());
@@ -135,7 +139,7 @@ public class FileContentBean {
     /**
      * Search for a default file with no language indicator.
      */
-    for (String extension : new String[]{MD, TEXT, XHTML, XML}) {
+    for (String extension : new String[]{MD, TEXT, XHTML, XML, JSON}) {
       String path = CONTENT + label + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
         return Paths.get(getClass().getClassLoader().getResource(path).toURI());

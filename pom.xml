@@ -59,6 +59,7 @@
     -- update markdown processor config for improved tables, macro support
     -- add "form" family of bootstrap-4 components
     -- update POM to inherit from keybridge.lib.faces master (02/11/19)
+    -- add reader support for XML and JSON raw data files (09/09/19)
 
   </description>
 
