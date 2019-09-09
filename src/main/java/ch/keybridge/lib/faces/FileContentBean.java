@@ -66,11 +66,14 @@ public class FileContentBean {
    * ".txt". Alternate markdown file extension.
    */
   private static final String TEXT = ".txt";
-
   /**
    * ".xhtml". The HTML file extension.
    */
   private static final String XHTML = ".xhtml";
+  /**
+   * ".xml". The XML file extension.
+   */
+  private static final String XML = ".xml";
   /**
    * "en". The default language.
    */
@@ -101,9 +104,9 @@ public class FileContentBean {
      */
     try {
       Path filename = findContentFile(label);
-      return filename.endsWith(XHTML)
-             ? readContentXHTML(filename)
-             : readContentMD(filename);
+      return filename.getFileName().toString().endsWith(MD)
+             ? readContentMD(filename)
+             : readContentRaw(filename);
     } catch (IOException | URISyntaxException exception) {
       LOGGER.log(Level.INFO, "Error reading file \"{0}\".  {1}", new Object[]{label, exception.getMessage()});
       return null;
@@ -123,7 +126,7 @@ public class FileContentBean {
     /**
      * Search for the language specific file.
      */
-    for (String extension : new String[]{MD, TEXT, XHTML}) {
+    for (String extension : new String[]{MD, TEXT, XHTML, XML}) {
       String path = CONTENT + label + "." + language + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
         return Paths.get(getClass().getClassLoader().getResource(path).toURI());
@@ -132,7 +135,7 @@ public class FileContentBean {
     /**
      * Search for a default file with no language indicator.
      */
-    for (String extension : new String[]{MD, TEXT, XHTML}) {
+    for (String extension : new String[]{MD, TEXT, XHTML, XML}) {
       String path = CONTENT + label + extension;
       if (getClass().getClassLoader().getResource(path) != null) {
         return Paths.get(getClass().getClassLoader().getResource(path).toURI());
@@ -151,7 +154,7 @@ public class FileContentBean {
    * @return the file content, converted to XHTML
    * @throws IOException if the file cannot be opened or read
    */
-  private String readContentXHTML(Path filename) throws IOException {
+  private String readContentRaw(Path filename) throws IOException {
     return new String(Files.readAllBytes(filename));
   }
 
