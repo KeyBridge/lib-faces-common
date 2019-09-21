@@ -12,6 +12,8 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <h:outputText id="#{cc.clientId}" value="#{cc.attrs.value}" converter="markdownConverter" escape="false" styleClass="#{cc.attrs.styleClass}"/>
+    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
+      <h:outputText value="#{cc.attrs.value}" converter="markdownConverter" escape="false"/>
+    </div>
   </cc:implementation>
 </html>
