@@ -20,6 +20,7 @@
  * v1.0.3 - 10/25/18 - update markdown image; set display:block
  * v1.0.4 - 01/10/19 - underline from h1, h2, h3 requires .markdown container
  * v1.0.5 - 02/10/19 - list-group-item.selected plain text (no longer bold)
+ * v1.0.6 - 09/21/19 - do not underline markdown headers
  */
 html {
   position: relative;
@@ -397,10 +398,10 @@ label { font-weight: bold; }
 
 
 /*markdown headers since v1.0.4*/
-.markdown h1, .markdown h2, .markdown h3 {
+/*.markdown h1, .markdown h2, .markdown h3 {
   border-bottom: 1px solid rgba(0,0,0,.2) !important;
   margin-bottom: 0.75em;
-}
+}*/
 
 /*markdown editor*/
 textarea.markdown {
