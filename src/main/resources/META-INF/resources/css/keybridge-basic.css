@@ -21,6 +21,7 @@
  * v1.0.4 - 01/10/19 - underline from h1, h2, h3 requires .markdown container
  * v1.0.5 - 02/10/19 - list-group-item.selected plain text (no longer bold)
  * v1.0.6 - 09/21/19 - do not underline markdown headers
+ * - add left border to blockquote
  */
 html {
   position: relative;
@@ -108,7 +109,8 @@ figure img { margin-bottom: 0.5em;}
 figure label, figure caption, figure .caption {  font-size: smaller; font-style: italic; }
 
 /*make blockquotes the same font size unless specifically declared otherwise*/
-blockquote {  font-size: inherit !important;}
+/*add a left border for emphasis*/
+blockquote, .blockquote { font-size: inherit !important; padding-left: 1.5rem; border-left: 5px solid rgba(0,0,0,.1) }
 
 /*fix ugly selects in safari*/
 select.form-control { -webkit-appearance: none; }
