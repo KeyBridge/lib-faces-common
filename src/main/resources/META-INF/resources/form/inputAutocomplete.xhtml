@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
@@ -23,7 +23,7 @@
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
-    <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
+    <cc:attribute name="styleClass" displayName="Additional form control css. e.g. [form-control-sm, form-control-lg]"/>
     <cc:editableValueHolder name="value" targets="autocomplete"/>
   </cc:interface>
 
@@ -32,7 +32,7 @@
     <div id="#{cc.clientId}" class="form-group">
       <h:outputLabel for="autocomplete" value="#{cc.attrs.label}" styleClass="d-block"/>
       <h:inputText id="autocomplete" value="#{cc.attrs.value}"
-                   a:list="#{cc.clientId}:datalist"
+                   a:list="#{cc.id}-datalist"
                    a:placeholder="#{cc.attrs.placeholder}"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
@@ -43,9 +43,9 @@
       </span>
     </div>
 
-    <datalist id="#{cc.clientId}:datalist">
+    <datalist id="#{cc.id}-datalist">
       <ui:repeat value="#{cc.attrs.datalist}" var="o">
-        <option value="#{o}"/>
+        <option>#{o}</option>
       </ui:repeat>
     </datalist>
 
