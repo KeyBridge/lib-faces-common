@@ -9,6 +9,7 @@
 
   <cc:interface>
     <cc:attribute name="version" required="false" type="java.lang.String" displayName="The application version number"/>
+    <cc:attribute name="rightsStatement" required="false" type="java.lang.String" default="#{cc.resourceBundleMap.all_rights_reserved}" displayName="The rights statement"/>
     <cc:attribute name="border" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the top border"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
@@ -18,7 +19,8 @@
       <span>
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
         <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
-        <br class="hidden-md-up"/> <h:outputText styleClass="text-smaller text-muted" value="#{cc.resourceBundleMap.all_rights_reserved}"/>
+        <br/>
+        <h:outputText styleClass="text-smaller text-muted" value="#{cc.attrs.rightsStatement}"/>
       </span>
       <h:outputText rendered="#{cc.attrs.version != null}" value="#{cc.attrs.version}" class="text-smaller text-muted"/>
     </div>
