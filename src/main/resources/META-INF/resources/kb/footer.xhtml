@@ -14,7 +14,7 @@
   </cc:interface>
 
   <cc:implementation>
-    <div id="#{cc.clientId}" class="ws-nowrap py-2 mt-3 mx-2 d-flex justify-content-between #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
+    <div id="#{cc.clientId}" class="ws-nowrap d-flex justify-content-between #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
       <span>
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
         <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
