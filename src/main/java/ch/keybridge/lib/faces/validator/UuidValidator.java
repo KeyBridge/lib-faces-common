@@ -34,10 +34,11 @@ public class UuidValidator extends AbstractValidator {
       if (uuid.length() != 36) {
         setValidityStatus(component, false);
         throwErrorException("Invalid token",
-                            "This does not appear to be a valid token. "
-                            + "Tokens are formated like "
-                            + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.");
+                "This does not appear to be a valid token. "
+                + "Tokens are formated like "
+                + "'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.");
       }
     }
+    setValidityStatus(component, true);
   }
 }

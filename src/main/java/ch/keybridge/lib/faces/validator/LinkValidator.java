@@ -74,6 +74,7 @@ public class LinkValidator extends AbstractValidator {
               .request()
               .header(HttpHeaders.USER_AGENT, MOZILLA)
               .get();
+      setValidityStatus(component, true); // update the jsf component
     } catch (Exception e) {
       setValidityStatus(component, false); // update the jsf component
       throwErrorException("Not available", "This resource is not available. " + e.getMessage());

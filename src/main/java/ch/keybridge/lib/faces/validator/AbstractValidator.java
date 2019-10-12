@@ -81,6 +81,24 @@ public abstract class AbstractValidator implements Validator {
   }
 
   /**
+   * Remove the validity status from the form input component.
+   *
+   * @param component the form component
+   * @since v4.1.1 added 10/12/19
+   */
+  protected void unsetValidityStatus(UIComponent component) {
+    /**
+     * Get and clear the current styleclass, then add the validity status.
+     */
+    if (component != null) {
+      String styleClass = (String) component.getAttributes().get(STYLECLASS);
+      styleClass = styleClass.replaceAll(INVALID_CSS, "");
+      styleClass = styleClass.replaceAll(VALID_CSS, "");
+      component.getAttributes().put(STYLECLASS, styleClass);
+    }
+  }
+
+  /**
    * Shortcut to throw a SEVERITY_WARN exception.
    *
    * @param messageSummary the message summary
