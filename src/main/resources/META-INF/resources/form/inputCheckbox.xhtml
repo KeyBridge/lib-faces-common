@@ -27,7 +27,7 @@
       </div>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="text" styleClass="text-small text-danger" rendered="#{!text.valid}"/>
+        <h:message for="text" styleClass="text-small text-danger" rendered="#{not text.valid}"/>
       </span>
     </div>
   </cc:implementation>

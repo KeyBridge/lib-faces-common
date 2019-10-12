@@ -27,7 +27,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="selectMany" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="selectMany" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
@@ -36,7 +36,7 @@
       </h:selectManyListbox>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="selectMany" styleClass="text-small text-danger" rendered="#{!selectMany.valid ne null}"/>
+        <h:message for="selectMany" styleClass="text-small text-danger" rendered="#{not selectMany.valid}"/>
       </span>
     </div>
   </cc:implementation>

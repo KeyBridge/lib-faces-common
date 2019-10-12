@@ -26,7 +26,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="textArea" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="textArea" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputTextarea id="textArea" value="#{cc.attrs.value}"
                        a:placeholder="#{cc.attrs.placeholder}"
                        rows="#{cc.attrs.rows}"
@@ -34,7 +34,7 @@
                        styleClass="form-control #{component.valid ?'':'is-invalid'} #{cc.attrs.smallText?'text-small':''}"/>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="textArea" styleClass="text-small text-danger" rendered="#{!textArea.valid ne null}"/>
+        <h:message for="textArea" styleClass="text-small text-danger" rendered="#{not textArea.valid}"/>
       </span>
     </div>
   </cc:implementation>

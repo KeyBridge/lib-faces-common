@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>4.1.0</version>
+  <version>4.1.1</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -61,7 +61,7 @@
     -- update POM to inherit from keybridge.lib.faces master (02/11/19)
     -- add reader support for XML and JSON raw data files (09/09/19)
     v4.1.0 - upgrade Primefaces from v6.2 to v7.0
-
+    v4.1.1 - add conditional label render in form components, fix valid render logic
 
   </description>
 

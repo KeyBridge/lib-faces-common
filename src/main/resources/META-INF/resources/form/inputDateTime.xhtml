@@ -29,13 +29,13 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="datetime" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="datetime" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <p:calendar id="datetime" value="#{cc.attrs.value}"
                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                   pattern="#{cc.attrs.pattern}" mode="#{cc.attrs.mode}"/>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="datetime" styleClass="text-small text-danger" rendered="#{!datetime.valid ne null}"/>
+        <h:message for="datetime" styleClass="text-small text-danger" rendered="#{not datetime.valid}"/>
       </span>
     </div>
   </cc:implementation>

@@ -31,7 +31,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <div class="d-flex align-items-center">
         <h:inputText id="range" value="#{cc.attrs.value}"
                      a:type="range"
@@ -43,7 +43,7 @@
       </div>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="range" styleClass="text-small text-danger" rendered="#{!range.valid ne null}"/>
+        <h:message for="range" styleClass="text-small text-danger" rendered="#{not range.valid}"/>
       </span>
     </div>
     <script type="text/javascript">

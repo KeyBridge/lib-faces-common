@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" 
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
@@ -30,7 +30,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="autocomplete" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="autocomplete" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="autocomplete" value="#{cc.attrs.value}"
                    a:list="#{cc.id}-datalist"
                    a:placeholder="#{cc.attrs.placeholder}"
@@ -39,7 +39,7 @@
                    styleClass="form-control #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="autocomplete" styleClass="text-small text-danger" rendered="#{!autocomplete.valid ne null}"/>
+        <h:message for="autocomplete" styleClass="text-small text-danger" rendered="#{not autocomplete.valid}"/>
       </span>
     </div>
 

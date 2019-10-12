@@ -28,7 +28,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group">
-      <h:outputLabel for="date" value="#{cc.attrs.label}" styleClass="d-block"/>
+      <h:outputLabel for="date" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="date" value="#{cc.attrs.value}"
                    a:type="date"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
@@ -36,7 +36,7 @@
                    styleClass="form-control #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="text" styleClass="text-small text-danger" rendered="#{!text.valid ne null}"/>
+        <h:message for="text" styleClass="text-small text-danger" rendered="#{not text.valid}"/>
       </span>
     </div>
   </cc:implementation>
