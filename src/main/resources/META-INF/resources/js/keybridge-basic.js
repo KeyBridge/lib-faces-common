@@ -18,16 +18,19 @@
  * 
  * 
  * History:
- * v1.0.0 copy active items from sas-portal  10/12/19
+ * v1.0.0 - copy active items from sas-portal  10/12/19
+ * - rewrite selectListItem to match pages vs. directories
  */
 
 
-// set the active tab on document load
-$(function () {
-  setActiveTab();
-  selectListItem();
-});
-// set the active tab
+/**
+ * Set the active tab. This matches the containing directory and supports 
+ * section by section navigation.
+ * 
+ * How to use: Apply the `nav-undertabs` CSS to the controlling tab element.
+ * 
+ * @returns {undefined}
+ */
 function setActiveTab() {
   var path = window.location.pathname;
   $('.nav-undertabs a').each(function () {
@@ -39,14 +42,28 @@ function setActiveTab() {
     }
   });
 }
-// set the active list item
+/**
+ * Set the active list item. This matches the exact HREF and supports 
+ * page-by-page navigation.
+ 
+ * How to use: Apply the `nav-list-group` CSS to the controlling tab element.
+ * 
+ * @returns {undefined}
+ */
 function selectListItem() {
   var path = window.location.pathname;
   $('.nav-list-group a').each(function () {
     var href = $(this).attr('href');
-    var hrefdir = href.substring(0, href.length - 11); // strip index.xhtml
-    if (path.substring(0, hrefdir.length) === hrefdir) {
+    if (path.includes(href)) {
       $(this).addClass('selected');
     }
   });
 }
+/**
+ * Set the active tab on document load
+ * @returns {undefined}
+ */
+$(function () {
+  setActiveTab();
+  selectListItem();
+});
