@@ -181,7 +181,6 @@ label { font-weight: bold; }
 .text-capitalize {  text-transform:capitalize !important}
 .text-initial {  text-transform:initial !important}
 
-.text-underline {  text-decoration: underline !important}
 .text-no-underline {  text-decoration:none !important}
 .text-ws-no-wrap {  white-space:nowrap !important}
 .text-ws-normal {  white-space:normal !important}
@@ -403,6 +402,7 @@ label { font-weight: bold; }
 /*.markdown h1, .markdown h2, .markdown h3 {
   border-bottom: 1px solid rgba(0,0,0,.2) !important;
   margin-bottom: 0.75em;
+  padding-bottom: 0.5rem;
 }*/
 
 /*markdown editor*/
