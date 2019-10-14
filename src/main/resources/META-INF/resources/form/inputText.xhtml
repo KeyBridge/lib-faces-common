@@ -31,18 +31,16 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="form-group">
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <h:outputLabel for="text" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
                    readonly="#{cc.attrs.readOnly}"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
-                   styleClass="#{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
-      <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="text" styleClass="text-small text-danger" rendered="#{not text.valid}"/>
-      </span>
+                   styleClass="#{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
+      <h:outputText value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:message for="text" styleClass="my-1 float-right text-small text-danger" rendered="#{not text.valid}"/>
     </div>
   </cc:implementation>
-</html>
+</html> 
