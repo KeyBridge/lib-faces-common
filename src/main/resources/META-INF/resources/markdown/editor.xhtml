@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
   <!--Markdown editor component.-->
   <!--01/23/18 - created-->
@@ -29,7 +30,12 @@
     <cc:attribute name="smallText" default="false" type="java.lang.Boolean" displayName="Render the text font smaller"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
     <cc:attribute name="renderExtendedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
+
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
     <!--fileUploadToken is a JWT identifying the sending application and possibly the user-->
+    <!--note: In the JWT: the user IP address is the shared secret-->
     <cc:attribute name="fileUploadToken" type="java.lang.String" displayName="An upload token, presented by the sending web service on behalf of the user"/>
     <cc:attribute name="fileUploadUrl" type="java.lang.String" displayName="i0i0 file upload endpoint"/>
   </cc:interface>
@@ -38,7 +44,7 @@
   <cc:implementation>
     <div id="#{cc.clientId}" class="#{cc.attrs.styleClass} form-group">
       <h:outputLabel for="#{cc.id}-edit" value="#{cc.attrs.label}" rendered="#{cc.attrs.label ne null}" styleClass="d-block"/>
-      <div class="card">
+      <div class="card #{component.valid ?'':'border-danger'}">
         <!--EDIT-->
         <div class="card-header edit-commands">
           <span class="btn-group">
@@ -93,19 +99,18 @@
                   class="form-control undotted markdown #{cc.attrs.smallText?'text-small':''}"
                   data-provide="markdown">#{cc.attrs.value}</textarea>
       </div>
-      <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.renderDescription}"/>
+      <span class="d-block text-small my-1 d-flex justify-content-between">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-muted" rendered="#{cc.attrs.renderDescription}"/>
+        <h:message for="text" styleClass="float-right text-danger" rendered="#{not text.valid}"/>
       </span>
     </div>
     <style type="text/css">
       .dotted { border: dashed 2px  #007bff; }
       .undotted {  border: solid 2px transparent; }
     </style>
-    <script type="text/javascript" src="#{cc.resourceBundleMap.makdown_editor_min}"/>
-    <h:outputScript rendered="#{cc.attrs.fileUploadUrl ne null}">
-      //  <![CDATA[
-      function uploadOneFile(e, t){var d = new FormData; d.append("file", e), d.append("contentType", e.type), d.append("size", e.size), d.append("token", "#{cc.attrs.fileUploadToken}"); var n = new XMLHttpRequest; n.open("POST", "#{cc.attrs.fileUploadUrl}"), n.upload.onprogress = function(t){uploadProgressCallback(e, t)}, n.onload = function(d){handleIoioServerResponse(n.response, t, e.name)}, n.send(d)}document.getElementById("#{cc.id}-file-input").onchange = function(e){console.debug("event=change", e, this.files), uploadFiles(document.getElementById("#{cc.id}-edit"), this.files)}, document.getElementById("#{cc.id}-edit").ondrop = function(e){e.preventDefault(), uploadFiles(document.getElementById("#{cc.id}-edit"), e.dataTransfer.files), e.target.classList.add("undotted"), e.target.classList.remove("dotted")}, document.getElementById("#{cc.id}-edit").ondragover = function(e){e.preventDefault(), e.target.classList.remove("undotted"), e.target.classList.add("dotted")}, document.getElementById("#{cc.id}-edit").ondragleave = function(e){e.target.classList.add("undotted"), e.target.classList.remove("dotted")};
-      //      ]]>
-    </h:outputScript>
+    <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_editor_min}"/>
+    <ui:fragment rendered="#{cc.attrs.fileUploadUrl ne null}">
+      <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_file_upload_min}"/>
+    </ui:fragment>
   </cc:implementation>
 </html>

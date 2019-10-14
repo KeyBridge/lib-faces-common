@@ -95,7 +95,8 @@ function uploadOneFile(file, textArea) {
   formData.append("size", file.size);
   /**
    * fileUploadToken is a JWT identifying the sending application and possibly the user.
-   * fileUploadToken ispresented by the sending web service on behalf of the user
+   * fileUploadToken ispresented by the sending web service on behalf of the user. 
+   * In the JWT: the user IP address is the shared secret.
    */
   formData.append("token", '#{cc.attrs.fileUploadToken}');
   /**
