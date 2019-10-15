@@ -38,7 +38,7 @@
                      a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
                      required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                      style="width: calc(100% - 80px);"
-                     styleClass="mr-2 #{component.valid ?'':'is-invalid'}"/>
+                     styleClass="mr-2 form-control-range #{component.valid ?'':'is-invalid'}"/>
         <span id="#{cc.clientId}:value"> #{cc.attrs.value} </span>
       </div>
       <span class="d-block my-1 d-flex justify-content-between">
