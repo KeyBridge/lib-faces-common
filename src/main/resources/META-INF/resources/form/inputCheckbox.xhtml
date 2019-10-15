@@ -20,7 +20,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="d-block #{cc.attrs.styleClass} ">
+    <div id="#{cc.clientId}" class="d-block #{cc.attrs.styleClass}">
       <div style="padding: .375rem .75rem .375rem 0;">
         <h:selectBooleanCheckbox id="check" value="#{cc.attrs.value}" styleClass="#{component.valid ?'':'is-invalid'}"/>
         <h:outputLabel for="check" value="#{cc.attrs.label}" styleClass="mb-0"/>

@@ -26,12 +26,12 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="form-group">
+    <div id="#{cc.clientId}" class="form-group  #{cc.attrs.styleClass}">
       <h:outputLabel for="selectMany" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                           styleClass="custom-select #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}">
+                           styleClass="custom-select #{component.valid ?'':'is-invalid'}">
         <f:selectItems transient="true" value="#{cc.attrs.selectItems.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}"/>
       </h:selectManyListbox>
       <span class="d-block my-1 d-flex justify-content-between">

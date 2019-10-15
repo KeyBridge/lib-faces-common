@@ -28,11 +28,11 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="form-group">
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <h:outputLabel for="selectOne" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:selectOneMenu id="selectOne" value="#{cc.attrs.value}"
                        required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                       styleClass="custom-select #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}">
+                       styleClass="custom-select #{component.valid ?'':'is-invalid'}">
         <f:selectItem transient="true" itemLabel="#{cc.attrs.placeholder}" itemValue="" rendered="#{cc.attrs.placeholder ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItemMap.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}" rendered="#{cc.attrs.selectItemMap ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems}" var="s" itemValue="#{s}" itemLabel="#{s}" rendered="#{cc.attrs.selectItems ne null}"/>

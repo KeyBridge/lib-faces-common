@@ -28,7 +28,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="form-group">
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <h:outputLabel for="datetime" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <p:calendar id="datetime" value="#{cc.attrs.value}"
                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"

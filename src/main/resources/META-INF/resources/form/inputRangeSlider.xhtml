@@ -30,7 +30,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="form-group">
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <div class="d-flex align-items-center">
         <h:inputText id="range" value="#{cc.attrs.value}"
@@ -38,7 +38,7 @@
                      a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
                      required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                      style="width: calc(100% - 80px);"
-                     styleClass="mr-2 #{cc.attrs.styleClass} #{component.valid ?'':'is-invalid'}"/>
+                     styleClass="mr-2 #{component.valid ?'':'is-invalid'}"/>
         <span id="#{cc.clientId}:value"> #{cc.attrs.value} </span>
       </div>
       <span class="d-block my-1 d-flex justify-content-between">
