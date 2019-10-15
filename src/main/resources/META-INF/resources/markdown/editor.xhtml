@@ -31,9 +31,6 @@
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
     <cc:attribute name="renderExtendedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
 
-    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
-    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
-
     <!--fileUploadToken is a JWT identifying the sending application and possibly the user-->
     <!--note: In the JWT: the user IP address is the shared secret-->
     <cc:attribute name="fileUploadToken" type="java.lang.String" displayName="An upload token, presented by the sending web service on behalf of the user"/>
@@ -44,7 +41,7 @@
   <cc:implementation>
     <div id="#{cc.clientId}" class="#{cc.attrs.styleClass} form-group">
       <h:outputLabel for="#{cc.id}-edit" value="#{cc.attrs.label}" rendered="#{cc.attrs.label ne null}" styleClass="d-block"/>
-      <div class="card #{component.valid ?'':'border-danger'}">
+      <div class="card">
         <!--EDIT-->
         <div class="card-header edit-commands">
           <span class="btn-group">
@@ -99,15 +96,14 @@
                   class="form-control undotted markdown #{cc.attrs.smallText?'text-small':''}"
                   data-provide="markdown">#{cc.attrs.value}</textarea>
       </div>
-      <span class="d-block text-small my-1 d-flex justify-content-between">
-        <h:outputText value="#{cc.attrs.description}" styleClass="text-muted" rendered="#{cc.attrs.renderDescription}"/>
-        <h:message for="text" styleClass="float-right text-danger" rendered="#{not text.valid}"/>
-      </span>
+      <h:outputText value="#{cc.attrs.description}" styleClass="d-block my-1 text-small text-muted" rendered="#{cc.attrs.renderDescription}"/>
     </div>
+
     <style type="text/css">
       .dotted { border: dashed 2px  #007bff; }
       .undotted {  border: solid 2px transparent; }
     </style>
+
     <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_editor_min}"/>
     <ui:fragment rendered="#{cc.attrs.fileUploadUrl ne null}">
       <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_file_upload_min}"/>
