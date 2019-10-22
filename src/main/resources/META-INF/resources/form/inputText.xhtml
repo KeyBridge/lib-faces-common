@@ -25,6 +25,7 @@
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
+    <cc:attribute name="internalStyleClass" displayName="Additional form control css. [w-100]"/>
 
     <cc:editableValueHolder name="value" targets="text"/>
   </cc:interface>
@@ -38,7 +39,7 @@
                    readonly="#{cc.attrs.readOnly}"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
-                   styleClass="#{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
+                   styleClass="#{cc.attrs.internalStyleClass} #{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
       <h:outputText value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
       <h:message for="text" styleClass="my-1 float-right text-small text-danger" rendered="#{not text.valid}"/>
     </div>
