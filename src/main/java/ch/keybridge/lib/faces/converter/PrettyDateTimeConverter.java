@@ -31,8 +31,12 @@ import javax.faces.convert.FacesConverter;
 import org.ocpsoft.prettytime.PrettyTime;
 
 /**
- * Generic pretty date time converter. Accepts ZonedDateTime, LocalDateTime,
- * LocalDate Date, String (of ZonedDateTime).
+ * Generic pretty date time converter. String converter accepts ZonedDateTime,
+ * LocalDateTime, LocalDate, java.util.Calendar, java.util.Date, and String (of
+ * ZonedDateTime).
+ * <p>
+ * This is a one-way `getAsString` converter. The Object converter always return
+ * null.
  *
  * @author Key Bridge
  * @since v4.0.0 added 01/14/19 to consolidate different pretty converters
