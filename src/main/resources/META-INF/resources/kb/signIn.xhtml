@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+              xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:f="http://xmlns.jcp.org/jsf/core"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:form="http://xmlns.jcp.org/jsf/composite/form">
+
+  <!--Sign-in component.-->
+  <!--@since v4.1.1 moved to kb to use as a common widget 10/31/19-->
+
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="userName" required="true" type="java.lang.String" displayName="The bean username field"/>
+    <cc:attribute name="password" required="true" type="java.lang.String" displayName="The bean password field"/>
+    <cc:attribute name="actionListener" required="true" method-signature="void signIn()" displayName="The sign in method"/>
+
+    <cc:attribute name="registerUrl" required="false" type="java.lang.String" default="#{cc.resourceBundleMap.register_url}" displayName="The register url link"/>
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <h:form styleClass="#{cc.attrs.styleClass}">
+      <f:passThroughAttribute name="autocomplete" value="off"/>
+      <form:inputText id="username" label="#{cc.resourceBundleMap.username}"
+                      required="true" requiredMessage="#{cc.resourceBundleMap.username} #{cc.resourceBundleMap.is_required}."
+                      value="#{cc.attrs.userName}"/>
+      <form:inputSecret id="password" label="#{cc.resourceBundleMap.password}"
+                        required="true" requiredMessage="#{cc.resourceBundleMap.password} #{cc.resourceBundleMap.is_required}."
+                        value="#{cc.attrs.password}"/>
+      <div class="form-group">
+        <input type="hidden" name="referer" value="#{param['referer']}"/>
+        <!--EXECUTE-->
+        <h:commandLink actionListener="#{cc.attrs.actionListener}" type="submit" styleClass="btn btn-success text-bold" a:type="submit" value="#{cc.resourceBundleMap.sign_in}"/>
+        #{cc.resourceBundleMap.sign_in_or}
+        <h:outputLink value="#{cc.attrs.registerUrl}">#{cc.resourceBundleMap.sign_up}</h:outputLink>
+      </div>
+
+      <p:messages id="messages" showIcon="false" showDetail="true" showSummary="false"/>
+    </h:form>
+  </cc:implementation>
+
+</ui:component>
