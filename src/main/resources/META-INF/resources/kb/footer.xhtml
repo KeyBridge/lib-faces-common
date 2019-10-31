@@ -9,20 +9,21 @@
 
   <cc:interface>
     <cc:attribute name="version" required="false" type="java.lang.String" displayName="The application version number"/>
+    <cc:attribute name="url" required="false" type="java.lang.String" default="#{cc.resourceBundleMap.keybridge_url}" displayName="The url link"/>
+    <cc:attribute name="company" required="false" type="java.lang.String" default="#{cc.resourceBundleMap.keybridge_wireless}" displayName="Company name"/>
     <cc:attribute name="rightsStatement" required="false" type="java.lang.String" default="#{cc.resourceBundleMap.all_rights_reserved}" displayName="The rights statement"/>
     <cc:attribute name="border" required="false" type="java.lang.Boolean" default="true" displayName="Whether to display the top border"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
   </cc:interface>
 
   <cc:implementation>
-    <div id="#{cc.clientId}" class="ws-nowrap d-flex justify-content-between #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
-      <span>
+    <div id="#{cc.clientId}" class="ws-nowrap #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
+      <h:outputText rendered="#{cc.attrs.version != null}" value="#{cc.attrs.version}" class="text-smaller text-muted float-right"/>
+      <span class="d-block">
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
-        <h:outputLink value="#{link.keybridge}" styleClass="mx-1">#{project.keybridge}</h:outputLink>
-        <br/>
-        <h:outputText styleClass="text-smaller text-muted" value="#{cc.attrs.rightsStatement}"/>
+        <h:outputLink value="#{cc.attrs.url}" styleClass="mx-1">#{cc.attrs.company}</h:outputLink>
       </span>
-      <h:outputText rendered="#{cc.attrs.version != null}" value="#{cc.attrs.version}" class="text-smaller text-muted"/>
+      <h:outputText styleClass="d-block text-smaller text-muted" value="#{cc.attrs.rightsStatement}"/>
     </div>
   </cc:implementation>
 
