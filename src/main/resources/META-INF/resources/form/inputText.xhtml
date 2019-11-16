@@ -19,6 +19,7 @@
 
     <cc:attribute name="maxlength" default="256" displayName="The maximum input length. Default is 255 characters"/>
 
+    <cc:attribute name="disabled" default="false" type="java.lang.Boolean" displayName="If the input is disabled"/>
     <cc:attribute name="readOnly" default="false" type="java.lang.Boolean" displayName="If the input is not editable"/>
     <cc:attribute name="readOnlyPlainText" default="false" type="java.lang.Boolean" displayName="Use only if readOnly; render as plain text"/>
 
@@ -38,6 +39,7 @@
       <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
                    readonly="#{cc.attrs.readOnly}"
+                   disabled="#{cc.attrs.disabled}"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
                    styleClass="#{cc.attrs.internalStyleClass} #{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
