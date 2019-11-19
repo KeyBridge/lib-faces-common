@@ -88,42 +88,42 @@
       <artifactId>primefaces</artifactId>
     </dependency>
 
+    <!--for pretty time conversion-->
     <dependency>
-      <!--for pretty time conversion-->
       <groupId>org.ocpsoft.prettytime</groupId>
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>${lib.prettytime.version}</version>
     </dependency>
 
+    <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
     <dependency>
-      <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-tables</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
 
+    <!--since 4.0.0 for rendering various gitlab extensions-->
     <dependency>
-      <!--since 4.0.0 for rendering various gitlab extensions-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gitlab</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+    <!--since 4.0.0 for rendering task lists-->
     <dependency>
-      <!--since 4.0.0 for rendering task lists-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gfm-tasklist</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+    <!--since 4.0.0 for complex MD macro content-->
+    <!--see https://github.com/vsch/flexmark-java/wiki/Macros-Extension-->
     <dependency>
-      <!--since 4.0.0 for complex MD macro content-->
-      <!--see https://github.com/vsch/flexmark-java/wiki/Macros-Extension-->
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-macros</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
 
+    <!--since 4.0.0 for rendering WADL API documentation-->
     <dependency>
-      <!--since 4.0.0 for rendering WADL API documentation-->
       <groupId>keybridge.lib</groupId>
       <artifactId>wadl</artifactId>
       <version>${lib.wadl.version}</version>
