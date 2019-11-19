@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>4.1.2</version>
+  <version>5.0.0</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -20,6 +20,7 @@
 
     History:
     v1.0.0 - collect common utilities into single JAR
+
     v2.0.0 - rewrite as maven release
     v2.0.1 - add getContextPath to FacesUtil
     v2.1.0 - PF and Omnifaces rev upgrade, refactor utilities into base package
@@ -42,6 +43,7 @@
     v2.8.0 - add phone, local, zoned date time converters; rename existing converters
     v2.9.0 - consolidate string converters into one converter that accepts parameters
     v2.10.0 - add 'addCookie' name + value signature
+
     v3.0.0 - add 'kb' widgets, file content and locale beans; upgrade markdown lib
     v3.1.0 - using markdown 2.x processor
     v3.1.1 - support string representations in pretty date time converters
@@ -53,6 +55,7 @@
     v3.6.0 - make primefaces dependency transitive
     v3.6.1 - update xml gregorian calendar converters
     v3.6.2 - make primefaces dependency compiled
+
     v4.0.0 - rewrite and reorganize markdown resources using flexmark library  (01/12/19)
     -- add wadl support, moved from lib-wadl to this
     -- add http link validator
@@ -63,12 +66,19 @@
     v4.1.0 - upgrade Primefaces from v6.2 to v7.0
     v4.1.1 - add conditional label render in form components, fix valid render logic
     v4.1.2 - add sign in composite component
+
+    v5.0.0 - refactor all into 'ch.keybridge.faces' base package (2019-11-19)
+    - bump all dependency versions
+
   </description>
 
   <properties>
-    <lib.prettytime.version>4.0.1.Final</lib.prettytime.version>
-    <lib.flexmark.version>0.40.4</lib.flexmark.version>
-    <lib.wadl.version>1.0.0</lib.wadl.version>
+    <!--4.0.2.Final released 21-May-2018-->
+    <lib.prettytime.version>4.0.2.Final</lib.prettytime.version>
+    <!--0.50.44 released 11-Nov-2019-->
+    <lib.flexmark.version>0.50.44</lib.flexmark.version>
+    <!--1.1.0 release 2019-11-19-->
+    <lib.wadl.version>1.1.0</lib.wadl.version>
   </properties>
 
   <dependencies>

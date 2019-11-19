@@ -44,7 +44,7 @@ The resolved constants are by reference stored in the cache to improve retrievin
 ]]>
     </description>
     <tag-name>importConstants</tag-name>
-    <handler-class>ch.keybridge.lib.faces.util.ImportConstants</handler-class>
+    <handler-class>ch.keybridge.faces.util.ImportConstants</handler-class>
     <attribute>
       <description>
 <![CDATA[
