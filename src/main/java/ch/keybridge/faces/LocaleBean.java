@@ -106,16 +106,20 @@ public class LocaleBean implements Serializable {
       locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
     }
     /**
-     * Null check.
+     * Always provide a locale.
      */
     if (locale == null) {
       locale = Locale.getDefault();
     }
     /**
-     * Set the locale cookie if needed.
+     * Set a new global, long lived, locale cookie if needed.
      */
     if (localeCookie == null) {
-      FacesUtil.addCookie(LOCALE_COOKIE, locale.getLanguage());
+      Cookie cookie = new Cookie(LOCALE_COOKIE, locale.getLanguage());
+      cookie.setPath("/");
+      cookie.setVersion(0);
+      cookie.setMaxAge(Integer.MAX_VALUE);
+      FacesUtil.addCookie(cookie);
     }
   }
 
