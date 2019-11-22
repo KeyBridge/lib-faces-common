@@ -11,6 +11,7 @@
 
   <!--Sign-in component.-->
   <!--@since v4.1.1 moved to kb to use as a common widget 10/31/19-->
+  <!--v5.0.0 - use h:commandButton to render input type=submit instead of a link-->
 
 
   <!-- INTERFACE -->
@@ -36,7 +37,8 @@
       <div class="form-group">
         <input type="hidden" name="referer" value="#{param['referer']}"/>
         <!--EXECUTE-->
-        <h:commandLink actionListener="#{cc.attrs.actionListener}" type="submit" styleClass="btn btn-success text-bold" a:type="submit" value="#{cc.resourceBundleMap.sign_in}"/>
+        <h:commandButton actionListener="#{cc.attrs.actionListener}" a:type="submit"
+                         styleClass="btn btn-success text-bold" value="#{cc.resourceBundleMap.sign_in}"/>
         #{cc.resourceBundleMap.sign_in_or}
         <h:outputLink value="#{cc.attrs.registerUrl}">#{cc.resourceBundleMap.sign_up}</h:outputLink>
       </div>
