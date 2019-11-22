@@ -521,6 +521,15 @@ public class FacesUtil {
   }
 
   /**
+   * Determine if the current servlet request uses HTTPS (secure) protocol.
+   *
+   * @return TRUE if the current request uses HTTPS
+   */
+  public static boolean isHttps() {
+    return "https".equalsIgnoreCase(getHttpServletRequest().getScheme());
+  }
+
+  /**
    * Add a cookie cookie to the HttpServletResponse. This method can be called
    * multiple times to set more than one cookie.
    * <p>
@@ -535,6 +544,7 @@ public class FacesUtil {
     Cookie cookie = new Cookie(name, value);
     cookie.setPath(getExternalContext().getRequestContextPath());
     cookie.setVersion(0);
+    cookie.setSecure(isHttps());
     addCookie(cookie);
     return cookie;
   }
