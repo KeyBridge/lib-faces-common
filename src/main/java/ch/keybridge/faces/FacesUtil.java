@@ -543,8 +543,9 @@ public class FacesUtil {
   public static Cookie addCookie(String name, String value) {
     Cookie cookie = new Cookie(name, value);
     cookie.setPath(getExternalContext().getRequestContextPath());
-    cookie.setVersion(0);
+    cookie.setVersion(1);
     cookie.setSecure(isHttps());
+    cookie.setHttpOnly(true);
     addCookie(cookie);
     return cookie;
   }
