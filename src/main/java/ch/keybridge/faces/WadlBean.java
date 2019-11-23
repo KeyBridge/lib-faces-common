@@ -95,7 +95,7 @@ public class WadlBean extends AbstractWadlBean {
      * URL host.
      */
     for (String context : new String[]{CONTEXT_DEFAULT, contextRoot}) {
-      for (String restContext : new String[]{"api", "rest", "resource", "resources", "webresources"}) {
+      for (String restContext : new String[]{"api", "rs", "rest", "resource", "resources", "webresources"}) {
         load(buildWadlUrl(context, restContext));
         if (wadl != null) {
           break;
