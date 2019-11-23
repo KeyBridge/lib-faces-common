@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
   <!--xmlns:a="http://xmlns.jcp.org/jsf/passthrough"-->
   <!--WADL component. Requires a WADL bean.-->
@@ -58,32 +57,28 @@
               <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
               <!--method description-->
               <h:outputText value="#{cc.attrs.wadlBean.getMethodDescription(cc.attrs.method.id)}" escape="false" styleClass="card-text d-block mb-3"/>
-              <h:panelGroup rendered="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method).size() > 0}">
+              <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}">
                 <!--request query params-->
-                <hr/>
                 <p class="text-bold text-small">Request parameters</p>
-
                 <h:dataTable value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p"
                              styleClass="table table-sm table-no-border"
-                             columnClasses="text-bold, text-small, text-small text-capitalize, w-100, float-right">
+                             columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
                   <h:column>
-                    <f:facet name="header">Name</f:facet>
-                      #{p.name}
+                    #{p.name}
                   </h:column>
                   <h:column>
-                    <h:outputText value="#{p.path}" styleClass="text-code"/>
-                  </h:column>
-                  <h:column>
-                    <f:facet name="header">Type</f:facet>
                     <span class="text-code text-success">#{p.type.localPart}</span>
                   </h:column>
                   <h:column>
-                    <f:facet name="header">Description</f:facet>
                     <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var"/>
-                    <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
+                    <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.path ne null}">
+                      Name = <h:outputText value="#{p.path}" styleClass="text-danger text-monospace"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.default ne null}">
+                      Default = <h:outputText value="#{p.default}" styleClass="text-danger text-monospace"/>
+                    </h:panelGroup>
                   </h:column>
                   <h:column>
-                    <f:facet name="header">Type</f:facet>
                     <span class="text-code text-small text-muted">#{p.style}</span>
                   </h:column>
 
@@ -91,35 +86,41 @@
               </h:panelGroup>
 
               <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}">
-                <!--request post parameters-->
-                <hr/>
-                <!--Request objects are only valid for PUT or POST operations-->
-                <p class="text-bold text-small">Post parameters</p>
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}">
+                  <!--request post parameters-->
+                  <!--Request objects are only valid for PUT or POST operations-->
                   <ui:repeat value="#{cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
-                    <p>
-                      Parameters encoded as <h:outputText value="#{mvmap.key.mediaType}" styleClass="text-code text-small"/>.
+                    <p class="text-small">
+                      <span class="text-bold">Form parameters</span>
+                      <span class="float-right"><h:outputText value="#{mvmap.key.mediaType}" styleClass="text-code"/></span>
                     </p>
-                    <ui:repeat value="#{mvmap.value}" var="p">
-                      <div class="d-flex flex-row w-100 mb-2">
-                        <div class="align-items-start">
-                          <span class="text-bold"> #{p.name} </span>
-                          <span class="text-code text-small text-success text-capitalize mx-2">#{p.type.localPart}</span>
-                          <h:outputText value="#{p.path}" styleClass="text-code text-small mx-3" rendered="#{p.path ne null}"/>
-                        </div>
-                        <div class="align-items-start">
-                          <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var w-100"/>
-                          <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
-                        </div>
-                        <div class="align-items-start">
-                          <span class="text-code text-small text-muted float-right mx-2">#{p.style}</span>
-                        </div>
-                      </div>
-                    </ui:repeat>
+                    <h:dataTable value="#{mvmap.value}" var="p"
+                                 styleClass="table table-sm table-no-border"
+                                 columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
+                      <h:column>
+                        #{p.name}
+                      </h:column>
+                      <h:column>
+                        <span class="text-code text-success">#{p.type.localPart}</span>
+                      </h:column>
+                      <h:column>
+                        <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var"/>
+                        <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.path ne null}">
+                          Name = <h:outputText value="#{p.path}" styleClass="text-danger text-monospace"/>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.default ne null}">
+                          Default = <h:outputText value="#{p.default}" styleClass="text-danger text-monospace"/>
+                        </h:panelGroup>
+                      </h:column>
+                      <h:column>
+                        <span class="text-code text-small text-muted">#{p.style}</span>
+                      </h:column>
+                    </h:dataTable>
                   </ui:repeat>
                 </h:panelGroup>
+
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}">
-                  <!--request post objects-->
+                  <!--request post objects and accepted encoding-->
                   <ui:repeat value="#{cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
                     <div>
                       <span class="text-bold"> #{mvmap.key} </span>
@@ -131,18 +132,26 @@
                   </ui:repeat>
                 </h:panelGroup>
               </h:panelGroup>
-              <hr/>
-              <p class="text-bold text-small">Response parameters</p>
+
+              <p class="text-bold text-small">Response encoding</p>
+
               <ui:repeat value="#{cc.attrs.method.response}" var="r">
-                <ui:repeat value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap">
-                  <div>
-                    <span class="text-bold"> HTTP #{r.status.size() == 0? '200' : r.status} </span>
+
+                <h:dataTable value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap"
+                             styleClass="table table-sm table-no-border"
+                             columnClasses="text-bold w-20, , w-75">
+                  <h:column>
+                    HTTP #{r.status.size() == 0? '200' : r.status}
+                  </h:column>
+                  <h:column>
                     <ui:repeat value="#{mvmap.value}" var="rep">
-                      <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mx-2">#{rep.mediaType}</span>
+                      <span class="text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mr-2">#{rep.mediaType}</span>
                     </ui:repeat>
-                  </div>
-                  <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
-                </ui:repeat>
+                  </h:column>
+                  <h:column>
+                    <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
+                  </h:column>
+                </h:dataTable>
               </ui:repeat>
             </div>
           </div>
