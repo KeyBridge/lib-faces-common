@@ -337,16 +337,14 @@ public abstract class AbstractWadlBean implements LabelProvider {
    */
   public MultivaluedMap<String, Representation> findMethodRequestElements(Method method) {
     MultivaluedMap<String, Representation> elementMediaTypes = new MultivaluedHashMap<>();
-    try {
-      if (HTTPMethods.PUT.equals(method.getName()) || HTTPMethods.POST.equals(method.getName())) {
+    if (HTTPMethods.PUT.equals(method.getName()) || HTTPMethods.POST.equals(method.getName())) {
+      if (method.getRequest() != null) {
         method.getRequest().getRepresentation().stream().forEach((Representation representation) -> {
           if (representation.getElement() != null) {
             elementMediaTypes.add(representation.getElement().getLocalPart(), representation);
           }
         });
       }
-    } catch (Exception e) {
-      LOG.log(Level.WARNING, "findMethodRequestElements ERROR for method {0}.  {1}", new Object[]{method.getId(), e.getMessage()});
     }
     return elementMediaTypes;
   }
@@ -365,11 +363,13 @@ public abstract class AbstractWadlBean implements LabelProvider {
   public MultivaluedMap<Representation, Param> findUploadMethodElements(Method method) {
     MultivaluedMap<Representation, Param> formElements = new MultivaluedHashMap<>();
     if (HTTPMethods.PUT.equals(method.getName()) || HTTPMethods.POST.equals(method.getName())) {
-      method.getRequest().getRepresentation().stream().forEach(representation -> {
-        representation.getParam().stream().forEach(param -> {
-          formElements.add(representation, param);
+      if (method.getRequest() != null) {
+        method.getRequest().getRepresentation().stream().forEach(representation -> {
+          representation.getParam().stream().forEach(param -> {
+            formElements.add(representation, param);
+          });
         });
-      });
+      }
     }
     return formElements;
   }
