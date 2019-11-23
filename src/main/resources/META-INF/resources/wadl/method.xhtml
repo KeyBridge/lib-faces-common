@@ -3,12 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <!--xmlns:a="http://xmlns.jcp.org/jsf/passthrough"-->
   <!--WADL component. Requires a WADL bean.-->
-  <!--updated 01/12/19 to properly handle form encoded representations-->
-  <!--updated 01/13/19 to support conditional collapsibility, render short path in header-->
+  <!--update 01/12/19 to properly handle form encoded representations-->
+  <!--update 01/13/19 to support conditional collapsibility, render short path in header-->
+  <!--update 11/22/19 using tables instead of divs for cleaner presentation-->
 
   <!--  USAGE-->
   <!--Must include the wadl.css file. e.g.-->
@@ -60,23 +62,34 @@
                 <!--request query params-->
                 <hr/>
                 <p class="text-bold text-small">Request parameters</p>
-                <ui:repeat value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p">
-                  <div class="wadl-var d-flex flex-row w-100 mb-2">
-                    <div class="align-items-start">
-                      <span class="text-bold"> #{p.name} </span>
-                      <span class="text-code text-small text-success text-capitalize mx-2">#{p.type.localPart}</span>
-                      <h:outputText value="#{p.path}" styleClass="text-code text-small mx-3" rendered="#{p.path ne null}"/>
-                    </div>
-                    <div class="align-items-start">
-                      <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var w-100"/>
-                      <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
-                    </div>
-                    <div class="align-items-start">
-                      <span class="text-code text-small text-muted float-right mx-2">#{p.style}</span>
-                    </div>
-                  </div>
-                </ui:repeat>
+
+                <h:dataTable value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p"
+                             styleClass="table table-sm table-no-border"
+                             columnClasses="text-bold, text-small, text-small text-capitalize, w-100, float-right">
+                  <h:column>
+                    <f:facet name="header">Name</f:facet>
+                      #{p.name}
+                  </h:column>
+                  <h:column>
+                    <h:outputText value="#{p.path}" styleClass="text-code"/>
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">Type</f:facet>
+                    <span class="text-code text-success">#{p.type.localPart}</span>
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">Description</f:facet>
+                    <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var"/>
+                    <h:outputText value="Default = #{p.default}." styleClass="text-bold d-block" rendered="#{p.default ne null}"/>
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">Type</f:facet>
+                    <span class="text-code text-small text-muted">#{p.style}</span>
+                  </h:column>
+
+                </h:dataTable>
               </h:panelGroup>
+
               <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}">
                 <!--request post parameters-->
                 <hr/>
