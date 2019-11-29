@@ -18,20 +18,15 @@
  */
 package ch.keybridge.faces.converter;
 
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
@@ -60,11 +55,11 @@ import javax.faces.convert.FacesConverter;
  * with LocalDateTime in JSF</a>
  */
 @FacesConverter("zonedDateTimeConverter")
-public class ZonedDateTimeConverter implements Converter {
+public class ZonedDateTimeConverter extends AbstractConverter {
 
-  private static final ZoneId ZONE_ID = ZoneId.systemDefault();
-  private static final ZoneId UTC = ZoneOffset.UTC;
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
@@ -74,7 +69,7 @@ public class ZonedDateTimeConverter implements Converter {
     if (modelValue instanceof ZonedDateTime) {
       return getFormatter(context, component).format((TemporalAccessor) modelValue);
     } else if (modelValue instanceof Date) {
-      return getFormatter(context, component).format(toZonedDateTime((Date) modelValue, UTC));
+      return getFormatter(context, component).format(toZonedDateTime((Date) modelValue, UTC_ZONE));
     } else if (modelValue instanceof String) {
       return getFormatter(context, component).format(ZonedDateTime.parse((CharSequence) modelValue));
     } else {
@@ -82,6 +77,9 @@ public class ZonedDateTimeConverter implements Converter {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
     if (submittedValue == null || submittedValue.isEmpty()) {
@@ -107,72 +105,6 @@ public class ZonedDateTimeConverter implements Converter {
     return pattern == null
            ? DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(getLocale(context, component)).withZone(getZoneId(component))
            : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component)).withZone(getZoneId(component));
-  }
-
-  /**
-   * Extract the converter output pattern provided as a component attribute.
-   * <p>
-   * Example:
-   * {@code &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z"/&gt;}
-   *
-   * @param component the UI component
-   * @return the output pattern.
-   */
-  private String getPattern(UIComponent component) {
-    return component != null ? (String) component.getAttributes().get("pattern") : null;
-  }
-
-  /**
-   * Extract the Locale provided as a component attribute
-   *
-   * @param context   the context
-   * @param component the component
-   * @return the locale, if provided, otherwise the default locale
-   */
-  private Locale getLocale(FacesContext context, UIComponent component) {
-    try {
-      Object locale = component.getAttributes().get("locale");
-      return (locale instanceof Locale) ? (Locale) locale
-             : (locale instanceof String) ? new Locale((String) locale)
-               : context.getViewRoot().getLocale();
-    } catch (Exception e) {
-      return Locale.getDefault();
-    }
-  }
-
-  /**
-   * Extract the time zone id provided as a component attribute
-   *
-   * @param component the component
-   * @return the time zone
-   */
-  private ZoneId getZoneId(UIComponent component) {
-    Object timeZone = component != null ? component.getAttributes().get("timeZone") : "UTC";
-    return (timeZone instanceof TimeZone) ? ((TimeZone) timeZone).toZoneId()
-           : (timeZone instanceof String) ? ZoneId.of((String) timeZone)
-             : null;
-  }
-
-  /**
-   * Convert Date to a LocalDateTime. Gets the ZonedDateTime part of this
-   * date-time. This returns a ZonedDateTime with the same year, month and day
-   * as this date-time.
-   * <p>
-   * If the ZoneId is null then the default (system) zone is used.
-   *
-   * @param date the Date instance
-   * @param zone the time zone
-   * @return a ZonedDateTime instance in the indicated time zone
-   */
-  public static ZonedDateTime toZonedDateTime(java.util.Date date, ZoneId zone) {
-    if (date == null) {
-      return null;
-    }
-    if (date instanceof java.sql.Timestamp) {
-      return ((java.sql.Timestamp) date).toLocalDateTime().atZone(zone != null ? zone : ZONE_ID);
-    } else {
-      return date.toInstant().atZone(zone != null ? zone : ZONE_ID);
-    }
   }
 
 }
