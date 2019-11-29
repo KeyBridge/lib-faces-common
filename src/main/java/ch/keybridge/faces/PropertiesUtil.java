@@ -14,25 +14,28 @@
  */
 package ch.keybridge.faces;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A simple class to enable the loading and import of a properties file.
+ * A simple class to enable the loading and import of a properties file. This
+ * will first seek a Resource bundle. If none exists, then a properties file in
+ * the app server domain config directory is queried.
  * <p>
- * The properties file may be either in the /usr/local/etc then look in the user
- * home directory under ~/etc/.
- *
  * @author Jesse Caulfield
+ * @since v5.0.0 rewrite 11/29/19 to use the app server domain config directory.
  */
 public class PropertiesUtil {
+
+  private static final Logger LOG = Logger.getLogger(PropertiesUtil.class.getName());
 
   /**
    * Helper method to query the properties file and determine if the current
@@ -50,7 +53,7 @@ public class PropertiesUtil {
     Properties properties = load(prefix, filename);
     try {
       return properties.containsKey("run.host")
-             && properties.getProperty("run.host").contains(InetAddress.getLocalHost().getHostName().toLowerCase());
+        && properties.getProperty("run.host").contains(InetAddress.getLocalHost().getHostName().toLowerCase());
     } catch (UnknownHostException unknownHostException) {
       System.err.println("WARN: PropertiesUtil unknownHostException " + unknownHostException.getMessage());
     }
@@ -76,7 +79,7 @@ public class PropertiesUtil {
    * @return a a non-null Properties container
    */
   public static Properties load(String prefix, String filename) {
-    Properties propertiesAll = load(filename);
+    Properties propertiesAll = loadAll(filename);
     Properties properties = new Properties();
     for (String propertyName : propertiesAll.stringPropertyNames()) {
       if (propertyName.startsWith(prefix)) {
@@ -92,8 +95,8 @@ public class PropertiesUtil {
   }
 
   /**
-   * Try to load a PROPERTIES file as a resource bundle, from /usr/local/etc/ or
-   * ~/etc.
+   * Try to load a PROPERTIES file as a resource bundle, from the application
+   * server domain configuration directory.
    * <p>
    * If the properties file is not found in either search directory an empty
    * properties container is returned.
@@ -104,10 +107,10 @@ public class PropertiesUtil {
    * @param baseName baseName - the base name of the resource bundle
    * @return a non-null Properties container
    */
-  public static Properties load(String baseName) {
+  public static Properties loadAll(String baseName) {
     Properties properties = new Properties();
     /**
-     * First try a resource bundle.
+     * First try as a resource bundle.
      */
     try {
       ResourceBundle bundle = ResourceBundle.getBundle(baseName);
@@ -118,40 +121,35 @@ public class PropertiesUtil {
         return properties;
       }
     } catch (Exception e) {
+      // ignore if ResourceBundle does not exist
     }
     /**
-     * Next try a file
+     * Next try a file in the application server domain configuration directory.
      */
     try {
-      /**
-       * Assume a *NIX deployment and look in /usr/local/etc.
-       */
-      File propertiesFile = new File("/usr/local/etc/" + baseName + ".properties");
-      /**
-       * If not in /usr/local/etc then look in the user home directory. Note:
-       * this is the Glassfish user, so in production environments will be
-       * "/var/www/etc/".
-       */
-      if (!propertiesFile.exists()) {
-        propertiesFile = new File(System.getProperty("user.home") + File.separator + "etc" + File.separator + baseName + ".properties");
-      }
-      /**
-       * Read the properties file.
-       */
-      if (propertiesFile.exists()) {
+      Path propertiesFile = Paths.get(baseName + ".properties");
+      if (propertiesFile.toFile().exists()) {
         /**
-         * Initialize and load the properties file.
+         * Read the properties file. Initialize and load the properties file.
          */
-        properties.load(new FileInputStream(propertiesFile));
+        properties.load(new FileInputStream(propertiesFile.toFile()));
+        LOG.log(Level.INFO, "Load properties from {0}", propertiesFile);
         return properties;
+      } else {
+        LOG.log(Level.WARNING, "Configuratino error. {0} properties file does not exist on this server. ", baseName);
+//        LOG.log(Level.INFO, "Create empty properties file {0}", propertiesFile);
+//        Files.createFile(propertiesFile);
+        return new Properties();
       }
     } catch (IOException exception) {
+      LOG.log(Level.SEVERE, "Error loading properties file for {0}", baseName);
+      LOG.log(Level.SEVERE, "PropertiesLoader", exception);
     }
     /**
      * If program flow has reached this point either the properties file does
      * not exist, is incomplete, or is corrupted.
      */
-    Logger.getLogger(PropertiesUtil.class.getName()).log(Level.WARNING, "Properties file {0} could not be loaded.", baseName);
+    LOG.log(Level.WARNING, "Properties file {0} could not be loaded.", baseName);
     return new Properties();
   }
 }
