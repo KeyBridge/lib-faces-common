@@ -18,14 +18,14 @@
  */
 package ch.keybridge.faces.converter;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -37,14 +37,48 @@ import org.ocpsoft.prettytime.PrettyTime;
  * <p>
  * This is a one-way `getAsString` converter. The Object converter always return
  * null.
+ * <p>
+ * LocalDateTime: When using UTC based LocalDateTime with an appropriate UTC
+ * based TIMESTAMP (without time zone!) DB column type, use the below JSF
+ * converter to convert between String in the UI and LocalDateTime in the model.
+ * This converter will lookup the pattern, timeZone and locale attributes from
+ * the parent component. If the parent component doesn't natively support a
+ * pattern, timeZone and/or locale attribute, simply add them as &lt;f:attribute
+ * name="..." value="..."&gt;. The timeZone attribute must represent the
+ * fallback time zone of the input string (when the pattern doesn't contain a
+ * time zone), and the time zone of the output string.
+ * <p>
+ * ZonedDateTime: When using ZonedDateTime with an appropriate TIMESTAMP WITH
+ * TIME ZONE DB column type, use the below JSF converter to convert between
+ * String in the UI and ZonedDateTime in the model. This converter will lookup
+ * the pattern and locale attributes from the parent component. If the parent
+ * component doesn't natively support a pattern or locale attribute, simply add
+ * them as &lt;f:attribute name="..." value="..."&gt;. If the locale attribute
+ * is absent, the (default) &lt;f:view locale&gt; will be used instead. There is
+ * no timeZone attribute for the reason as explained in #1 here above.
+ * <p>
+ * Example use:
+ * <pre>
+ * &lt;h:outputText id="display" value="#{bean.dateTime}"&gt;
+ *   &lt;f:converter converterId="prettyDateTimeConverter" /&gt;
+ *   &lt;f:attribute name="pattern" value="dd-MMM-yyyy hh:mm:ss a Z" /&gt;
+ *   &lt;f:attribute name="timeZone" value="Asia/Kolkata" /&gt;
+ * &lt;/h:outputText&gt;</pre>
  *
  * @author Key Bridge
- * @since v4.0.0 added 01/14/19 to consolidate different pretty converters
+ * @since v0.11.0 added 12/05/17 from stackoverflow example
+ * @see
+ * <a href="https://stackoverflow.com/questions/34883270/how-to-use-java-time-zoneddatetime-localdatetime-in-pcalendar">Dealing
+ * with LocalDateTime in JSF</a>
+ * @since v4.0.0 created 01/14/19 to consolidate different pretty converters
  * @see <a href="http://www.ocpsoft.org/prettytime/">prettytime</a>
  */
 @FacesConverter("prettyDateTimeConverter")
-public class PrettyDateTimeConverter implements Converter {
+public class PrettyDateTimeConverter extends AbstractConverter {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
@@ -62,65 +96,19 @@ public class PrettyDateTimeConverter implements Converter {
     } else if (modelValue instanceof Date) {
       return new PrettyTime(getLocale(context, component)).format((Date) modelValue);
     } else if (modelValue instanceof String) {
-      return new PrettyTime(getLocale(context, component)).format(toDate((String) modelValue));
+      return new PrettyTime(getLocale(context, component)).format(parseZonedDateTime((String) modelValue));
     } else {
       throw new ConverterException(new FacesMessage(modelValue + " is not a valid date or time representation."));
     }
 
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
     return null;
-  }
-
-  /**
-   * Extract the Locale provided as a component attribute
-   *
-   * @param context   the context
-   * @param component the component
-   * @return the locale, if provided, otherwise the default locale
-   */
-  private Locale getLocale(FacesContext context, UIComponent component) {
-    try {
-      Object locale = component.getAttributes().get("locale");
-      return (locale instanceof Locale) ? (Locale) locale
-             : (locale instanceof String) ? new Locale((String) locale)
-               : context.getViewRoot().getLocale();
-    } catch (Exception e) {
-      return Locale.getDefault();
-    }
-  }
-
-  /**
-   * Convert a java.time.LocalDate instance to a java.util.Date.
-   *
-   * @param temporal the java.time instance
-   * @return the java.util intance
-   */
-  public static Date toDate(LocalDate temporal) {
-    return toDate(temporal.atTime(LocalTime.now()));
-  }
-
-  /**
-   * Convert a java.time.LocalDateTime instance to a java.util.Date.
-   *
-   * @param temporal the java.time instance
-   * @return the java.util intance
-   */
-  public static Date toDate(LocalDateTime temporal) {
-    return toDate(temporal.atZone(ZoneOffset.UTC));
-  }
-
-  /**
-   * Convert a java.time.ZonedDateTime instance to a java.util.Date.
-   *
-   * @param temporal the java.time instance
-   * @return the java.util intance
-   */
-  public static Date toDate(ZonedDateTime temporal) {
-    Instant instant = temporal.toInstant();
-    return Date.from(instant);
   }
 
   /**
@@ -130,7 +118,7 @@ public class PrettyDateTimeConverter implements Converter {
    * @param temporal the java.lang.String instance
    * @return the java.util intance
    */
-  public static Date toDate(String temporal) {
+  public Date toDate(String temporal) {
     ZonedDateTime zdt = ZonedDateTime.parse(temporal);
     return toDate(zdt);
   }
