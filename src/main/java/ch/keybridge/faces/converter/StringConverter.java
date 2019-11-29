@@ -47,11 +47,17 @@ public class StringConverter implements Converter {
 
   private static final int DEFAULT_LENGTH = 8;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
     return value;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
     if (value == null || String.valueOf(value).trim().isEmpty()) {

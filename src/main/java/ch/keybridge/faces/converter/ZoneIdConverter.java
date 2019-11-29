@@ -14,25 +14,27 @@
  */
 package ch.keybridge.faces.converter;
 
+import java.time.ZoneId;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 /**
- * JSF converter for java.util.TimeZone
+ * JSF converter for java.time.ZoneId
  *
- * @author Jesse Caulfield
+ * @author Key Bridge
+ * @since v5.0.0 created 11/29/19 to complete the java.time converter series
  */
-@FacesConverter(value = "timezoneConverter")
-public class TimezoneConverter implements Converter {
+@FacesConverter(value = "zoneIdConverter")
+public class ZoneIdConverter implements Converter {
 
   /**
    * {@inheritDoc}
    */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
-    return value == null ? null : java.util.TimeZone.getTimeZone(value);
+    return value == null ? null : ZoneId.of(value);
   }
 
   /**
@@ -40,8 +42,8 @@ public class TimezoneConverter implements Converter {
    */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
-    if (value instanceof java.util.TimeZone) {
-      return ((java.util.TimeZone) value).getID();
+    if (value instanceof java.time.ZoneId) {
+      return ((java.time.ZoneId) value).getId();
     }
     return null;
   }

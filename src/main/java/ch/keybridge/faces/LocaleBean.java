@@ -66,6 +66,9 @@ import javax.servlet.http.Cookie;
 @RequestScoped
 public class LocaleBean implements Serializable {
 
+  /**
+   * ".locale" The locale cookie name.
+   */
   private static final String LOCALE_COOKIE = ".locale";
 
   /**
