@@ -70,6 +70,7 @@
     v5.0.0 - refactor all into 'ch.keybridge.faces' base package (2019-11-19)
     - bump all dependency versions
     - rewrite WADL method component to use tables instead of DIVs for improved layout
+    - remove deprecated pretty date time converters
 
   </description>
 
