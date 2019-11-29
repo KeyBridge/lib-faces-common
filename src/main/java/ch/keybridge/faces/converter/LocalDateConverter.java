@@ -109,8 +109,8 @@ public class LocalDateConverter extends AbstractConverter {
   private DateTimeFormatter getFormatter(FacesContext context, UIComponent component) {
     String pattern = getPattern(component);
     return pattern == null
-           ? DateTimeFormatter.ISO_DATE.withLocale(getLocale(context, component)).withZone(SYSTEM_ZONE)
-           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component)).withZone(SYSTEM_ZONE);
+           ? DateTimeFormatter.ISO_LOCAL_DATE.withLocale(getLocale(context, component)).withZone(UTC_ZONE)
+           : DateTimeFormatter.ofPattern(getPattern(component), getLocale(context, component)).withZone(UTC_ZONE);
   }
 
 }
