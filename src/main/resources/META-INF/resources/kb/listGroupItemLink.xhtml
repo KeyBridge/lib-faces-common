@@ -9,6 +9,7 @@
   <cc:interface>
     <cc:attribute name="outcome" required="true" type="java.lang.String" default="#" displayName="the href"/>
     <cc:attribute name="value" required="true" type="java.lang.String" default="Label" displayName="the link label"/>
+    <cc:attribute name="valueIndex" required="false" type="java.lang.String" displayName="a value index to optionally render"/>
     <cc:attribute name="icon" required="false" type="java.lang.String" displayName="the icon css class (e.g. 'icon icon-home' or 'fa fa-user'"/>
     <cc:attribute name="active" required="false" type="java.lang.Boolean" default="false" displayName="true if this is the active page link"/>
 
@@ -31,6 +32,7 @@
       <f:param name="#{cc.attrs.parameterName}" value="#{cc.attrs.parameterValue}" rendered="#{cc.attrs.parameterName ne null}"/>
       <span>
         <h:outputText styleClass="#{cc.attrs.icon} text-muted mr-2" rendered="#{cc.attrs.icon ne null}"/>
+        <h:outputText value="#{cc.attrs.valueIndex}" styleClass="text-mutext text-small mr-1" rendered="#{cc.attrs.valueIndex ne null}"/>
         <h:outputText value="#{cc.attrs.value}"/>
       </span>
       <h:outputText styleClass="#{cc.attrs.badgeStyle}" value="#{cc.attrs.badgeValue}" rendered="#{cc.attrs.renderBadge}"/>
