@@ -22,6 +22,7 @@
  * v1.0.5 - 02/10/19 - list-group-item.selected plain text (no longer bold)
  * v1.0.6 - 09/21/19 - do not underline markdown headers
  * - add left border to blockquote
+ * - add link-dark
  */
 html {
   position: relative;
@@ -217,7 +218,9 @@ label { font-weight: bold; }
 .link-light{ color: #868686 !important; }
 .link-light:hover { color: #5c5c5c !important; }
 .link-gray { color:#586069 !important; }
-.link-gray:hover { color:#0366d6 !important;}
+.link-gray:hover { color:#0366d6 !important; }
+.link-dark { color:#343a40 !important; }
+.link-dark:hover { color:#000000 !important;}
 .link-gray-dark { color:#24292e !important;}
 .link-gray-dark:hover { color:#0366d6 !important;}
 .link-hover-blue:hover { color:#0366d6 !important;}
