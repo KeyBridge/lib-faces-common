@@ -71,6 +71,7 @@
     - bump all dependency versions
     - rewrite WADL method component to use tables instead of DIVs for improved layout
     - remove deprecated pretty date time converters
+    - add text color utility to determine if the foreground color should be inverted
 
   </description>
 
