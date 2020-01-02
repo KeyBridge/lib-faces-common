@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+              xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+              xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Decorated h:inputText form component for numeric entries-->
+  <!--@since - created 01/02/20-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" displayName="The input value bean reference" />
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="type" default="number" displayName="One of: date, datetime, email, month, number, range, search, tel, time, url, week" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+    <cc:attribute name="placeholder" displayName="Example text shown in the input" />
+
+    <cc:attribute name="min" default="0" type="java.lang.Integer" displayName="The minimum value"/>
+    <cc:attribute name="max" type="java.lang.Integer" displayName="The maximum value"/>
+    <cc:attribute name="step" type="java.lang.Double" displayName="The numeric steps size"/>
+
+    <cc:attribute name="disabled" default="false" type="java.lang.Boolean" displayName="If the input is disabled"/>
+    <cc:attribute name="readOnly" default="false" type="java.lang.Boolean" displayName="If the input is not editable"/>
+    <cc:attribute name="readOnlyPlainText" default="false" type="java.lang.Boolean" displayName="Use only if readOnly; render as plain text"/>
+
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
+    <cc:attribute name="onChange" displayName="Javascript code executed when this element loses focus and its value has been modified since gaining focus."/>
+
+    <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
+    <cc:attribute name="internalStyleClass" displayName="Additional form control css. [w-100]"/>
+
+    <cc:editableValueHolder name="value" targets="text"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
+      <h:outputLabel for="text" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
+      <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
+                   a:placeholder="#{cc.attrs.placeholder}"
+                   readonly="#{cc.attrs.readOnly}"
+                   disabled="#{cc.attrs.disabled}"
+                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                   a:min="#{cc.attrs.min}"
+                   a:max="#{cc.attrs.maz}"
+                   a:step="#{cc.attrs.step}"
+                   onchange="#{cc.attrs.onChange}"
+                   styleClass="#{cc.attrs.internalStyleClass} #{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
+      <h:outputText value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:message for="text" styleClass="my-1 float-right text-small text-danger" rendered="#{not text.valid}"/>
+    </div>
+  </cc:implementation>
+</ui:component>
