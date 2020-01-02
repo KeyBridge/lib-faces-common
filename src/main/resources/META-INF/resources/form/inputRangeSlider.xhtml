@@ -18,11 +18,14 @@
 
 
     <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="units"  displayName="The value units to display" />
     <cc:attribute name="description" displayName="A bried description displayed below the input" />
     <cc:attribute name="placeholder" displayName="Example text shown in the input" />
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
     <cc:attribute name="maxlength" default="256" displayName="The maximum input length. Default is 255 characters"/>
+
+    <cc:attribute name="oninput" displayName="javascript method called on change"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [custom-range]"/>
     <cc:editableValueHolder name="value" targets="range"/>
@@ -31,16 +34,13 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
+      <span id="#{cc.clientId}:value" class="float-right text-small text-muted"> #{cc.attrs.value} </span>
       <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
-      <div class="d-flex align-items-center">
-        <h:inputText id="range" value="#{cc.attrs.value}"
-                     a:type="range"
-                     a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
-                     required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                     style="width: calc(100% - 80px);"
-                     styleClass="mr-2 form-control-range #{component.valid ?'':'is-invalid'}"/>
-        <span id="#{cc.clientId}:value"> #{cc.attrs.value} </span>
-      </div>
+      <h:inputText id="range" value="#{cc.attrs.value}"
+                   a:type="range"
+                   a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
+                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                   styleClass="mr-2 form-control-range #{component.valid ?'':'is-invalid'}"/>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
         <h:message for="range" styleClass="text-small text-danger" rendered="#{not range.valid}"/>
@@ -48,7 +48,8 @@
     </div>
     <script type="text/javascript">
       document.getElementById("#{cc.clientId}:range").oninput = function () {
-        document.getElementById("#{cc.clientId}:value").innerHTML = this.value;
+        document.getElementById("#{cc.clientId}:value").innerHTML = this.value + " #{cc.attrs.units}";
+      #{cc.attrs.oninput}
       };
     </script>
   </cc:implementation>
