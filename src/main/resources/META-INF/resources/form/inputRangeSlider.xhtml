@@ -35,7 +35,7 @@
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <span id="#{cc.clientId}:value" class="float-right text-small text-muted"> #{cc.attrs.value} </span>
-      <h:outputLabel for="range" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
+      <h:outputLabel id="label" for="range" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="range" value="#{cc.attrs.value}"
                    a:type="range"
                    a:min="#{cc.attrs.min}" a:max="#{cc.attrs.max}" a:step="#{cc.attrs.step}"
@@ -43,7 +43,7 @@
                    styleClass="mr-2 form-control-range #{component.valid ?'':'is-invalid'}"
                    style="padding: 0.375rem 0.75rem;"/>
       <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+        <h:outputText id="des" value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
         <h:message for="range" styleClass="text-small text-danger" rendered="#{not range.valid}"/>
       </span>
     </div>

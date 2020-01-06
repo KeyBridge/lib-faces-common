@@ -39,7 +39,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
-      <h:outputLabel for="value" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
+      <h:outputLabel id="label" for="value" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="value" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
                    readonly="#{cc.attrs.readOnly}"
@@ -50,7 +50,7 @@
                    a:step="#{cc.attrs.step}"
                    onchange="#{cc.attrs.onChange}"
                    styleClass="#{cc.attrs.internalStyleClass} #{cc.attrs.readOnly and cc.attrs.readOnlyPlainText?'form-control-plaintext':'form-control'} #{component.valid ?'':'is-invalid'}"/>
-      <h:outputText value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:outputText id="des" value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
       <h:message for="value" styleClass="my-1 float-right text-small text-danger" rendered="#{not value.valid}"/>
     </div>
   </cc:implementation>
