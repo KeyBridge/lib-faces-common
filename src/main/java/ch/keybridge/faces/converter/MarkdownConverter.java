@@ -18,12 +18,15 @@
  */
 package ch.keybridge.faces.converter;
 
+import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
 import com.vladsch.flexmark.ext.macros.MacrosExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.superscript.SuperscriptExtension;
 import com.vladsch.flexmark.util.ast.KeepType;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -70,10 +73,15 @@ public class MarkdownConverter implements Converter {
      * syntax. See https://github.com/vsch/flexmark-java/wiki/Macros-Extension
      */
     MutableDataSet options = new MutableDataSet();
-    options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(),
-                                                 GitLabExtension.create(),
-                                                 TaskListExtension.create(),
-                                                 MacrosExtension.create()));
+    options.set(Parser.EXTENSIONS, Arrays.asList(
+                AdmonitionExtension.create(),
+                StrikethroughExtension.create(),
+                TaskListExtension.create(),
+                GitLabExtension.create(),
+                MacrosExtension.create(),
+                SuperscriptExtension.create(),
+                TablesExtension.create()
+              ));
     /**
      * Parser.REFERENCES_KEEP defines the behavior of references when duplicate
      * references are defined in the source. In this case it is configured to
@@ -102,7 +110,7 @@ public class MarkdownConverter implements Converter {
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
     if (modelValue == null) {
-      return "";
+      return null;
     }
     /**
      * Cast the object to String since we only expect this converter to be used

@@ -72,6 +72,7 @@
     - rewrite WADL method component to use tables instead of DIVs for improved layout
     - remove deprecated pretty date time converters
     - add text color utility to determine if the foreground color should be inverted
+    - include additional flexmark extension processors
 
   </description>
 
@@ -98,13 +99,19 @@
       <version>${lib.prettytime.version}</version>
     </dependency>
 
+    <!--since 4.0.0 for rendering WADL API documentation-->
+    <dependency>
+      <groupId>keybridge.lib</groupId>
+      <artifactId>wadl</artifactId>
+      <version>${lib.wadl.version}</version>
+    </dependency>
+
     <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-tables</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
-
     <!--since 4.0.0 for rendering various gitlab extensions-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
@@ -124,14 +131,25 @@
       <artifactId>flexmark-ext-macros</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
-
-    <!--since 4.0.0 for rendering WADL API documentation-->
+    <!--https://github.com/vsch/flexmark-java/wiki/Extensions#gfm-strikethroughsubscript-->
     <dependency>
-      <groupId>keybridge.lib</groupId>
-      <artifactId>wadl</artifactId>
-      <version>${lib.wadl.version}</version>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-gfm-strikethrough</artifactId>
+      <version>${lib.flexmark.version}</version>
     </dependency>
-
+    <!--https://github.com/vsch/flexmark-java/wiki/Extensions#superscript-->
+    <dependency>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-superscript</artifactId>
+      <version>${lib.flexmark.version}</version>
+    </dependency>
+    <!--https://github.com/vsch/flexmark-java/wiki/Extensions#admonition-->
+    <!--https://github.com/vsch/flexmark-java/wiki/Admonition-Extension-->
+    <dependency>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-ext-admonition</artifactId>
+      <version>${lib.flexmark.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
