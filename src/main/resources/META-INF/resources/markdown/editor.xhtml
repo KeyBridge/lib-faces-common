@@ -10,6 +10,7 @@
   <!--01/15/19 - move to faces-common-->
   <!--03/02/19 - v2.0.0 add file upload capability, extended MD features -->
   <!--12/28/19 - separate advanced from extended functions-->
+  <!--01/05/19 - add different render groups-->
 
   <!--How to use:-->
   <!--Requires-->
@@ -30,6 +31,9 @@
     <cc:attribute name="placeholder" displayName="Example text shown in the input" />
     <cc:attribute name="smallText" default="false" type="java.lang.Boolean" displayName="Render the text font smaller"/>
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="Any CSS style class to wrap the file content."/>
+    <cc:attribute name="renderHeaderGroup" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
+    <cc:attribute name="renderListGroup" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
+    <cc:attribute name="renderLinkGroup" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
     <cc:attribute name="renderAdvancedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
     <cc:attribute name="renderExtendedFunctions" type="java.lang.Boolean" default="true" displayName="Show extended function buttons."/>
 
@@ -41,48 +45,48 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass} form-group">
+    <div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
       <h:outputLabel for="#{cc.id}-edit" value="#{cc.attrs.label}" rendered="#{cc.attrs.label ne null}" styleClass="d-block"/>
       <div class="card">
         <!--EDIT-->
-        <div class="card-header edit-commands">
-          <span class="btn-group">
+        <div class="p-2 border-bottom edit-commands">
+          <div class="btn-group mr-1">
             <span title="Bold" onclick="$('##{cc.id}-edit').mdBold();" class="btn btn-sm btn-default fa fa-bold"/>
             <span title="Italic" onclick="$('##{cc.id}-edit').mdItalic();" class="btn btn-sm btn-default fa fa-italic"/>
             <span title="Underline" onclick="$('##{cc.id}-edit').mdUnderline();" class="btn btn-sm btn-default fa fa-underline"/>
+            <span title="Strike" onclick="$('##{cc.id}-edit').mdStrikethrough();" class="btn btn-sm btn-default fa fa-strikethrough"/>
+            <span title="Superscript" onclick="$('##{cc.id}-edit').mdSuperscript();" class="btn btn-sm btn-default fa fa-superscript"/>
+            <span title="Subscript" onclick="$('##{cc.id}-edit').mdSubscript();" class="btn btn-sm btn-default fa fa-subscript"/>
             <h:panelGroup rendered="#{cc.attrs.renderAdvancedFunctions}">
-              <span title="Strike" onclick="$('##{cc.id}-edit').mdStrikethrough();" class="btn btn-sm btn-default fa fa-strikethrough"/>
-              <span title="Superscript" onclick="$('##{cc.id}-edit').mdSuperscript();" class="btn btn-sm btn-default fa fa-superscript"/>
-              <span title="Subscript" onclick="$('##{cc.id}-edit').mdSubscript();" class="btn btn-sm btn-default fa fa-subscript"/>
               <span title="Highlight" onclick="$('##{cc.id}-edit').mdHighlight();" class="btn btn-sm btn-default fa fa-highlighter"/>
             </h:panelGroup>
-          </span>
+          </div>
 
-          <span class="btn-group">
+          <h:panelGroup layout="block" class="btn-group mr-1" rendered="#{cc.attrs.renderHeaderGroup}">
             <span title="Header 1" onclick="$('##{cc.id}-edit').mdHeader({number: 1, default: ' '});" class="btn btn-sm btn-default fa fa-heading"/>
             <h:panelGroup rendered="#{cc.attrs.renderAdvancedFunctions}">
               <span title="Header 2" onclick="$('##{cc.id}-edit').mdHeader({number: 2, default: ' '});" class="btn btn-sm btn-default fa fa-heading text-small"/>
               <span title="Header 3" onclick="$('##{cc.id}-edit').mdHeader({number: 3, default: ' '});" class="btn btn-sm btn-default fa fa-heading" style="font-size: 10px;"/>
             </h:panelGroup>
-          </span>
+          </h:panelGroup>
 
-          <span class="btn-group">
+          <h:panelGroup layout="block" class="btn-group mr-1" rendered="#{cc.attrs.renderListGroup}">
             <span title="Bullet list" onclick="$('##{cc.id}-edit').mdBulletList();" class="btn btn-sm btn-default fa fa-list-ul"/>
             <span title="Numbered list" onclick="$('##{cc.id}-edit').mdNumberedList();" class="btn btn-sm btn-default fa fa-list-ol"/>
             <span title="Block quote" onclick="$('##{cc.id}-edit').mdQuote();" class="btn btn-sm btn-default fa fa-quote-left"/>
             <h:panelGroup rendered="#{cc.attrs.renderAdvancedFunctions}">
               <span title="Table" onclick="$('##{cc.id}-edit').mdTable();" class="btn btn-sm btn-default fa fa-table"/>
             </h:panelGroup>
-          </span>
+          </h:panelGroup>
 
-          <span class="btn-group">
+          <h:panelGroup layout="block" class="btn-group mr-1" rendered="#{cc.attrs.renderLinkGroup}">
             <span title="Link" onclick="$('##{cc.id}-edit').mdLink();" class="btn btn-sm btn-default fa fa-link"/>
             <h:outputLabel title="Upload file" styleClass="btn btn-sm btn-default fa fa-file-upload my-0" rendered="#{cc.attrs.fileUploadUrl ne null}">
               <input id="#{cc.id}-file-input" name="file" type="file" multiple="true" style="display:none"/>
             </h:outputLabel>
-          </span>
+          </h:panelGroup>
 
-          <h:panelGroup styleClass="btn-group" rendered="#{cc.attrs.renderExtendedFunctions}">
+          <h:panelGroup layout="block" styleClass="btn-group mr-1" rendered="#{cc.attrs.renderExtendedFunctions}">
             <span title="Inline Code" onclick="$('##{cc.id}-edit').mdCodeInline();" class="btn btn-sm btn-default fa fa-code"/>
             <span title="Code block" onclick="$('##{cc.id}-edit').mdCode();" class="btn btn-sm btn-default fa fa-file-code"/>
             <span title="Macro" onclick="$('##{cc.id}-edit').mdMacro();" class="btn btn-sm btn-default fa fa-magic"/>
@@ -95,7 +99,7 @@
         </div>
         <textarea id="#{cc.id}-edit" name="markdown" rows="#{cc.attrs.rows}"
                   placeholder="#{cc.attrs.placeholder}"
-                  class="form-control undotted markdown #{cc.attrs.smallText?'text-small':''}"
+                  class="form-control undotted border-bottom markdown #{cc.attrs.smallText?'text-small':''}"
                   data-provide="markdown">#{cc.attrs.value}</textarea>
       </div>
       <h:outputText value="#{cc.attrs.description}" styleClass="d-block my-1 text-small text-muted" rendered="#{cc.attrs.renderDescription}"/>
