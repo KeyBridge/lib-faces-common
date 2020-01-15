@@ -33,7 +33,7 @@
       <h:selectManyListbox id="selectMany" value="#{cc.attrs.value}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                           styleClass="custom-select #{component.valid ?'':'is-invalid'}">
+                           styleClass="custom-select w-100 #{component.valid ?'':'is-invalid'}">
         <f:selectItems transient="true" value="#{cc.attrs.selectItemMap.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}" rendered="#{cc.attrs.selectItemMap ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems}" var="s" itemValue="#{s}" itemLabel="#{s}" rendered="#{cc.attrs.selectItems ne null}"/>
       </h:selectManyListbox>
