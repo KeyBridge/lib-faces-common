@@ -11,8 +11,9 @@
  * Standard Product License Agreement. A copy of either Agreement can be
  * obtained upon request from: info@keybridgewireless.com
  */
-package ch.keybridge.faces;
+package ch.keybridge.faces.jsf;
 
+import ch.keybridge.faces.FacesUtil;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;

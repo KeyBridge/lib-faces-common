@@ -73,7 +73,7 @@
     - remove deprecated pretty date time converters
     - add text color utility to determine if the foreground color should be inverted
     - include additional flexmark extension processors
-
+    - move JSF beans to `jsf` package
   </description>
 
   <properties>

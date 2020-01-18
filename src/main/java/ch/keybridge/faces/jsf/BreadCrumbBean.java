@@ -11,7 +11,7 @@
  *  A copy of Caulfield's either License Agreement can be obtained on request
  *  by email from: info@caufield.org.
  */
-package ch.keybridge.faces;
+package ch.keybridge.faces.jsf;
 
 import java.util.ArrayList;
 import java.util.List;
