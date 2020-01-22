@@ -10,6 +10,7 @@
   <!--update 01/12/19 to properly handle form encoded representations-->
   <!--update 01/13/19 to support conditional collapsibility, render short path in header-->
   <!--update 11/22/19 using tables instead of divs for cleaner presentation-->
+  <!--note: 2020-01-22 - the div id must use {cc.id} and not {cc.clientId}-->
 
   <!--  USAGE-->
   <!--Must include the wadl.css file. e.g.-->
@@ -31,13 +32,13 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}" class="wadl-method">
+    <div id="#{cc.id}" class="wadl-method">
       <h:panelGroup rendered="#{cc.attrs.method !=null}">
 
         <div class="card border-#{wadlBean.buildCSSType(cc.attrs.method.name)} mb-3">
           <div class="wadl card-header" role="tab" id="#{cc.attrs.method.id}" style="position: relative; border-bottom: none;">
             <h:panelGroup rendered="#{cc.attrs.collapsible}">
-              <a data-toggle="collapse" data-parent="##{cc.clientId}" href="#collapse#{cc.attrs.method.id}" aria-expanded="true" aria-controls="collapse#{cc.attrs.method.id}">
+              <a data-toggle="collapse" data-parent="##{cc.id}" href="#collapse#{cc.attrs.method.id}" aria-expanded="true" aria-controls="collapse#{cc.attrs.method.id}">
                 <div class="wadl-button bg-#{wadlBean.buildCSSType(cc.attrs.method.name)}">  <h:outputText value="#{cc.attrs.method.name}"/> </div>
                 <h:outputText value="#{cc.attrs.wadlBean.parseMethodId(cc.attrs.method.id)}" styleClass="wadl-label"/>
               </a>
