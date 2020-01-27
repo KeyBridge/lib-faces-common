@@ -18,12 +18,12 @@
 
   <cc:implementation>
     <div id="#{cc.clientId}" class="ws-nowrap #{cc.attrs.border?'border-top':''} #{cc.attrs.styleClass}">
-      <h:outputText rendered="#{cc.attrs.version != null}" value="#{cc.attrs.version}" class="text-smaller text-muted float-right"/>
       <span class="d-block">
         &copy; <h:outputText value="#{now}"><f:convertDateTime pattern="yyyy" type="date" /></h:outputText>
         <h:outputLink value="#{cc.attrs.url}" styleClass="mx-1">#{cc.attrs.company}</h:outputLink>
       </span>
       <h:outputText styleClass="d-block text-smaller text-muted" value="#{cc.attrs.rightsStatement}"/>
+      <h:outputText styleClass="d-block text-smaller text-muted" value="#{cc.attrs.version}" rendered="#{cc.attrs.version != null}" />
     </div>
   </cc:implementation>
 
