@@ -38,7 +38,7 @@ public class LocaleConverter implements Converter {
    */
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
-    return value == null ? null : findLocale(value);
+    return value == null ? null : new Locale(value);
   }
 
   /**
@@ -46,7 +46,7 @@ public class LocaleConverter implements Converter {
    */
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
-    return value != null ? ((Locale) value).getLanguage() : null;
+    return value == null ? null : ((Locale) value).getLanguage();
   }
 
   /**
