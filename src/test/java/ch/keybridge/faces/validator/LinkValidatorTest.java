@@ -49,7 +49,8 @@ public class LinkValidatorTest {
 
   @Test
   public void testSomeMethod() {
-    String string = "keybridgewireless.com";
+    String string = "https://keybridgewireless.com";
+//    String string = "https://google.com";
 
     validator.validate(null, null, string);
   }

@@ -19,6 +19,7 @@
 package ch.keybridge.faces.validator;
 
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -86,6 +87,23 @@ public class LinkValidator extends AbstractValidator {
         .get();
       setValidityStatus(component, true); // update the jsf component
     } catch (Exception e) {
+      /**
+       * Conditionally try again without http.
+       */
+      if (url.startsWith("https")) {
+        url = url.replaceFirst("https", "http");
+        try {
+          Response response = trustingClient()
+            .target(url)
+            .request()
+            .header(HttpHeaders.USER_AGENT, MOZILLA)
+            .get();
+          setValidityStatus(component, true); // update the jsf component
+          return;
+        } catch (Exception exception) {
+          LOG.log(Level.INFO, "{0} is not available. Also tried http.", url);
+        }
+      }
       setValidityStatus(component, false); // update the jsf component
       throwErrorException("Not available", "This resource is not available. " + e.getMessage());
     }
@@ -117,12 +135,13 @@ public class LinkValidator extends AbstractValidator {
   private static final int TIMEOUT_READ = 1000;
 
   /**
+   * Build a trusting HTTPS client. Uses TLSv1.2.
    *
    * @return @throws Exception
    */
   protected Client trustingClient() throws Exception {
-    SSLContext sc = SSLContext.getInstance("TLSv1");//Java 8   // NoSuchAlgorithmException
-    System.setProperty("https.protocols", "TLSv1");//Java 8
+    SSLContext sc = SSLContext.getInstance("TLSv1.2");  //Java 8   // NoSuchAlgorithmException
+    System.setProperty("https.protocols", "TLSv1.2");   //Java 8
     TrustManager[] trustAllCerts = {new InsecureTrustManager()};
     sc.init(null, trustAllCerts, new java.security.SecureRandom()); // KeyManagementException
     HostnameVerifier allHostsValid = (String string, SSLSession ssls) -> true;
