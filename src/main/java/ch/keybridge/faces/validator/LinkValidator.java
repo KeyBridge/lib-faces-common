@@ -19,6 +19,7 @@
 package ch.keybridge.faces.validator;
 
 import java.security.cert.X509Certificate;
+import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
@@ -40,9 +41,12 @@ import javax.ws.rs.core.Response;
  * @author Key Bridge
  * @since v0.6.0 created 01/27/19
  * @since v4.1.0 use a trusting client to accept all SSL certificates
+ * @since v5.0.0 append "http://" if scheme is missing
  */
 @FacesValidator("linkValidator")
 public class LinkValidator extends AbstractValidator {
+
+  private static final Logger LOG = Logger.getLogger(LinkValidator.class.getName());
 
   /**
    * A fake user agent string, to ensure the query is not intercepted by a robot
@@ -63,17 +67,23 @@ public class LinkValidator extends AbstractValidator {
     if (value == null) {
       return;
     }
-    String url = (String) value;
-    if (url.isEmpty()) {
+    String url = ((String) value).toLowerCase();
+    if (url.trim().isEmpty()) {
       return;
     }
+    if (!url.startsWith("http")) {
+      url = "http://" + url;
+    }
+    /**
+     * Use a trusting client to ignore credential errors.
+     */
     try {
 //      Response response = ClientBuilder.newClient().target((String) value).request()
       Response response = trustingClient()
-              .target((String) value)
-              .request()
-              .header(HttpHeaders.USER_AGENT, MOZILLA)
-              .get();
+        .target(url)
+        .request()
+        .header(HttpHeaders.USER_AGENT, MOZILLA)
+        .get();
       setValidityStatus(component, true); // update the jsf component
     } catch (Exception e) {
       setValidityStatus(component, false); // update the jsf component

@@ -84,6 +84,10 @@
     <lib.flexmark.version>0.50.44</lib.flexmark.version>
     <!--1.1.0 release 2019-11-19-->
     <lib.wadl.version>1.1.0</lib.wadl.version>
+
+    <!--jersey client version-->
+    <jersey.version>2.26</jersey.version>
+
   </properties>
 
   <dependencies>
@@ -151,6 +155,43 @@
       <artifactId>flexmark-ext-admonition</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+
+
+    
+    <!--jersey client for getting and setting REST-->
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.1</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-jaxb</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
   </dependencies>
 
 </project>
