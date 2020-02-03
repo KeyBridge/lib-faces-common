@@ -112,7 +112,47 @@
 
     <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_editor_min}"/>
     <ui:fragment rendered="#{cc.attrs.fileUploadUrl ne null}">
-      <script type="text/javascript" src="#{cc.resourceBundleMap.markdown_file_upload_min}"/>
+      <script type="text/javascript">
+//  <![CDATA[
+              document.getElementById("#{cc.id}-file-input").onchange = function (a) {
+                console.debug("event=change", a, this.files);
+                uploadFiles(document.getElementById("#{cc.id}-edit"), this.files)
+              };
+              document.getElementById("#{cc.id}-edit").ondrop = function (a) {
+                a.preventDefault();
+                uploadFiles(document.getElementById("#{cc.id}-edit"), a.dataTransfer.files);
+                a.target.classList.add("undotted");
+                a.target.classList.remove("dotted")
+              };
+              document.getElementById("#{cc.id}-edit").ondragover = function (a) {
+                a.preventDefault();
+                a.target.classList.remove("undotted");
+                a.target.classList.add("dotted")
+              };
+              document.getElementById("#{cc.id}-edit").ondragleave = function (a) {
+                a.target.classList.add("undotted");
+                a.target.classList.remove("dotted")
+              };
+              function uploadOneFile(a, d) {
+                var b = new FormData;
+                b.append("file", a);
+                b.append("contentType", a.type);
+                b.append("size", a.size);
+                b.append("token", "#{cc.attrs.fileUploadToken}");
+                var c = new XMLHttpRequest;
+                c.open("POST", "#{cc.attrs.fileUploadUrl}");
+                c.upload.onprogress = function (b) {
+                  uploadProgressCallback(a, b)
+                };
+                c.onload = function (b) {
+                  handleIoioServerResponse(c.response, d, a.name)
+                };
+                c.send(b)
+              }
+              ;
+//      ]]>
+
+      </script>
     </ui:fragment>
   </cc:implementation>
 </html>
