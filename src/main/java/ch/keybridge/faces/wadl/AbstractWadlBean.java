@@ -171,7 +171,8 @@ public abstract class AbstractWadlBean implements LabelProvider {
      */
     Client client;
     try {
-      SSLContext sslcontext = SSLContext.getInstance("TLS");
+      SSLContext sslcontext = SSLContext.getInstance("TLSv1.2"); //Java 8   // NoSuchAlgorithmException
+      System.setProperty("https.protocols", "TLSv1.2");  //Java 8
       sslcontext.init(null, new TrustManager[]{new X509TrustManager() {
         @Override
         public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {

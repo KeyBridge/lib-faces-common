@@ -21,7 +21,6 @@ package ch.keybridge.faces.validator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  *
@@ -47,7 +46,7 @@ public class LinkValidatorTest {
   public void tearDown() {
   }
 
-  @Test
+//  @Test
   public void testSomeMethod() {
     String string = "https://keybridgewireless.com";
 //    String string = "https://google.com";
