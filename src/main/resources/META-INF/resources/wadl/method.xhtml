@@ -7,10 +7,11 @@
 
   <!--xmlns:a="http://xmlns.jcp.org/jsf/passthrough"-->
   <!--WADL component. Requires a WADL bean.-->
-  <!--update 01/12/19 to properly handle form encoded representations-->
-  <!--update 01/13/19 to support conditional collapsibility, render short path in header-->
-  <!--update 11/22/19 using tables instead of divs for cleaner presentation-->
-  <!--note: 2020-01-22 - the div id must use {cc.id} and not {cc.clientId}-->
+  <!--01/12/19 - properly handle form encoded representations-->
+  <!--01/13/19 -  support conditional collapsibility, render short path in header-->
+  <!--11/22/19 - use tables instead of divs for cleaner presentation-->
+  <!--2020-01-22 - NOTE: the div id must use {cc.id} and not {cc.clientId}-->
+  <!--2020-03-01 - update layout spacing and labels-->
 
   <!--  USAGE-->
   <!--Must include the wadl.css file. e.g.-->
@@ -31,6 +32,7 @@
   <!--NOTE: to use this widget you must add the WADL CSS somewhere in your app!-->
 
   <!-- IMPLEMENTATION -->
+  <!--NOTE: the div id must use {cc.id} and not {cc.clientId}-->
   <cc:implementation>
     <div id="#{cc.id}" class="wadl-method">
       <h:panelGroup rendered="#{cc.attrs.method !=null}">
@@ -58,9 +60,10 @@
               <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
               <!--method description-->
               <h:outputText value="#{cc.attrs.wadlBean.getMethodDescription(cc.attrs.method.id)}" escape="false" styleClass="card-text d-block mb-3"/>
-              <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}">
+
+              <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" layout="block" styleClass="mb-3">
                 <!--request query params-->
-                <p class="text-bold text-small">Request parameters</p>
+                <span class="d-block text-small">Query parameters</span>
                 <h:dataTable value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p"
                              styleClass="table table-sm table-no-border"
                              columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
@@ -86,15 +89,15 @@
                 </h:dataTable>
               </h:panelGroup>
 
-              <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}">
+              <h:panelGroup rendered="#{cc.attrs.wadlBean.isPutOrPost(cc.attrs.method)}" layout="block" styleClass="mb-3">
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}">
                   <!--request post parameters-->
                   <!--Request objects are only valid for PUT or POST operations-->
                   <ui:repeat value="#{cc.attrs.wadlBean.findUploadMethodElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
-                    <p class="text-small">
-                      <span class="text-bold">Form parameters</span>
+                    <span class="d-block text-small">
+                      <span>Form parameters</span>
                       <span class="float-right"><h:outputText value="#{mvmap.key.mediaType}" styleClass="text-code"/></span>
-                    </p>
+                    </span>
                     <h:dataTable value="#{mvmap.value}" var="p"
                                  styleClass="table table-sm table-no-border"
                                  columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
@@ -122,37 +125,35 @@
 
                 <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}">
                   <!--request post objects and accepted encoding-->
+                  <span class="d-block text-small">Request</span>
                   <ui:repeat value="#{cc.attrs.wadlBean.findMethodRequestElements(cc.attrs.method).entrySet().toArray()}" var="mvmap">
                     <div>
                       <span class="text-bold"> #{mvmap.key} </span>
-                      <ui:repeat value="#{mvmap.value}" var="rep">
-                        <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mx-2">#{rep.mediaType}</span>
-                      </ui:repeat>
+                      <span class="float-right">
+                        <ui:repeat value="#{mvmap.value}" var="rep">
+                          <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} ml-2">#{rep.mediaType}</span>
+                        </ui:repeat>
+                      </span>
                     </div>
                     <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
                   </ui:repeat>
                 </h:panelGroup>
               </h:panelGroup>
 
-              <p class="text-bold text-small">Response encoding</p>
 
+              <span class="d-block text-small">Response</span>
               <ui:repeat value="#{cc.attrs.method.response}" var="r">
-
-                <h:dataTable value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap"
-                             styleClass="table table-sm table-no-border"
-                             columnClasses="text-bold w-20, , w-75">
-                  <h:column>
-                    HTTP #{r.status.size() == 0? '200' : r.status}
-                  </h:column>
-                  <h:column>
-                    <ui:repeat value="#{mvmap.value}" var="rep">
-                      <span class="text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} mr-2">#{rep.mediaType}</span>
-                    </ui:repeat>
-                  </h:column>
-                  <h:column>
-                    <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
-                  </h:column>
-                </h:dataTable>
+                <ui:repeat value="#{cc.attrs.wadlBean.findMethodResponseElements(r).entrySet().toArray()}" var="mvmap">
+                  <div>
+                    <span class="text-bold"> #{mvmap.key} </span>
+                    <span class="float-right">
+                      <ui:repeat value="#{mvmap.value}" var="rep">
+                        <span class="text-small text-#{cc.attrs.wadlBean.buildCSSType(rep.mediaType)} ml-2">#{rep.mediaType}</span>
+                      </ui:repeat>
+                    </span>
+                  </div>
+                  <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, mvmap.key)}" escape="false" styleClass="wadl-var"/>
+                </ui:repeat>
               </ui:repeat>
             </div>
           </div>
