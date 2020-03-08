@@ -24,6 +24,7 @@
  * - add left border to blockquote
  * - add link-dark
  * - 10/30/19 - add link css following bs-4 naming
+ * - 2020-03-08 - add bottom margin to mermaid images
  */
 html {
   position: relative;
@@ -419,4 +420,7 @@ textarea.markdown {
   display: block;
 }
 
-
+/*add bottom margin to mermaid images*/
+.mermaid{
+  margin-bottom: 1em;
+}
