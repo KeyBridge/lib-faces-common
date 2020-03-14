@@ -75,6 +75,8 @@
     - include additional flexmark extension processors
     - move JSF beans to `jsf` package
     - simplify localeConverter
+    - add conditional ajax update behavior to selectOne input widget
+
   </description>
 
   <properties>
@@ -157,7 +159,7 @@
     </dependency>
 
 
-    
+
     <!--jersey client for getting and setting REST-->
     <dependency>
       <groupId>javax.ws.rs</groupId>

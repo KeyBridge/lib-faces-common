@@ -7,6 +7,10 @@
 
   <!--Decorated h:selectOneMenu form component-->
   <!--@since - created 02/07/19-->
+  <!--@since v5.0.1 - 2020-03-11 - add update param; conditionally rendered-->
+
+  <!--Note: To use the update parameter the destination component must be fully qualified.-->
+  <!--This includes the form name, widget name, etc. For example `formx:serviceType:selectOne`-->
 
   <!-- INTERFACE -->
   <cc:interface>
@@ -18,9 +22,10 @@
     <cc:attribute name="description" displayName="A bried description displayed below the input" />
     <cc:attribute name="placeholder" default="Select one" displayName="Example text shown in the input" />
 
-    <cc:attribute name="smallSelect" default="false" type="java.lang.Boolean" displayName="Render the select as a small item"/>
     <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
+    <cc:attribute name="update" displayName="a FULLY qualified page element to update on select"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [custom-select-sm, custom-select-lg]"/>
     <cc:editableValueHolder name="value" targets="selectOne"/>
@@ -36,6 +41,7 @@
         <f:selectItem transient="true" itemLabel="#{cc.attrs.placeholder}" itemValue="" rendered="#{cc.attrs.placeholder ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItemMap.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}" rendered="#{cc.attrs.selectItemMap ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems}" var="s" itemValue="#{s}" itemLabel="#{s}" rendered="#{cc.attrs.selectItems ne null}"/>
+        <f:ajax render="#{cc.attrs.update}" execute="#{cc.id}" rendered="#{cc.attrs.update ne null}"/>
       </h:selectOneMenu>
       <span class="d-block my-1 d-flex justify-content-between">
         <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
