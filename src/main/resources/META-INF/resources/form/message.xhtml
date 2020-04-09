@@ -8,16 +8,16 @@
   <!--uses bootstrap css, replaces replace p:message-->
   <!--@since 2020-04-09-->
 
-  <!-- INTERFACE
+  <!--INTERFACE-->
   <cc:interface>
     <cc:attribute name="for" required="false" type="java.lang.String" displayName="Client identifier of the component for which to display messages. This attribute is mutually exclusive with globalOnly and take precedence if used."/>
-    <cc:attribute name="showDetail" default="false" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the detail portion of displayed messages should be included. Default value is 'false'."/>
-    <cc:attribute name="showSummary" default="true" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the summary portion of displayed messages should be included. Default value is 'true'."/>
+    <cc:attribute name="showDetail" default="true" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the detail portion of displayed messages should be included. Default value is 'false'."/>
+    <cc:attribute name="showSummary" default="false" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the summary portion of displayed messages should be included. Default value is 'true'."/>
 
     <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="CSS to wrap this element."/>
   </cc:interface>
 
-  <!-- IMPLEMENTATION -->
+  <!--IMPLEMENTATION-->
   <cc:implementation>
     <h:message for="#{cc.attrs.for}"
                showDetail="#{cc.attrs.showDetail}"
