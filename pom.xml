@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.0</version>
+  <version>5.0.1</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -76,6 +76,7 @@
     - move JSF beans to `jsf` package
     - simplify localeConverter
     - add conditional ajax update behavior to selectOne input widget
+    v5.0.1 - add form:message and form:message components
 
   </description>
 

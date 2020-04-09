@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--pretty formatted h:messages widget-->
+  <!--uses bootstrap css, replaces replace p:messages-->
+  <!--@since 2020-04-09-->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="globalOnly" default="false" required="false" type="java.lang.Boolean" displayName="Flag indicating that only global messages (that is, messages not associated with any client identifier) are to be displayed. Default value is 'false'."/>
+    <cc:attribute name="showDetail" default="false" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the detail portion of displayed messages should be included. Default value is 'false'."/>
+    <cc:attribute name="showSummary" default="true" required="false" type="java.lang.Boolean" displayName="Flag indicating whether the summary portion of displayed messages should be included. Default value is 'true'."/>
+
+    <cc:attribute name="styleClass" required="false" type="java.lang.String" displayName="CSS to wrap this element."/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <h:messages styleClass="list list-unstyled #{cc.attrs.styleClass}"
+                globalOnly="#{cc.attrs.globalOnly}"
+                showDetail="#{cc.attrs.showDetail}"
+                showSummary="#{cc.attrs.showSummary}"
+                fatalClass="alert alert-dark text-bold text-danger"
+                errorClass="alert alert-danger"
+                warnClass="alert alert-warning"
+                infoClass="alert alert-primary"/>
+  </cc:implementation>
+</html>
