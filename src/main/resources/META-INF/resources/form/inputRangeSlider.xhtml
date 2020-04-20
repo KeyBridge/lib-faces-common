@@ -42,10 +42,8 @@
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    styleClass="mr-2 form-control-range #{component.valid ?'':'is-invalid'}"
                    style="padding: 0.375rem 0.75rem;"/>
-      <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText id="des" value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="range" styleClass="text-small text-danger" rendered="#{not range.valid}"/>
-      </span>
+      <h:outputText id="des" value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:message for="range" styleClass="my-1 float-right text-small text-danger" rendered="#{not range.valid}"/>
     </div>
     <script type="text/javascript">
       document.getElementById("#{cc.clientId}:range").oninput = function () {

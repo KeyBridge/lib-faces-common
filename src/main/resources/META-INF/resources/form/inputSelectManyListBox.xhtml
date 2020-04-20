@@ -37,10 +37,8 @@
         <f:selectItems transient="true" value="#{cc.attrs.selectItemMap.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}" rendered="#{cc.attrs.selectItemMap ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems}" var="s" itemValue="#{s}" itemLabel="#{s}" rendered="#{cc.attrs.selectItems ne null}"/>
       </h:selectManyListbox>
-      <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
-        <h:message for="selectMany" styleClass="text-small text-danger" rendered="#{not selectMany.valid}"/>
-      </span>
+      <h:outputText value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:message for="selectMany" styleClass="my-1 float-right text-small text-danger" rendered="#{not selectMany.valid}"/>
     </div>
   </cc:implementation>
 </html>

@@ -33,10 +33,10 @@
                        rows="#{cc.attrs.rows}"
                        required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                        styleClass="form-control #{component.valid ?'':'is-invalid'} #{cc.attrs.smallText?'text-small':''}"/>
-      <span class="d-block my-1 d-flex justify-content-between">
-        <h:outputText id="des" value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:panelGroup styleClass="d-block my-1 d-flex justify-content-between" rendered="#{cc.attrs.description ne null or not textArea.valid}">
+        <h:outputText value="#{cc.attrs.description}" styleClass="text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
         <h:message for="textArea" styleClass="text-small text-danger" rendered="#{not textArea.valid}"/>
-      </span>
+      </h:panelGroup>
     </div>
   </cc:implementation>
 </html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <!--Decorated h:inputText form component using the html5 type = date -->
+  <!--@since - created 02/07/19-->
+  <!--note: requires HTML5 browser compatibility-->
+  <!--  @since v5.0.1 rename to `inputLocalDate`. Require java.time.LocalDate to ensure compatibility
+    The RFC 3339/ISO 8601 "wire format": YYYY-MM-DD. According to the HTML5
+    specification, this is the format that must be used for the input's value
+    upon form submission or when requested via the DOM API.  -->
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="value" required="true" type="java.time.LocalDate" displayName="The input value bean reference" />
+    <cc:attribute name="label"  displayName="The component label displayed above the input" />
+    <cc:attribute name="description" displayName="A bried description displayed below the input" />
+    <cc:attribute name="placeholder" displayName="Example text shown in the input" />
+
+    <cc:attribute name="maxlength" default="16" displayName="The maximum input length. Default is 255 characters"/>
+
+    <cc:attribute name="required" default="false" type="java.lang.Boolean" displayName="If the input is required for the current form"/>
+    <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
+
+    <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
+    <cc:editableValueHolder name="value" targets="text"/>
+  </cc:interface>
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
+      <h:outputLabel for="date" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
+      <h:inputText id="date" value="#{cc.attrs.value}"
+                   a:type="date"
+                   required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
+                   maxlength="#{cc.attrs.maxlength}"
+                   styleClass="form-control #{component.valid ?'':'is-invalid'}"/>
+      <h:outputText id="des" value="#{cc.attrs.description}" styleClass="my-1 text-small text-muted" rendered="#{cc.attrs.description ne null}"/>
+      <h:message for="date" styleClass="my-1 float-right text-small text-danger" rendered="#{not date.valid}"/>
+    </div>
+  </cc:implementation>
+</html>
