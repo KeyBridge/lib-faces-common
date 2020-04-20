@@ -19,6 +19,7 @@
 package ch.keybridge.faces.converter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoField;
@@ -72,6 +73,16 @@ public class LocalDateConverterTest {
 
     formatter = DateTimeFormatter.ofPattern("MMM", Locale.CANADA_FRENCH);
     System.out.println("format MMM  " + formatter.format(now));
+
+  }
+
+  @Test
+  public void testLength() {
+
+    LocalDateTime now = LocalDateTime.now();
+
+    System.out.println("now: " + now);
+    System.out.println("len: " + now.toString().length());
 
   }
 

@@ -596,6 +596,17 @@ public class FacesUtil {
   }
 
   /**
+   * Clear all cookies associated with the current context. This sets the max
+   * age to zero for all cookies bound to the current external context.
+   */
+  public static void clearCookies() {
+    for (Cookie cookie : ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies()) {
+      cookie.setMaxAge(0);
+      ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
+    }
+  }
+
+  /**
    * Get the requesting page URI. Returns the part of this request's URL from
    * the protocol name up to the query string in the first line of the HTTP
    * request. The web container does not decode this String. For example: First
