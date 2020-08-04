@@ -23,7 +23,7 @@ import javax.inject.Named;
 import javax.servlet.http.Cookie;
 
 /**
- * SessionScoped scoped managed bean to support user locale selection. Detects
+ * RequestScoped scoped managed bean to support user locale selection. Detects
  * the locale for an application based on the initial browser request.
  * <p>
  * To set the current locale of the views, bind it to the &lt;f:view&gt; of your
