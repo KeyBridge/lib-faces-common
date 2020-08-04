@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.2</version>
+  <version>5.0.3</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -79,7 +79,7 @@
     v5.0.1 - add form:message and form:message components
     v5.0.2 - add clearCookies method to assist with user logout
     - reformat form widgets to conditionally display description and required text
-
+    v5.0.3 - addCookie with path support
   </description>
 
   <properties>

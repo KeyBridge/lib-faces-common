@@ -531,6 +531,29 @@ public class FacesUtil {
 
   /**
    * Add a cookie cookie to the HttpServletResponse. This method can be called
+   * multiple times to set more than one cookie. The cookie is set with version
+   * 0 and expires at the end of the current session.
+   *
+   * @param name  the cookie name
+   * @param value the cookie value
+   * @param path  Specifies a path for the cookie to which the client should
+   *              return the cookie. The cookie is visible to all the pages in
+   *              the directory you specify, and all the pages in that
+   *              directory's subdirectories.
+   * @return the new cookie
+   */
+  public static Cookie addCookie(String name, String value, String path) {
+    Cookie cookie = new Cookie(name, value);
+    cookie.setPath(path);
+    cookie.setVersion(1);
+    cookie.setSecure(isHttps());
+    cookie.setHttpOnly(true);
+    addCookie(cookie);
+    return cookie;
+  }
+
+  /**
+   * Add a cookie cookie to the HttpServletResponse. This method can be called
    * multiple times to set more than one cookie.
    * <p>
    * The cookie is set with the current context path, version 0, and expires at
