@@ -37,6 +37,7 @@
     <div id="#{cc.id}" class="wadl-method">
       <h:panelGroup rendered="#{cc.attrs.method !=null}">
 
+        <!--the collapsing menu-->
         <div class="card border-#{wadlBean.buildCSSType(cc.attrs.method.name)} mb-3">
           <div class="wadl card-header" role="tab" id="#{cc.attrs.method.id}" style="position: relative; border-bottom: none;">
             <h:panelGroup rendered="#{cc.attrs.collapsible}">
@@ -54,7 +55,8 @@
             <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.parent.path)}" escape="false" styleClass="text-small float-right" rendered="#{cc.attrs.renderPath}"/>
           </div>
 
-          <div id="collapse#{cc.attrs.method.id}" class="#{cc.attrs.collapsible?'collapse':''}" role="tabpanel" aria-labelledby="headingOne">
+          <!--the collapsible content-->
+          <div id="collapse#{cc.attrs.method.id}" class="#{cc.attrs.collapsible?'collapse':''}" role="tabpanel">
             <div class="card-body">
               <!--method uri-->
               <h:outputText value="#{cc.attrs.wadlBean.buildFormattedURI(cc.attrs.method.path)}" escape="false" styleClass="wadl-uri d-block mb-3"/>
@@ -63,16 +65,13 @@
 
               <h:panelGroup rendered="#{not empty cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" layout="block" styleClass="mb-3">
                 <!--request query params-->
-                <span class="d-block text-small">Query parameters</span>
+                <span class="d-block text-small">Parameters</span>
                 <h:dataTable value="#{cc.attrs.wadlBean.findMethodParameters(cc.attrs.method)}" var="p"
                              styleClass="table table-sm table-no-border"
-                             columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
-                  <h:column>
-                    #{p.name}
-                  </h:column>
-                  <h:column>
-                    <span class="text-code text-success">#{p.type.localPart}</span>
-                  </h:column>
+                             columnClasses="text-bold text-nowrap, text-small text-monospace text-success text-capitalize text-nowrap, text-small text-monospace text-muted text-nowrap, w-100">
+                  <h:column> #{p.name}           </h:column>
+                  <h:column> #{p.type.localPart} </h:column>
+                  <h:column> #{p.style}          </h:column>
                   <h:column>
                     <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var"/>
                     <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.path ne null}">
@@ -81,9 +80,6 @@
                     <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.default ne null}">
                       Default = <h:outputText value="#{p.default}" styleClass="text-danger text-monospace"/>
                     </h:panelGroup>
-                  </h:column>
-                  <h:column>
-                    <span class="text-code text-small text-muted">#{p.style}</span>
                   </h:column>
 
                 </h:dataTable>
@@ -100,13 +96,10 @@
                     </span>
                     <h:dataTable value="#{mvmap.value}" var="p"
                                  styleClass="table table-sm table-no-border"
-                                 columnClasses="text-bold w-20, text-small text-capitalize, w-100, float-right">
-                      <h:column>
-                        #{p.name}
-                      </h:column>
-                      <h:column>
-                        <span class="text-code text-success">#{p.type.localPart}</span>
-                      </h:column>
+                                 columnClasses="text-bold text-nowrap, text-small text-monospace text-success text-capitalize text-nowrap, text-small text-monospace text-muted text-nowrap, w-100">
+                      <h:column> #{p.name}           </h:column>
+                      <h:column> #{p.type.localPart} </h:column>
+                      <h:column> #{p.style}          </h:column>
                       <h:column>
                         <h:outputText value="#{cc.attrs.wadlBean.getLabel(cc.attrs.method.id, p.name)}" escape="false" styleClass="wadl-var"/>
                         <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.path ne null}">
@@ -115,9 +108,6 @@
                         <h:panelGroup styleClass="d-block text-small text-muted" rendered="#{p.default ne null}">
                           Default = <h:outputText value="#{p.default}" styleClass="text-danger text-monospace"/>
                         </h:panelGroup>
-                      </h:column>
-                      <h:column>
-                        <span class="text-code text-small text-muted">#{p.style}</span>
                       </h:column>
                     </h:dataTable>
                   </ui:repeat>

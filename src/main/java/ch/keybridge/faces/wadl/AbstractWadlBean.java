@@ -419,12 +419,12 @@ public abstract class AbstractWadlBean implements LabelProvider {
     Comparator<Param> comparator = (Param o1, Param o2) -> o1.getName().compareTo(o2.getName());
     Collection<Param> parameters = new TreeSet(comparator);
     parameters.addAll(method.getParent().getParam());
+    /**
+     * Add all request parameters. This captures Query and Template method
+     * parameters plus Post headers.
+     */
     try {
       if (method.isSetRequest()) {
-        /**
-         * Add all request parameters. This captures Query and Template method
-         * parameters.
-         */
         parameters.addAll(method.getRequest().getParam());
       }
     } catch (Exception e) {
