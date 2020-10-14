@@ -98,7 +98,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InetAddressUtility {
 
+  /**
+   * Generic IP address pattern matcher.
+   */
   private static final Pattern IP_ADDRESS_PATTERN = Pattern.compile("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})");
+  /**
+   * Private IP block matcher.
+   */
   private static final Pattern PRIVATE_IP_ADDRESS_PATTERN = Pattern.compile("(^127\\.0\\.0\\.1)|(^10\\.)|(^172\\.1[6-9]\\.)|(^172\\.2[0-9]\\.)|(^172\\.3[0-1]\\.)|(^192\\.168\\.)");
 
   private static String findNonPrivateIpAddress(String s) {
@@ -159,5 +165,16 @@ public class InetAddressUtility {
    */
   public static InetAddress getInet4AddressFromRequest(final HttpServletRequest request) throws UnknownHostException {
     return Inet4Address.getByName(getAddressFromRequest(request));
+  }
+
+  /**
+   * Evaluate an IP address string and determine if it is a private (or public)
+   * address.
+   *
+   * @param ipAddress the IP address string. e.g. {@code 192.168.1.1}
+   * @return true if the address is private
+   */
+  public static boolean isPrivateIpAddress(String ipAddress) {
+    return PRIVATE_IP_ADDRESS_PATTERN.matcher(ipAddress).find();
   }
 }
