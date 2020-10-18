@@ -82,7 +82,7 @@
     v5.0.3 - addCookie with path support
     (fork) v5.0.4 - bump parent pom to v1.1.1; upgrade to primefaces v8.0 (buggy)
     v5.0.4 - touch up the wadl method widget
-
+    - add WADL parameter name filter to omit the javax.ws.rs.container.Suspended attribute
   </description>
 
   <properties>

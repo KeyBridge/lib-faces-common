@@ -23,6 +23,7 @@ import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -430,7 +431,12 @@ public abstract class AbstractWadlBean implements LabelProvider {
     } catch (Exception e) {
       LOG.log(Level.WARNING, "findMethodParameters ERROR for method {0}.  {1}", new Object[]{method.getId(), e.getMessage()});
     }
-    return new ArrayList<>(parameters);
+    /**
+     * Use a parameter name filter to omit the javax.ws.rs.container.Suspended
+     * attribute, which is picked up for asynchronous REST methods.
+     */
+    return parameters.stream().filter(p -> !p.getName().startsWith("javax.ws")).collect(Collectors.toList());
+//    return new ArrayList<>(parameters);
   }
 
   /**
