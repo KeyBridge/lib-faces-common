@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.4</version>
+  <version>5.0.5</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -83,6 +83,7 @@
     (fork) v5.0.4 - bump parent pom to v1.1.1; upgrade to primefaces v8.0 (buggy)
     v5.0.4 - touch up the wadl method widget
     - add WADL parameter name filter to omit the javax.ws.rs.container.Suspended attribute
+    v5.0.5 - migrate sas portal converters to this; add pretty print phone number converter
   </description>
 
   <properties>
@@ -163,7 +164,12 @@
       <artifactId>flexmark-ext-admonition</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
-
+    <!--for pretty print phone numbers-->
+    <dependency>
+      <groupId>com.googlecode.libphonenumber</groupId>
+      <artifactId>libphonenumber</artifactId>
+      <version>8.12.7</version>
+    </dependency>
 
 
     <!--jersey client for getting and setting REST-->
