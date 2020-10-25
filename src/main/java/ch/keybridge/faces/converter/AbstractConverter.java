@@ -122,7 +122,7 @@ public abstract class AbstractConverter implements Converter {
    * @return the time zone
    */
   protected ZoneId getZoneId(UIComponent component) {
-    Object timeZone = component.getAttributes().get("timeZone");
+    Object timeZone = component.getAttributes().get("timezone");
     if (timeZone == null) {
       timeZone = FacesUtil.getCookie(".tzid") != null
                  ? FacesUtil.getCookie(".tzid").getValue()
