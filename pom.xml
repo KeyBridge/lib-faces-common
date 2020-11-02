@@ -84,6 +84,9 @@
     v5.0.4 - touch up the wadl method widget
     - add WADL parameter name filter to omit the javax.ws.rs.container.Suspended attribute
     v5.0.5 - migrate sas portal converters to this; add pretty print phone number converter
+    - add hidden input to capture user timezone offset at signin
+
+
   </description>
 
   <properties>

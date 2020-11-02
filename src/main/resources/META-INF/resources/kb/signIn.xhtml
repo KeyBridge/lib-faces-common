@@ -34,6 +34,7 @@
                         required="true" requiredMessage="#{cc.resourceBundleMap.password} #{cc.resourceBundleMap.is_required}."
                         value="#{cc.attrs.password}"/>
       <div class="form-group">
+        <input id="offset" type="hidden" name="offset"/>
         <input type="hidden" name="referer" value="#{param['referer']}"/>
         <!--EXECUTE-->
         <h:commandButton actionListener="#{cc.attrs.actionListener}" a:type="submit"
@@ -43,6 +44,12 @@
       </div>
       <form:messages/>
     </h:form>
+    <script type="text/javascript">
+      window.onload = function () {
+        var offset = new Date().getTimezoneOffset();
+        $('#offset').val(offset);
+      };
+    </script>
   </cc:implementation>
 
 </ui:component>
