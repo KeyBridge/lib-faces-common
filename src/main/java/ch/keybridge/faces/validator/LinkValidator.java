@@ -94,34 +94,35 @@ public class LinkValidator extends AbstractValidator {
    * @param url the link URL
    * @return TRUE if the resource is available for download
    */
-  public boolean testLinkValidity(String url) {
+  public boolean testLinkValidity(final String url) {
+    String queryUrl = url.trim();
     /**
      * Use a trusting client to ignore credential errors.
      */
     try {
       Response response = trustingClient()
-        .target(url)
+        .target(queryUrl)
         .request()
         .header(HttpHeaders.USER_AGENT, MOZILLA)
         .head();
-      LOG.log(Level.FINEST, "debug testLinkValidity {0} retrieved OK", url);
+      LOG.log(Level.FINEST, "debug testLinkValidity {0} retrieved OK", queryUrl);
       return response != null;
     } catch (Exception exception) {
       /**
        * Conditionally try again without HTTPS.
        */
-      Matcher matcher = Pattern.compile("https", Pattern.CASE_INSENSITIVE).matcher(url);
+      Matcher matcher = Pattern.compile("https", Pattern.CASE_INSENSITIVE).matcher(queryUrl);
       if (matcher.find()) {
-        String newUrl = url.replaceFirst(matcher.group(0), "http");
+        queryUrl = queryUrl.replaceFirst(matcher.group(0), "http");
         try {
           Response response = trustingClient()
-            .target(newUrl)
+            .target(queryUrl)
             .request()
             .header(HttpHeaders.USER_AGENT, MOZILLA)
             .head();
           return response != null;
         } catch (Exception exception2) {
-          LOG.log(Level.INFO, "Link {0} is not available. Also tried http.", url);
+          LOG.log(Level.INFO, "Link {0} is not available. Also tried http.", queryUrl);
           return false;
         }
       }
