@@ -18,9 +18,12 @@
  */
 package ch.keybridge.faces.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -46,12 +49,44 @@ public class LinkValidatorTest {
   public void tearDown() {
   }
 
-//  @Test
+  @Test
   public void testSomeMethod() {
-    String string = "https://keybridgewireless.com";
+    String url = "https://keybridgewireless.com";
 //    String string = "https://google.com";
+    boolean valid = validator.testLinkValidity(url);
+//    validator.validate(null, null, url);
+    System.out.println(" is valid " + url + " ? " + valid);
 
-    validator.validate(null, null, string);
+  }
+
+//  @Test
+  public void testRegex() {
+    /**
+     * A bit of hackery to test case insensitive regex
+     */
+
+    String url = "HTTps://keybridgewireless.com";
+
+    if (url.toLowerCase().startsWith("https")) {
+      System.out.println("  starts with https ");
+
+      String newUrl = url.replaceFirst("(?)https", "http");
+
+      System.out.println("  old url " + url);
+      System.out.println("  new url " + newUrl);
+
+      Pattern p = Pattern.compile("https", Pattern.CASE_INSENSITIVE);
+      Matcher m = p.matcher(url);
+      if (m.find()) {
+        System.out.println("  match !");
+        System.out.println("  " + m.group(0));
+        newUrl = url.replace(m.group(0), "http");
+      }
+
+      System.out.println("  old url " + url);
+      System.out.println("  new url " + newUrl);
+    }
+
   }
 
 }

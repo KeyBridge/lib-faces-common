@@ -21,6 +21,8 @@ package ch.keybridge.faces.validator;
 import java.security.cert.X509Certificate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
@@ -68,46 +70,65 @@ public class LinkValidator extends AbstractValidator {
     if (value == null) {
       return;
     }
-    String url = ((String) value).toLowerCase();
-    if (url.trim().isEmpty()) {
+    String url = ((String) value).trim();
+    if (url.isEmpty()) {
       return;
     }
-    if (!url.startsWith("http")) {
+    if (!url.toLowerCase().startsWith("http")) {
       url = "http://" + url;
     }
     /**
      * Use a trusting client to ignore credential errors.
      */
+    boolean validityStatus = testLinkValidity(url);
+    setValidityStatus(component, validityStatus); // update the jsf component
+    if (!validityStatus) {
+      throwErrorException("Not available", "This resource is not available. ");
+    }
+  }
+
+  /**
+   * Test whether a link is available or not. Uses the HEAD method to just
+   * verify that the resource is available.
+   *
+   * @param url the link URL
+   * @return TRUE if the resource is available for download
+   */
+  public boolean testLinkValidity(String url) {
+    /**
+     * Use a trusting client to ignore credential errors.
+     */
     try {
-//      Response response = ClientBuilder.newClient().target((String) value).request()
       Response response = trustingClient()
         .target(url)
         .request()
         .header(HttpHeaders.USER_AGENT, MOZILLA)
-        .get();
-      setValidityStatus(component, true); // update the jsf component
-    } catch (Exception e) {
+        .head();
+      LOG.log(Level.FINEST, "debug testLinkValidity {0} retrieved OK", url);
+      return response != null;
+    } catch (Exception exception) {
       /**
-       * Conditionally try again without http.
+       * Conditionally try again without HTTPS.
        */
-      if (url.startsWith("https")) {
-        url = url.replaceFirst("https", "http");
+      Matcher matcher = Pattern.compile("https", Pattern.CASE_INSENSITIVE).matcher(url);
+      if (matcher.find()) {
+        String newUrl = url.replaceFirst(matcher.group(0), "http");
         try {
           Response response = trustingClient()
-            .target(url)
+            .target(newUrl)
             .request()
             .header(HttpHeaders.USER_AGENT, MOZILLA)
-            .get();
-          setValidityStatus(component, true); // update the jsf component
-          return;
-        } catch (Exception exception) {
-          LOG.log(Level.INFO, "{0} is not available. Also tried http.", url);
+            .head();
+          return response != null;
+        } catch (Exception exception2) {
+          LOG.log(Level.INFO, "Link {0} is not available. Also tried http.", url);
+          return false;
         }
       }
-      setValidityStatus(component, false); // update the jsf component
-      throwErrorException("Not available", "This resource is not available. " + e.getMessage());
     }
+    return false;
   }
+
   /**
    * From org.glassfish.jersey.client.ClientProperties
    */
