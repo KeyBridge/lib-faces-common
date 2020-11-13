@@ -37,7 +37,7 @@
   <!-- IMPLEMENTATION -->
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
-      <h:outputLabel id="label" for="text" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
+      <h:outputLabel id="label" for="text" value="#{cc.attrs.label}" styleClass="d-block text-nowrap" rendered="#{cc.attrs.label ne null}"/>
       <h:inputText id="text" value="#{cc.attrs.value}" a:type="#{cc.attrs.type}"
                    a:placeholder="#{cc.attrs.placeholder}"
                    readonly="#{cc.attrs.readOnly}"
