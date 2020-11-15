@@ -16,6 +16,7 @@ package ch.keybridge.faces;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.el.ELContext;
@@ -164,6 +165,17 @@ public class FacesUtil {
   /**
    * Returns the implementation information of currently loaded JSF
    * implementation. E.g. "Mojarra 2.1.7-FCS".
+   * <p>
+   * Gets the package for this class. The class loader of this class is used to
+   * find the package. If the class was loaded by the bootstrap class loader the
+   * set of packages loaded from CLASSPATH is searched to find the package of
+   * the class. Null is returned if no package object was created by the class
+   * loader of this class.
+   * <p>
+   * Packages have attributes for versions and specifications only if the
+   * information was defined in the manifests that accompany the classes, and if
+   * the class loader created the package instance with the attributes from the
+   * manifest.
    *
    * @return The implementation information of currently loaded JSF
    *         implementation.
@@ -412,7 +424,7 @@ public class FacesUtil {
    * @return The HTTP request parameter values map.
    */
   public static Map<String, String> getRequestParameterMap() {
-    return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+    return new TreeMap(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap());
   }
 
   /**
@@ -460,6 +472,26 @@ public class FacesUtil {
    * was "?key1=value1&amp;key2=value2" then this method would return "key2" for
    * the query key "key2".
    *
+   * @return the corresponding URI query value
+   */
+  public static Map<String, String> getRequestHeaderMap() {
+    /**
+     * Developer note: getRequestHeaderMap() returns an immutable Map whose keys
+     * are the set of request header names included in the current request, and
+     * whose values (of type String) are the first (or only) value for each
+     * parameter name returned by the underlying request.
+     */
+    return new TreeMap<>(FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap());
+  }
+
+  /**
+   * Get an HTTP request header value based upon its index (or key). Query the
+   * FacesContext request parameters included in the current request.
+   * <p>
+   * This fetches a request value from GET URIs. For example, if the URI query
+   * was "?key1=value1&amp;key2=value2" then this method would return "key2" for
+   * the query key "key2".
+   *
    * @param queryKey the URI query key
    * @return the corresponding URI query value
    */
@@ -485,11 +517,9 @@ public class FacesUtil {
    */
   public static String getReferer() {
     /**
-     * Sometimes the "referer" header is capitalized.
+     * Sometimes the "referer" header is capitalized. Check both options.
      */
-    return getRequestHeader("referer") != null
-           ? getRequestHeader("referer")
-           : getRequestHeader("Referer");
+    return getRequestHeader("referer") != null ? getRequestHeader("referer") : getRequestHeader("Referer");
   }
 
   /**
@@ -543,13 +573,7 @@ public class FacesUtil {
    * @return the new cookie
    */
   public static Cookie addCookie(String name, String value, String path) {
-    Cookie cookie = new Cookie(name, value);
-    cookie.setPath(path);
-    cookie.setVersion(1);
-    cookie.setSecure(isHttps());
-    cookie.setHttpOnly(true);
-    addCookie(cookie);
-    return cookie;
+    return addCookie(name, value, path, null, null, -1, isHttps());
   }
 
   /**
@@ -564,12 +588,112 @@ public class FacesUtil {
    * @return the new cookie
    */
   public static Cookie addCookie(String name, String value) {
+    return addCookie(name, value, getExternalContext().getRequestContextPath(), null, null, -1, isHttps());
+  }
+
+  /**
+   * Build a HTTP new Cookie configuration.
+   * <p>
+   * The name must conform to RFC 2109. However, vendors may provide a
+   * configuration option that allows cookie names conforming to the original
+   * Netscape Cookie Specification to be accepted. The name of a cookie cannot
+   * be changed once the cookie has been created.
+   * <p>
+   * The value can be anything the server chooses to send. Its value is probably
+   * of interest only to the server. The cookie's value can be changed after
+   * creation with the setValue method. By default, cookies are created
+   * according to the Netscape cookie specification.
+   * <p>
+   * Developer note: The {@code javax.servlet.http.Cookie} object is not
+   * compatible with JAXB marshalling / un-marshalling.
+   * <p>
+   * Domain specifies the interet domain within which this cookie should be
+   * presented. The form of the domain name is specified by RFC 2109. A domain
+   * name begins with a dot (<code>.foo.com</code>) and means that the cookie is
+   * visible to servers in a specified Domain Name System (DNS) zone (for
+   * example, <code>www.foo.com</code>, but not <code>a.b.foo.com</code>). By
+   * default, cookies are only returned to the server that sent them.
+   *
+   * @param name    the name of the cookie per RFC 2109
+   * @param value   the value of the cookie.
+   * @param path    the URI path for which the cookie is valid. This is the
+   *                application path (i.e. context root) under which the client
+   *                should return the cookie. (default is all applications: "/")
+   * @param domain  the domain name within which this cookie is visible; form is
+   *                according to RFC 2109. May be a domain (e.g. ".example.com"
+   *                or a host (e.g. "www.example.com"). (default null) Do not
+   *                set when testing. For production, specify the entire domain
+   *                within which this cookie should be presented. e.g.
+   *                ".example.com"
+   * @param comment Specifies a comment that describes a cookie's purpose. The
+   *                comment is useful if the browser presents the cookie to the
+   *                user.
+   * @param maxAge  the maximum age in seconds for this Cookie. A negative value
+   *                means that the cookie is not stored persistently and will be
+   *                deleted when the Web browser exits.
+   * @param secure  specifies whether the cookie will only be sent over a secure
+   *                connection.
+   * @return an HTTP version 1 cookie.
+   * @see <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management
+   * Mechanism</a>
+   */
+  public static Cookie addCookie(String name, String value, String path, String domain, String comment, int maxAge, boolean secure) {
+    /**
+     * Developer note: This method cannot be included in a Session entity object
+     * as the HTTP Cookie class is not compatible with JAXB marshalling /
+     * un-marshalling.
+     */
     Cookie cookie = new Cookie(name, value);
-    cookie.setPath(getExternalContext().getRequestContextPath());
+    /**
+     * HttpOnly cookies are not supposed to be exposed to client-side scripting
+     * code, and may therefore help mitigate certain kinds of cross-site
+     * scripting attacks
+     */
+    cookie.setHttpOnly(secure);
+    /**
+     * Indicates to the browser whether the cookie should only be sent using a
+     * secure protocol, such as HTTPS or SSL. The default value is false.
+     */
+    cookie.setSecure(secure);
+    /**
+     * Do not set a null cookie domain value; throws NPE. Also, do not set when
+     * testing. For production, specify the entire domain within which this
+     * cookie should be presented. e.g. ".keybridgewireless.com"
+     */
+    if (domain != null) {
+      cookie.setDomain(domain);
+    }
+    if (comment != null) {
+      cookie.setComment(comment);
+    }
+    /**
+     * Specifies a path for the cookie to which the client should return the
+     * cookie. The cookie is visible to all the pages in the directory you
+     * specify, and all the pages in that directory's subdirectories. If not
+     * specified set the cookie to respond to all applications.
+     */
+    cookie.setPath(path != null ? path : "/");
+    /**
+     * Sets the version of the cookie protocol that this Cookie complies with.
+     * Version 1 complies with RFC 2109.
+     */
     cookie.setVersion(1);
-    cookie.setSecure(isHttps());
-    cookie.setHttpOnly(true);
+    /**
+     * Sets the maximum age in seconds for this Cookie. A positive value
+     * indicates that the cookie will expire after that many seconds have
+     * passed. Note that the value is the maximum age when the cookie will
+     * expire, not the cookie's current age. A negative value means that the
+     * cookie is not stored persistently and will be deleted when the Web
+     * browser exits. A zero value causes the cookie to be deleted.
+     */
+    cookie.setMaxAge(maxAge);
+    /**
+     * Add the cookie to the HttpServletResponse.
+     */
     addCookie(cookie);
+    /**
+     * Done.
+     */
     return cookie;
   }
 
@@ -614,6 +738,7 @@ public class FacesUtil {
     Cookie cookie = getCookie(cookieName);
     if (cookie != null) {
       cookie.setMaxAge(0);
+      cookie.setValue("");
       addCookie(cookie);
     }
   }
@@ -625,6 +750,7 @@ public class FacesUtil {
   public static void clearCookies() {
     for (Cookie cookie : ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies()) {
       cookie.setMaxAge(0);
+      cookie.setValue("");
       ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
     }
   }
@@ -743,7 +869,7 @@ public class FacesUtil {
    *         request
    */
   public static String getRemoteAddr() {
-    return InetAddressUtility.getAddressFromRequest((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
+    return InetAddressUtility.getRemoteAddr((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
   }
 
   /**
@@ -756,7 +882,7 @@ public class FacesUtil {
    * @return a String containing the fully qualified name of the client
    */
   public static String getRemoteHost() {
-    return InetAddressUtility.getHostnameFromRequest((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
+    return InetAddressUtility.getHostName((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
   }
 
   /**
@@ -799,121 +925,6 @@ public class FacesUtil {
       FacesContext.getCurrentInstance().responseComplete();
     } catch (IOException iOException) {
     }
-  }
-
-  /**
-   * Build a simple HTTP cookie using the default configuration.
-   * <p>
-   * This returns a cookie with: any http connection, no domain, no path, no
-   * comment. The cookie is set to expire when the browser is closed.
-   *
-   * @param name  the name of the cookie per RFC 2109
-   * @param value the value of the cookie
-   * @return an HTTP version 1 cookie.
-   */
-  public static Cookie buildCookie(String name, String value) {
-    /**
-     * The cookie max age is about one day.
-     */
-    return buildCookie(name, value, -1, false, null, null, null);
-  }
-
-  /**
-   * Build a HTTP new Cookie configuration.
-   * <p>
-   * The name must conform to RFC 2109. However, vendors may provide a
-   * configuration option that allows cookie names conforming to the original
-   * Netscape Cookie Specification to be accepted. The name of a cookie cannot
-   * be changed once the cookie has been created.
-   * <p>
-   * The value can be anything the server chooses to send. Its value is probably
-   * of interest only to the server. The cookie's value can be changed after
-   * creation with the setValue method. By default, cookies are created
-   * according to the Netscape cookie specification.
-   * <p>
-   * Developer note: The {@code javax.servlet.http.Cookie} object is not
-   * compatible with JAXB marshalling / un-marshalling.
-   * <p>
-   * Domain specifies the interet domain within which this cookie should be
-   * presented. The form of the domain name is specified by RFC 2109. A domain
-   * name begins with a dot (<code>.foo.com</code>) and means that the cookie is
-   * visible to servers in a specified Domain Name System (DNS) zone (for
-   * example, <code>www.foo.com</code>, but not <code>a.b.foo.com</code>). By
-   * default, cookies are only returned to the server that sent them.
-   *
-   * @param name    the name of the cookie per RFC 2109
-   * @param value   the value of the cookie
-   * @param maxAge  the maximum age in seconds for this Cookie. A negative value
-   *                means that the cookie is not stored persistently and will be
-   *                deleted when the Web browser exits.
-   * @param secure  Indicates to the browser whether the cookie should only be
-   *                sent using a secure protocol, such as HTTPS or SSL. The
-   *                default value is false.
-   * @param domain  the domain name within which this cookie is visible; form is
-   *                according to RFC 2109. May be a domain (e.g. ".example.com"
-   *                or a host (e.g. "www.example.com"). (default null) Do not
-   *                set when testing. For production, specify the entire domain
-   *                within which this cookie should be presented. e.g.
-   *                ".keybridgewireless.com"
-   * @param path    the application path (i.e. context root) under which the
-   *                client should return the cookie. (default is all
-   *                applications: "/")
-   * @param comment Specifies a comment that describes a cookie's purpose. The
-   *                comment is useful if the browser presents the cookie to the
-   *                user.
-   * @return an HTTP version 1 cookie.
-   */
-  public static Cookie buildCookie(String name, String value, int maxAge, boolean secure, String domain, String path, String comment) {
-    /**
-     * Developer note: This method cannot be included in the Session entity
-     * object as the HTTP Cookie class is not compatible with JAXB marshalling /
-     * un-marshalling.
-     */
-    Cookie cookie = new Cookie(name, value);
-    /**
-     * HttpOnly cookies are not supposed to be exposed to client-side scripting
-     * code, and may therefore help mitigate certain kinds of cross-site
-     * scripting attacks
-     */
-    cookie.setHttpOnly(secure);
-    /**
-     * Indicates to the browser whether the cookie should only be sent using a
-     * secure protocol, such as HTTPS or SSL. The default value is false.
-     */
-    cookie.setSecure(secure);
-    /**
-     * Do not set a null cookie domain value; throws NPE. Also, do not set when
-     * testing. For production, specify the entire domain within which this
-     * cookie should be presented. e.g. ".keybridgewireless.com"
-     */
-    if (domain != null) {
-      cookie.setDomain(domain);
-    }
-    if (comment != null) {
-      cookie.setComment(comment);
-    }
-    /**
-     * Specifies a path for the cookie to which the client should return the
-     * cookie. The cookie is visible to all the pages in the directory you
-     * specify, and all the pages in that directory's subdirectories. If not
-     * specified set the cookie to respond to all applications.
-     */
-    cookie.setPath(path != null ? path : "/");
-    /**
-     * Sets the version of the cookie protocol that this Cookie complies with.
-     * Version 1 complies with RFC 2109.
-     */
-    cookie.setVersion(1);
-    /**
-     * Sets the maximum age in seconds for this Cookie. A positive value
-     * indicates that the cookie will expire after that many seconds have
-     * passed. Note that the value is the maximum age when the cookie will
-     * expire, not the cookie's current age. A negative value means that the
-     * cookie is not stored persistently and will be deleted when the Web
-     * browser exits. A zero value causes the cookie to be deleted.
-     */
-    cookie.setMaxAge(maxAge);
-    return cookie;
   }
 
   /**
@@ -1016,9 +1027,13 @@ public class FacesUtil {
       return null;
     }
     UIViewRoot viewRoot = context.getViewRoot();
-// The initial implementation has visited the tree for UIForm components which returns true on isSubmitted().
-// But with testing it turns out to return false on ajax requests where the form is not included in execute!
-// The current implementation just walks through the request parameter map instead.
+    /**
+     * The initial implementation has visited the tree for UIForm components
+     * which returns true on isSubmitted(). But with testing it turns out to
+     * return false on ajax requests where the form is not included in execute!
+     * The current implementation just walks through the request parameter map
+     * instead.
+     */
     for (String name : context.getExternalContext().getRequestParameterMap().keySet()) {
       if (name.startsWith("javax.faces.")) {
         continue; // Quick skip.
@@ -1053,8 +1068,7 @@ public class FacesUtil {
     try {
       return viewRoot.findComponent(clientId);
     } catch (IllegalArgumentException ignore) {
-// May occur when view has changed by for example a successful navigation.
-      return null;
+      return null; // May occur when view has changed by for example a successful navigation.
     }
   }
 

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -85,19 +85,24 @@
     - add WADL parameter name filter to omit the javax.ws.rs.container.Suspended attribute
     v5.0.5 - migrate sas portal converters to this; add pretty print phone number converter
     - add hidden input to capture user timezone offset at signin
+    v5.0.6 - update remote-addr parser; rename and rewrite applicaion properties utility
+    v5.0.7 - bump dependencies to latest as of 2020-11-15
 
 
   </description>
 
   <properties>
     <!--4.0.2.Final released 21-May-2018-->
-    <lib.prettytime.version>4.0.2.Final</lib.prettytime.version>
+    <!--4.0.6.Final released 27-Sep-2020-->
+    <lib.prettytime.version>4.0.6.Final</lib.prettytime.version>
     <!--0.50.44 released 11-Nov-2019-->
-    <lib.flexmark.version>0.50.44</lib.flexmark.version>
+    <!--0.62.2  released 05-Jun-2020-->
+    <lib.flexmark.version>0.62.2</lib.flexmark.version>
     <!--1.1.0 release 2019-11-19-->
     <lib.wadl.version>1.1.0</lib.wadl.version>
 
     <!--jersey client version-->
+    <!--lock at v.2.26 to enable simpleton clients-->
     <jersey.version>2.26</jersey.version>
 
   </properties>
@@ -168,10 +173,11 @@
       <version>${lib.flexmark.version}</version>
     </dependency>
     <!--for pretty print phone numbers-->
+    <!--v8.12.13 released 12-Nov-2020-->
     <dependency>
       <groupId>com.googlecode.libphonenumber</groupId>
       <artifactId>libphonenumber</artifactId>
-      <version>8.12.7</version>
+      <version>8.12.13</version>
     </dependency>
 
 

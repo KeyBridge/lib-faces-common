@@ -26,16 +26,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A simple class to enable the loading and import of a properties file. This
- * will first seek a Resource bundle. If none exists, then a properties file in
- * the app server domain config directory is queried.
+ * A simple class to enable the loading and import of application properties
+ * from a file.
  * <p>
+ * This class first seeks to load properties from a Resource bundle. If none
+ * exists, then a properties file in the app server domain config directory is
+ * queried.
+ *
  * @author Jesse Caulfield
  * @since v5.0.0 rewrite 11/29/19 to use the app server domain config directory.
  */
-public class PropertiesUtil {
+public class ApplicationPropertiesUtility {
 
-  private static final Logger LOG = Logger.getLogger(PropertiesUtil.class.getName());
+  private static final Logger LOG = Logger.getLogger(ApplicationPropertiesUtility.class.getName());
+  private static final String CONFIG_DIRECTORY = "keybridge";
 
   /**
    * Helper method to query the properties file and determine if the current
@@ -43,6 +47,10 @@ public class PropertiesUtil {
    * <p>
    * The match is ALWAYS be lower case and all run.host entries in the
    * properties file must therefore be entered lower case to match.
+   * <p>
+   * This method is used to identify, in a properties file, which host should
+   * execute a process where the same properties are shared amongst multiple
+   * hosts. This can occur, for example, in a cluster configuration.
    *
    * @param prefix   a properties prefix identifying a process (e.g. fcc_cdbs)
    * @param filename the properties file name to read
@@ -65,8 +73,8 @@ public class PropertiesUtil {
   }
 
   /**
-   * Load a PROPERTIES file from either /usr/local/etc/ or ~/etc and filter
-   * those properties for the given prefix.
+   * Load a PROPERTIES file from either a resource bundle or from a
+   * configuration file and filter those properties for the given prefix.
    * <p>
    * The prefix (and trailing dot) is stripped from the properties name in the
    * returned properties container.
@@ -118,6 +126,7 @@ public class PropertiesUtil {
         for (String string : bundle.keySet()) {
           properties.setProperty(string, bundle.getString(string));
         }
+        LOG.log(Level.INFO, "Loaded properties from resource bundle {0}", baseName);
         return properties;
       }
     } catch (Exception e) {
@@ -126,30 +135,29 @@ public class PropertiesUtil {
     /**
      * Next try a file in the application server domain configuration directory.
      */
-    try {
-      Path propertiesFile = Paths.get(baseName + ".properties");
-      if (propertiesFile.toFile().exists()) {
-        /**
-         * Read the properties file. Initialize and load the properties file.
-         */
+    Path configDirectory = Paths.get(CONFIG_DIRECTORY);
+    if (!configDirectory.toFile().exists()) {
+      LOG.info("Configuration directory " + CONFIG_DIRECTORY + " does not exist on this server.");
+      return properties;
+    }
+    /**
+     * Try to read the properties file.
+     */
+    Path propertiesFile = configDirectory.resolve(baseName + ".properties");
+    if (propertiesFile.toFile().exists()) {
+      try {
         properties.load(new FileInputStream(propertiesFile.toFile()));
-        LOG.log(Level.INFO, "Load properties from {0}", propertiesFile);
+        LOG.log(Level.INFO, "Loaded properties from file {0}", propertiesFile);
         return properties;
-      } else {
-        LOG.log(Level.WARNING, "Configuratino error. {0} properties file does not exist on this server. ", baseName);
-//        LOG.log(Level.INFO, "Create empty properties file {0}", propertiesFile);
-//        Files.createFile(propertiesFile);
-        return new Properties();
+      } catch (IOException exception) {
+        LOG.log(Level.SEVERE, "PropertiesLoader", exception);
       }
-    } catch (IOException exception) {
-      LOG.log(Level.SEVERE, "Error loading properties file for {0}", baseName);
-      LOG.log(Level.SEVERE, "PropertiesLoader", exception);
     }
     /**
      * If program flow has reached this point either the properties file does
      * not exist, is incomplete, or is corrupted.
      */
-    LOG.log(Level.WARNING, "Properties file {0} could not be loaded.", baseName);
+    LOG.log(Level.SEVERE, "Error loading properties file {0}", propertiesFile);
     return new Properties();
   }
 }

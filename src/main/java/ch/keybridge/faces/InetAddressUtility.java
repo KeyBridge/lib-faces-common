@@ -107,6 +107,12 @@ public class InetAddressUtility {
    */
   private static final Pattern PRIVATE_IP_ADDRESS_PATTERN = Pattern.compile("(^127\\.0\\.0\\.1)|(^10\\.)|(^172\\.1[6-9]\\.)|(^172\\.2[0-9]\\.)|(^172\\.3[0-1]\\.)|(^192\\.168\\.)");
 
+  /**
+   * Find a non private address in the provided string.
+   *
+   * @param s a string
+   * @return a non-private IP address, if one exists
+   */
   private static String findNonPrivateIpAddress(String s) {
     Matcher matcher = IP_ADDRESS_PATTERN.matcher(s);
     while (matcher.find()) {
@@ -123,22 +129,26 @@ public class InetAddressUtility {
    * return the the first non-private IP Address from within an
    * "X-Forwarded-For" request header. If <code>X-Forwarded-For</code> is not
    * present then the unmodified request remote Address is returned.
+   * <p>
+   * The X-Forwarded-For request header helps you identify the IP address of a
+   * client when you use an HTTP or HTTPS load balancer. Because load balancers
+   * intercept traffic between clients and servers, your server access logs
+   * contain only the IP address of the load balancer. To see the IP address of
+   * the client, use the X-Forwarded-For request header. Elastic Load Balancing
+   * stores the IP address of the client in the X-Forwarded-For request header
+   * and passes the header to your server.
+   * <p>
+   * The X-Forwarded-For request header takes the following form:
+   * <p>
+   * {@code X-Forwarded-For: client-ip-address}
    *
    * @param request the HTTP servlet request
    * @return the best guess remote address
    */
-  public static String getAddressFromRequest(final HttpServletRequest request) {
-    /**
-     * X-Forwarded-For is a comma separated string: client,proxy1,proxy2,...
-     */
-    String forwardedFor = request.getHeader("X-Forwarded-For");
-    if (forwardedFor != null && (forwardedFor = findNonPrivateIpAddress(forwardedFor)) != null) {
-      return forwardedFor;
-    }
-    /**
-     * Fall back and return the request remote address.
-     */
-    return request.getRemoteAddr();
+  public static String getRemoteAddr(final HttpServletRequest request) {
+    return request.getHeader("X-Forwarded-For") == null
+           ? request.getRemoteAddr()
+           : request.getHeader("X-Forwarded-For");
   }
 
   /**
@@ -147,13 +157,58 @@ public class InetAddressUtility {
    * @param request the HTTP servlet request
    * @return the resolved host name
    */
-  public static String getHostnameFromRequest(final HttpServletRequest request) {
-    String addr = getAddressFromRequest(request);
+  public static String getHostName(final HttpServletRequest request) {
+    String addr = getRemoteAddr(request);
     try {
       return Inet4Address.getByName(addr).getHostName();
     } catch (Exception e) {
     }
     return addr;
+  }
+
+  /**
+   * The X-Forwarded-Proto request header helps you identify the protocol (HTTP
+   * or HTTPS) that a client used to connect to your load balancer. Your server
+   * access logs contain only the protocol used between the server and the load
+   * balancer; they contain no information about the protocol used between the
+   * client and the load balancer. To determine the protocol used between the
+   * client and the load balancer, use the X-Forwarded-Proto request header.
+   * Elastic Load Balancing stores the protocol used between the client and the
+   * load balancer in the X-Forwarded-Proto request header and passes the header
+   * along to your server.
+   * <p>
+   * Your application or website can use the protocol stored in the
+   * X-Forwarded-Proto request header to render a response that redirects to the
+   * appropriate URL.
+   * <p>
+   * The X-Forwarded-Proto request header takes the following form:
+   * <p>
+   * {@code X-Forwarded-Proto: originatingProtocol}
+   * <p>
+   * The following example contains an X-Forwarded-Proto request header for a
+   * request that originated from the client as an HTTPS request:
+   * {@code X-Forwarded-Proto: https}
+   *
+   * @param request the HTTP servlet request
+   * @return the forwarded protocol
+   */
+  public static String getProtocol(final HttpServletRequest request) {
+    return request.getHeader("X-Forwarded-Proto") == null
+           ? request.getProtocol()
+           : request.getHeader("X-Forwarded-Proto");
+  }
+
+  /**
+   * The X-Forwarded-Port request header helps you identify the destination port
+   * that the client used to connect to the load balancer.
+   *
+   * @param request the HTTP servlet request
+   * @return the forwarded port
+   */
+  public static int getLocalPort(final HttpServletRequest request) {
+    return request.getHeader("X-Forwarded-Port") == null
+           ? request.getLocalPort()
+           : Integer.parseInt(request.getHeader("X-Forwarded-Port"));
   }
 
   /**
@@ -163,8 +218,8 @@ public class InetAddressUtility {
    * @return the Internet address
    * @throws UnknownHostException if the internet address does not resolve
    */
-  public static InetAddress getInet4AddressFromRequest(final HttpServletRequest request) throws UnknownHostException {
-    return Inet4Address.getByName(getAddressFromRequest(request));
+  public static InetAddress getInetAddress(final HttpServletRequest request) throws UnknownHostException {
+    return Inet4Address.getByName(getRemoteAddr(request));
   }
 
   /**
