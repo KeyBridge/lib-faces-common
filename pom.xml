@@ -88,24 +88,22 @@
     - add hidden input to capture user timezone offset at signin
     v5.0.6 - update remote-addr parser; rename and rewrite applicaion properties utility
     v5.0.7 - bump dependencies to latest as of 2020-11-15
+    - add rewrite-config-prettyfaces
 
 
   </description>
 
   <properties>
-    <!--4.0.2.Final released 21-May-2018-->
-    <!--4.0.6.Final released 27-Sep-2020-->
-    <lib.prettytime.version>4.0.6.Final</lib.prettytime.version>
+    <!--1.1.0 release 2019-11-19-->
+    <lib.wadl.version>1.1.0</lib.wadl.version>
+
     <!--0.50.44 released 11-Nov-2019-->
     <!--0.62.2  released 05-Jun-2020-->
     <lib.flexmark.version>0.62.2</lib.flexmark.version>
-    <!--1.1.0 release 2019-11-19-->
-    <lib.wadl.version>1.1.0</lib.wadl.version>
 
     <!--jersey client version-->
     <!--lock at v.2.26 to enable simpleton clients-->
     <jersey.version>2.26</jersey.version>
-
   </properties>
 
   <dependencies>
@@ -115,18 +113,36 @@
       <artifactId>primefaces</artifactId>
     </dependency>
 
-    <!--for pretty time conversion-->
-    <dependency>
-      <groupId>org.ocpsoft.prettytime</groupId>
-      <artifactId>prettytime-integration-jsf</artifactId>
-      <version>${lib.prettytime.version}</version>
-    </dependency>
-
     <!--since 4.0.0 for rendering WADL API documentation-->
     <dependency>
       <groupId>keybridge.lib</groupId>
       <artifactId>wadl</artifactId>
       <version>${lib.wadl.version}</version>
+    </dependency>
+
+    <!--for pretty time conversion-->
+    <!--4.0.2.Final released 21-May-2018-->
+    <!--4.0.6.Final released 27-Sep-2020-->
+    <dependency>
+      <groupId>org.ocpsoft.prettytime</groupId>
+      <artifactId>prettytime-integration-jsf</artifactId>
+      <version>4.0.6.Final</version>
+    </dependency>
+    <!--for url rewriting-->
+    <!--see https://www.ocpsoft.org/rewrite/-->
+    <!--v3.4.4.Final updated 10-Dec-2019-->
+    <dependency>
+      <groupId>org.ocpsoft.rewrite</groupId>
+      <artifactId>rewrite-servlet</artifactId>
+      <version>3.4.4.Final</version>
+    </dependency>
+    <!--prettyfaces rewriting solution for Servlet, JSF, and Java EE-->
+    <!--see https://www.ocpsoft.org/prettyfaces/-->
+    <!--v3.4.4.Final updated 10-Dec-2019-->
+    <dependency>
+      <groupId>org.ocpsoft.rewrite</groupId>
+      <artifactId>rewrite-config-prettyfaces</artifactId>
+      <version>3.4.4.Final</version>
     </dependency>
 
     <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
@@ -173,6 +189,7 @@
       <artifactId>flexmark-ext-admonition</artifactId>
       <version>${lib.flexmark.version}</version>
     </dependency>
+
     <!--for pretty print phone numbers-->
     <!--v8.12.13 released 12-Nov-2020-->
     <dependency>
@@ -180,7 +197,6 @@
       <artifactId>libphonenumber</artifactId>
       <version>8.12.13</version>
     </dependency>
-
 
     <!--jersey client for getting and setting REST-->
     <dependency>
