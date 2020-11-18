@@ -10,7 +10,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.8</version>
+  <version>5.0.9</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -89,7 +89,9 @@
     v5.0.6 - update remote-addr parser; rename and rewrite applicaion properties utility
     v5.0.7 - bump dependencies to latest as of 2020-11-15
     - add rewrite-config-prettyfaces
-    v5.0.8 - add AuthNBean to support standard user signout
+    v5.0.8 - update FacesUtil to support standard user signout; reorganize
+    v5.0.9 - rewrite FacesUtil cookie management
+
 
 
 
