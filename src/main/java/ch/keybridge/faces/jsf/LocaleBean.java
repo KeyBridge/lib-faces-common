@@ -122,7 +122,7 @@ public class LocaleBean implements Serializable {
       Cookie cookie = new Cookie(LOCALE_COOKIE, locale.getLanguage());
       cookie.setPath("/");
       cookie.setVersion(0);
-      cookie.setMaxAge(Integer.MAX_VALUE);
+      cookie.setMaxAge(-1);
       FacesUtil.addCookie(cookie);
     }
   }
