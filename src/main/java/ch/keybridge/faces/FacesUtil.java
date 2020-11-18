@@ -315,14 +315,13 @@ public class FacesUtil {
   /**
    * Redirect the browser.
    * <p>
-   * URI may be an absolute or relative page reference. Absolute references
-   * should include the WAR application name, whereas relative reference need
-   * not.
+   * URI may be an absolute or relative page reference. e.g. {@code index.xhtml}
+   * or {@code https://www.example.com/path/page.xhtml}
    * <p>
-   * All page references should identify the fully qualified page name
-   * (including suffix).
+   * References should identify the fully qualified page name (including
+   * suffix). Try to avoid directory level references if possible.
    *
-   * @param pageUri e.g. index.xhtml
+   * @param pageUri the redirect URI
    */
   public static void redirect(String pageUri) {
     try {
