@@ -982,7 +982,7 @@ public class FacesUtil {
    *
    * @param name the cookie name
    */
-  public static void removeCookieClobal(String name) {
+  public static void removeCookieGlobal(String name) {
     addCookie(name, null, "/", null, null, -1, isHttps());
   }
 
