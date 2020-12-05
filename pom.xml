@@ -10,7 +10,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.10</version>
+  <version>5.0.11</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -93,6 +93,7 @@
     v5.0.9 - rewrite FacesUtil cookie management
     v5.0.10 - attach ajax events to composite components
     - add inner css to text-area
+    v5.0.11 - add URL plus URL format validators
 
 
 

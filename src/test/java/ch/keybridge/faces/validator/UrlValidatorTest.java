@@ -18,6 +18,8 @@
  */
 package ch.keybridge.faces.validator;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.After;
@@ -29,11 +31,11 @@ import org.junit.Test;
  *
  * @author Key Bridge
  */
-public class LinkValidatorTest {
+public class UrlValidatorTest {
 
-  private LinkValidator validator;
+  private UrlValidator validator;
 
-  public LinkValidatorTest() {
+  public UrlValidatorTest() {
   }
 
   @BeforeClass
@@ -42,7 +44,7 @@ public class LinkValidatorTest {
 
   @Before
   public void setUp() {
-    this.validator = new LinkValidator();
+    this.validator = new UrlValidator();
   }
 
   @After
@@ -50,8 +52,11 @@ public class LinkValidatorTest {
   }
 
   @Test
-  public void testSomeMethod() {
-    String url = "https://keybridgewireless.com";
+  public void testSomeMethod() throws MalformedURLException {
+    String urlText = "https://keybridgewireless.com";
+
+    URL url = new URL(urlText);
+
 //    String string = "https://google.com";
     boolean valid = validator.testLinkValidity(url);
 //    validator.validate(null, null, url);

@@ -18,11 +18,12 @@
  */
 package ch.keybridge.faces.validator;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
@@ -34,22 +35,24 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 /**
- * HTTP link validator. Validates an HTTP link to determine if the link is
- * publicly available. Note: Since v4.1.0 this uses a trusting client; for HTTPS
- * links this does NOT validate the server certificate.
+ * HTTP / HTTPS URL link validator. Validates an HTTP URL to determine if the
+ * referenced end point is publicly available. This validator also updates the
+ * input component CSS to include a BS-4 status indicator.
  * <p>
- * This validator also updates the input component CSS to include a BS-4 status
- * indicator.
+ * Note: Since v4.1.0 this uses a trusting client; for HTTPS links this does NOT
+ * validate the server certificate.
  *
  * @author Key Bridge
  * @since v0.6.0 created 01/27/19
  * @since v4.1.0 use a trusting client to accept all SSL certificates
  * @since v5.0.0 append "http://" if scheme is missing
+ * @since v5.0.11 rewrite 2020-12-05 to first validate the URL format, then test
+ * link availability
  */
-@FacesValidator("linkValidator")
-public class LinkValidator extends AbstractValidator {
+@FacesValidator("urlValidator")
+public class UrlValidator extends AbstractValidator {
 
-  private static final Logger LOG = Logger.getLogger(LinkValidator.class.getName());
+  private static final Logger LOG = Logger.getLogger(UrlValidator.class.getName());
 
   /**
    * A fake user agent string, to ensure the query is not intercepted by a robot
@@ -70,20 +73,23 @@ public class LinkValidator extends AbstractValidator {
     if (value == null) {
       return;
     }
-    String url = ((String) value).trim();
-    if (url.isEmpty()) {
+    String urlText = ((String) value).trim();
+    if (urlText.isEmpty()) {
       return;
-    }
-    if (!url.toLowerCase().startsWith("http")) {
-      url = "http://" + url;
     }
     /**
      * Use a trusting client to ignore credential errors.
      */
-    boolean validityStatus = testLinkValidity(url);
-    setValidityStatus(component, validityStatus); // update the jsf component
-    if (!validityStatus) {
-      throwErrorException("Not available", "This resource is not available. ");
+    try {
+      URL url = new URL(urlText);
+      boolean validityStatus = testLinkValidity(url);
+      setValidityStatus(component, validityStatus); // update the jsf component
+      if (!validityStatus) {
+        throwErrorException("Not available", "This resource could not be verified");
+      }
+    } catch (MalformedURLException ex) {
+      setValidityStatus(component, false);
+      throwErrorException("Invalid URL", "This does not appear to be a valid URL format");
     }
   }
 
@@ -94,37 +100,36 @@ public class LinkValidator extends AbstractValidator {
    * @param url the link URL
    * @return TRUE if the resource is available for download
    */
-  public boolean testLinkValidity(final String url) {
-    String queryUrl = url.trim();
+  public boolean testLinkValidity(final URL url) {
     /**
      * Use a trusting client to ignore credential errors.
      */
     try {
       Response response = trustingClient()
-        .target(queryUrl)
+        .target(url.toURI())
         .request()
         .header(HttpHeaders.USER_AGENT, MOZILLA)
         .head();
-      LOG.log(Level.FINEST, "debug testLinkValidity {0} retrieved OK", queryUrl);
+      LOG.log(Level.FINEST, "debug testLinkValidity {0} retrieved OK", url);
       return response != null;
     } catch (Exception exception) {
       /**
        * Conditionally try again without HTTPS.
        */
-      Matcher matcher = Pattern.compile("https", Pattern.CASE_INSENSITIVE).matcher(queryUrl);
-      if (matcher.find()) {
-        queryUrl = queryUrl.replaceFirst(matcher.group(0), "http");
-        try {
+      try {
+        URI uri = URI.create(url.toString());
+        if (uri.getScheme().equalsIgnoreCase("https")) {
+          URL httpUrl = new URL("http", url.getHost(), url.getPort(), url.getFile());
           Response response = trustingClient()
-            .target(queryUrl)
+            .target(httpUrl.toURI())
             .request()
             .header(HttpHeaders.USER_AGENT, MOZILLA)
             .head();
           return response != null;
-        } catch (Exception exception2) {
-          LOG.log(Level.INFO, "Link {0} is not available. Also tried http.", queryUrl);
-          return false;
         }
+      } catch (Exception exception2) {
+        LOG.log(Level.INFO, "Link {0} is not available. Also tried http.", url);
+        return false;
       }
     }
     return false;

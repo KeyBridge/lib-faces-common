@@ -56,7 +56,7 @@ public class EmailValidator extends AbstractValidator {
     }
     if (value instanceof String) {
       String address = (String) value;
-      if (address.isEmpty()) {
+      if (address.trim().isEmpty()) {
         unsetValidityStatus(component);
         return;
       }
