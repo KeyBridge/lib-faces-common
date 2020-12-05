@@ -26,7 +26,9 @@
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [form-control-sm, form-control-lg]"/>
-    <cc:editableValueHolder name="value" targets="text"/>
+
+    <cc:clientBehavior name="valueChange" targets="date" event="valueChange"/>
+    <cc:editableValueHolder name="value" targets="date"/>
   </cc:interface>
 
   <!-- IMPLEMENTATION -->

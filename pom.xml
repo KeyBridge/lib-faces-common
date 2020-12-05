@@ -10,7 +10,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.9</version>
+  <version>5.0.10</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -91,8 +91,15 @@
     - add rewrite-config-prettyfaces
     v5.0.8 - update FacesUtil to support standard user signout; reorganize
     v5.0.9 - rewrite FacesUtil cookie management
+    v5.0.10 - attach ajax events to composite components
+    - add inner css to text-area
 
 
+
+
+    See: How to attach ajax event to composite component
+    https://stackoverflow.com/questions/31912815/how-to-attach-ajax-event-to-composite-component
+    https://stackoverflow.com/questions/23804002/fajax-render-not-working-via-compositeclientbehavior
 
 
   </description>

@@ -28,6 +28,8 @@
     <cc:attribute name="update" displayName="a FULLY qualified page element to update on select"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [custom-select-sm, custom-select-lg]"/>
+
+    <cc:clientBehavior name="valueChange" targets="selectOne" event="valueChange"/>
     <cc:editableValueHolder name="value" targets="selectOne"/>
   </cc:interface>
 
