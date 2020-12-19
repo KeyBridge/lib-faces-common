@@ -27,6 +27,7 @@
     <cc:attribute name="requiredMessage" displayName="A required message to display on form submit error"/>
 
     <cc:attribute name="styleClass" displayName="Additional form control css. [custom-select-sm, custom-select-lg]"/>
+    <cc:attribute name="internalStyleClass" displayName="Additional form control css. e.g. text-monospace"/>
 
     <cc:clientBehavior name="valueChange" targets="selectMany" event="valueChange"/>
     <cc:editableValueHolder name="value" targets="selectMany"/>
@@ -41,7 +42,7 @@
                            disabled="#{cc.attrs.disabled}"
                            size="#{cc.attrs.size}"
                            required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
-                           styleClass="custom-select w-100 #{component.valid ?'':'is-invalid'}">
+                           styleClass="custom-select w-100 #{cc.attrs.internalStyleClass} #{component.valid ?'':'is-invalid'}">
         <f:selectItems transient="true" value="#{cc.attrs.selectItemMap.entrySet()}" var="s" itemValue="#{s.key}" itemLabel="#{s.value}" rendered="#{cc.attrs.selectItemMap ne null}"/>
         <f:selectItems transient="true" value="#{cc.attrs.selectItems}" var="s" itemValue="#{s}" itemLabel="#{s}" rendered="#{cc.attrs.selectItems ne null}"/>
       </h:selectManyListbox>
