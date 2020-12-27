@@ -199,34 +199,42 @@ label { font-weight: bold; }
 /*text colors*/
 .text-inherit {  color:inherit !important}
 /*.text-blue {  color:#0366d6 !important}*/
-.text-blue{ color: #005f9b !important; }
-.text-blue-dark{ color: #003f66 !important; }
-.text-red {  color:#cb2431 !important}
-.text-gray-light {  color:#6a737d !important}
-.text-gray {  color:#586069 !important}
-.text-gray-dark {  color:#24292e !important}
-.text-green {  color:#28a745 !important}
-.text-orange {  color:#a04100 !important}
-.text-orange-light {  color:#e36209 !important}
-.text-purple {  color:#6f42c1 !important}
-.text-white {  color:#fff !important}
 .text-black {  color:#000 !important}
-.text-pending {  color:#b08800 !important}
-.text-light{ color: rgba(255,255,255,0.8) !important; }
+.text-blue{ color:#007bff !important; }
+.text-blue-dark{ color: #003f66 !important; }
+.text-brown {  color:#b08800 !important}
+.text-cyan{ color:#17a2b8 !important; }
+.text-gray{ color:#6c757d !important; }
+.text-gray-dark{ color:#343a40 !important; }
+.text-gray-light {  color:#6a737d !important}
+.text-green{ color:#28a745 !important; }
+.text-indigo{ color:#6610f2 !important; }
+.text-orange{ color:#fd7e14 !important; }
+.text-orange-light {  color:#e36209 !important}
+.text-pink{ color:#e83e8c !important; }
+.text-purple{ color:#6f42c1 !important; }
+.text-red{ color:#dc3545 !important; }
+.text-teal{ color:#20c997 !important; }
+.text-white{ color:#fff !important; }
+.text-yellow{ color:#ffc107 !important; }
 .text-shadow-light { text-shadow: 1px 1px 2px #fff; }
 .text-shadow-dark { text-shadow: 1px 1px 2px #000; }
 
 .link-white { color:#fff !important}
 .link-white:hover { color:#0366d6 !important; text-decoration:none; }
+
 .link-black { color:#000000 !important}
 .link-black:hover { color:#0366d6 !important; text-decoration:none; }
 
 .link-light{ color: #868686 !important; }
 .link-light:hover { color: #0366d6 !important; text-decoration:none;  }
+
 .link-secondary{ color: #6c757d !important; }
 .link-secondary:hover { color: #0366d6 !important; text-decoration:none;  }
+
 .link-dark { color:#343a40 !important; }
 .link-dark:hover { color:#0366d6 !important;  text-decoration:none; }
+
 .link-muted { color:#586069 !important;}
 .link-muted:hover { color:#0366d6 !important; text-decoration:none; }
 
