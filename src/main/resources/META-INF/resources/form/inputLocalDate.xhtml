@@ -35,7 +35,7 @@
   <cc:implementation>
     <div id="#{cc.clientId}" class="form-group #{cc.attrs.styleClass}">
       <h:outputLabel for="date" value="#{cc.attrs.label}" styleClass="d-block" rendered="#{cc.attrs.label ne null}"/>
-      <h:inputText id="date" value="#{cc.attrs.value}"
+      <h:inputText id="date" value="#{cc.attrs.value}" converter="localDateConverter"
                    a:type="date"
                    required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}"
                    maxlength="#{cc.attrs.maxlength}"
