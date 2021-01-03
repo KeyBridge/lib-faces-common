@@ -57,7 +57,11 @@ public class WadlBean extends AbstractWadlBean {
      * "resources", "webresources". Else must directly call
      * {@code super.load(rest-context)}.
      */
-    this.autoload();
+    try {
+      this.autoload();
+    } catch (Exception e) {
+      LOG.log(Level.INFO, "Error downloading WADL file.");
+    }
 //    super.load(buildWadlUrl("rest-context"));  // ONLY if not typical
     /**
      * Initialize a MarkdownConverter instance. This is used to convert MD
