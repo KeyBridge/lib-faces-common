@@ -25,6 +25,7 @@
  * - add link-dark
  * - 10/30/19 - add link css following bs-4 naming
  * - 2020-03-08 - add bottom margin to mermaid images
+ * v1.0.7 - 2021-01-04 - add template header css to this
  */
 html {
   position: relative;
@@ -432,3 +433,45 @@ textarea.markdown {
 .mermaid{
   margin-bottom: 1em;
 }
+
+
+/*template CSS for navbar and navbar-inverse*/
+header {
+  z-index: 100;
+}
+header .navbar{ padding: 0 !important; }
+header .nav-link {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  position: relative;
+}
+header .active .nav-link:after{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  content: "";
+  background-color: #6a737d;
+}
+
+
+header .nav-link:hover{ color: #6a737d !important; }
+header .nav-item { margin-left: 1.5em; }
+header .navbar-icon { width: 36px; }
+header .navbar-logo { width: 200px; }
+
+.header {
+  color: rgb(36, 41, 46) !important;
+  border-bottom: 1px solid #ddd;
+}
+.header-inverse {
+  color: rgba(255,255,255,0.75) !important;
+  background-color: #222222;
+}
+
+.header .nav-link { color: rgb(36, 41, 46) !important; }
+.header .active .nav-link:hover { color: #6a737d !important; }
+
+.header-inverse .nav-link { color: #fff !important; }
+.header-inverse .active .nav-link:hover { color: #fff !important; }
