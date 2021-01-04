@@ -94,6 +94,7 @@
     - add inner css to text-area
     v5.0.11 - add URL plus URL format validators
     v5.0.12 - default nav image library to 'img', add defensive code to wadlbean init
+    - remove rewrite-servlet; make optional
 
 
 
@@ -140,21 +141,12 @@
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>4.0.6.Final</version>
     </dependency>
-    <!--for url rewriting-->
-    <!--see https://www.ocpsoft.org/rewrite/-->
-    <!--v3.4.4.Final updated 10-Dec-2019-->
+    <!--for pretty print phone numbers-->
+    <!--v8.12.13 released 12-Nov-2020-->
     <dependency>
-      <groupId>org.ocpsoft.rewrite</groupId>
-      <artifactId>rewrite-servlet</artifactId>
-      <version>3.4.4.Final</version>
-    </dependency>
-    <!--prettyfaces rewriting solution for Servlet, JSF, and Java EE-->
-    <!--see https://www.ocpsoft.org/prettyfaces/-->
-    <!--v3.4.4.Final updated 10-Dec-2019-->
-    <dependency>
-      <groupId>org.ocpsoft.rewrite</groupId>
-      <artifactId>rewrite-config-prettyfaces</artifactId>
-      <version>3.4.4.Final</version>
+      <groupId>com.googlecode.libphonenumber</groupId>
+      <artifactId>libphonenumber</artifactId>
+      <version>8.12.13</version>
     </dependency>
 
     <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
@@ -200,14 +192,6 @@
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-admonition</artifactId>
       <version>${lib.flexmark.version}</version>
-    </dependency>
-
-    <!--for pretty print phone numbers-->
-    <!--v8.12.13 released 12-Nov-2020-->
-    <dependency>
-      <groupId>com.googlecode.libphonenumber</groupId>
-      <artifactId>libphonenumber</artifactId>
-      <version>8.12.13</version>
     </dependency>
 
     <!--jersey client for getting and setting REST-->
