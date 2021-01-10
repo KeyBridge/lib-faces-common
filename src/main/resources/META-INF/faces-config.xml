@@ -6,12 +6,6 @@
 
   <name>keybridge</name>
 
-  <ordering>
-    <after>
-      <others/>
-    </after>
-  </ordering>
-
   <managed-bean eager="true">
     <description>
 <![CDATA[
@@ -35,5 +29,24 @@ This makes an instance of <code>java.util.Date</code> as current datetime availa
     <managed-bean-class>java.util.Date</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+
+
+  <managed-bean>
+    <managed-bean-name>localeBean</managed-bean-name>
+    <managed-bean-class>ch.keybridge.faces.jsf.LocaleBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>fileContent</managed-bean-name>
+    <managed-bean-class>ch.keybridge.faces.jsf.FileContentBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>wadlBean</managed-bean-name>
+    <managed-bean-class>ch.keybridge.faces.jsf.WadlBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+
+
 
 </faces-config>

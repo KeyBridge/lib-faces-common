@@ -9,7 +9,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.0.12</version>
+  <version>5.1.0</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -95,6 +95,9 @@
     v5.0.11 - add URL plus URL format validators
     v5.0.12 - default nav image library to 'img', add defensive code to wadlbean init
     - remove rewrite-servlet; make optional
+    v5.1.0 - rewrite to use as a common application library
+    - configure managed beans in faces-config.xml
+    - rewrite FileContentBean to use faces context, content must be placed in /resources instead of META-INF
 
 
 
@@ -120,17 +123,12 @@
   </properties>
 
   <dependencies>
-    <!--incorporate primefaces into web app-->
-    <dependency>
-      <groupId>org.primefaces</groupId>
-      <artifactId>primefaces</artifactId>
-    </dependency>
-
     <!--since 4.0.0 for rendering WADL API documentation-->
     <dependency>
       <groupId>keybridge.lib</groupId>
       <artifactId>wadl</artifactId>
       <version>${lib.wadl.version}</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--for pretty time conversion-->
@@ -140,6 +138,7 @@
       <groupId>org.ocpsoft.prettytime</groupId>
       <artifactId>prettytime-integration-jsf</artifactId>
       <version>4.0.6.Final</version>
+      <scope>provided</scope>
     </dependency>
     <!--for pretty print phone numbers-->
     <!--v8.12.13 released 12-Nov-2020-->
@@ -147,6 +146,7 @@
       <groupId>com.googlecode.libphonenumber</groupId>
       <artifactId>libphonenumber</artifactId>
       <version>8.12.13</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--since 4.0.0 for rendering tables; replaces flexmark-ext-gfm-tables-->
@@ -154,18 +154,21 @@
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-tables</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--since 4.0.0 for rendering various gitlab extensions-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gitlab</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--since 4.0.0 for rendering task lists-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gfm-tasklist</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--since 4.0.0 for complex MD macro content-->
     <!--see https://github.com/vsch/flexmark-java/wiki/Macros-Extension-->
@@ -173,18 +176,21 @@
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-macros</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--https://github.com/vsch/flexmark-java/wiki/Extensions#gfm-strikethroughsubscript-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-gfm-strikethrough</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--https://github.com/vsch/flexmark-java/wiki/Extensions#superscript-->
     <dependency>
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-superscript</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!--https://github.com/vsch/flexmark-java/wiki/Extensions#admonition-->
     <!--https://github.com/vsch/flexmark-java/wiki/Admonition-Extension-->
@@ -192,42 +198,8 @@
       <groupId>com.vladsch.flexmark</groupId>
       <artifactId>flexmark-ext-admonition</artifactId>
       <version>${lib.flexmark.version}</version>
+      <scope>provided</scope>
     </dependency>
-
-    <!--jersey client for getting and setting REST-->
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>javax.ws.rs-api</artifactId>
-      <version>2.1</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>${jersey.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-jaxb</artifactId>
-      <version>${jersey.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-json-jackson</artifactId>
-      <version>${jersey.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.inject</groupId>
-      <artifactId>jersey-hk2</artifactId>
-      <version>${jersey.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-
   </dependencies>
 
 </project>
