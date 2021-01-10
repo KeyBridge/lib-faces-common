@@ -38,7 +38,6 @@ import javax.faces.validator.ValidatorException;
  * @author Key Bridge
  * @since v2.8.0 created 12/13/17
  */
-@FacesValidator("phoneValidator")
 public class PhoneValidator extends AbstractValidator {
 
   private static final int REQUIRED_DIGITS = 7;

@@ -12,7 +12,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v0.39.0 created 2020-01-24
  */
-@FacesConverter(value = "emailMaskConverter")
 public class EmailMaskConverter implements Converter {
 
   /**

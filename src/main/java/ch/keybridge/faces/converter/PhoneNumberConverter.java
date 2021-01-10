@@ -34,7 +34,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v0.41.4 created 2020-08-08
  */
-@FacesConverter(value = "phoneNumberConverter")
 public class PhoneNumberConverter implements Converter {
 
   private static final PhoneNumberUtil PHONE_UTIL = PhoneNumberUtil.getInstance();

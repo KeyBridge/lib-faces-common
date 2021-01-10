@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  * @since v0.8.4 added 05/01/17
  * @since v4.0.0 moved from web-app-template 0.2.2 to faces-common
  */
-//@Named(value = "wadlBean")@RequestScoped
 public class WadlBean extends AbstractWadlBean {
 
   private static final Logger LOG = Logger.getLogger(WadlBean.class.getName());

@@ -32,7 +32,6 @@ import javax.faces.validator.ValidatorException;
  * @author Key Bridge
  * @since v5.0.11 created 2020-12-05
  */
-@FacesValidator("urlFormatValidator")
 public class UrlFormatValidator extends AbstractValidator {
 
   /**

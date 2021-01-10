@@ -42,7 +42,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v2.9.0 added 12/16/17 replaces ConvertLength[X] classes
  */
-@FacesConverter(value = "stringConverter")
 public class StringConverter implements Converter {
 
   private static final int DEFAULT_LENGTH = 8;

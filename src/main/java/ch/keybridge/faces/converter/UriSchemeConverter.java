@@ -35,7 +35,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v0.40.4 created 2020-08-08
  */
-@FacesConverter(value = "uriSchemeConverter")
 public class UriSchemeConverter implements Converter {
 
   /**

@@ -50,7 +50,6 @@ import javax.servlet.http.Cookie;
  * @since v5.1.0 rewrite 2021-01-09 to use faces context, content must be placed
  * in /resources instead of META-INF
  */
-//@Named(value = "fileContent")@RequestScoped
 public class FileContentBean implements Serializable {
 
   private static final Logger LOGGER = Logger.getLogger(FileContentBean.class.getName());

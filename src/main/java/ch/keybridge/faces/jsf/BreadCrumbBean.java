@@ -15,7 +15,6 @@ package ch.keybridge.faces.jsf;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jesse Caulfield
  * @since 2.2.0 added 05/17/16
  */
-@FacesComponent(value = "breadCrumbBean")
+//@FacesComponent(value = "breadCrumbBean")
 public class BreadCrumbBean extends UINamingContainer {
 
   /**

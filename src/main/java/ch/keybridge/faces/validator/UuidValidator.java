@@ -24,7 +24,6 @@ import javax.faces.validator.ValidatorException;
  * @author Jesse Caulfield
  * @since v2.8.0 rename 12/13/17 ValidateUUID to UuidValidator
  */
-@FacesValidator("uuidValidator")
 public class UuidValidator extends AbstractValidator {
 
   @Override

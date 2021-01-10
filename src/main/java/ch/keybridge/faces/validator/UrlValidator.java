@@ -49,7 +49,6 @@ import javax.ws.rs.core.Response;
  * @since v5.0.11 rewrite 2020-12-05 to first validate the URL format, then test
  * link availability
  */
-@FacesValidator("urlValidator")
 public class UrlValidator extends AbstractValidator {
 
   private static final Logger LOG = Logger.getLogger(UrlValidator.class.getName());

@@ -30,7 +30,6 @@ import javax.faces.validator.ValidatorException;
  * @since v3.3.0 rename 06/26/18 to EmailValidator
  * @since v3.6.1 update 09/14/18 to ignore null or empty input values
  */
-@FacesValidator("emailValidator")
 public class EmailValidator extends AbstractValidator {
 
   /**

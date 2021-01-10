@@ -30,7 +30,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v2.3.0 create 03/28/17
  */
-@FacesConverter("localeConverter")
 public class LocaleConverter implements Converter {
 
   /**

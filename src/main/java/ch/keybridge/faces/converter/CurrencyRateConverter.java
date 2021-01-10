@@ -37,7 +37,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v5.0.5 created 2020-10-24
  */
-@FacesConverter(value = "currencyRateConverter")
 public class CurrencyRateConverter extends AbstractConverter {
 
   private static final Currency US_DOLLAR = Currency.getInstance(Locale.US);

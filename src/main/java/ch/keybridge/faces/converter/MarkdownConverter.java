@@ -46,7 +46,6 @@ import javax.faces.convert.FacesConverter;
  * @since v4.0.0 extended 02/18/19 to include MacrosExtension
  * @see <a href="https://daringfireball.net/projects/markdown/">Markdown</a>
  */
-@FacesConverter("markdownConverter")
 public class MarkdownConverter implements Converter {
 
   /**

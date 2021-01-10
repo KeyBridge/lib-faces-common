@@ -30,7 +30,7 @@ This makes an instance of <code>java.util.Date</code> as current datetime availa
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
 
-
+  <!--Managed beans-->
   <managed-bean>
     <managed-bean-name>localeBean</managed-bean-name>
     <managed-bean-class>ch.keybridge.faces.jsf.LocaleBean</managed-bean-class>
@@ -46,6 +46,88 @@ This makes an instance of <code>java.util.Date</code> as current datetime availa
     <managed-bean-class>ch.keybridge.faces.jsf.WadlBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+
+  <!--Components-->
+  <component>
+    <component-type>breadCrumbBean</component-type>
+    <component-class>ch.keybridge.faces.jsf.BreadCrumbBean</component-class>
+  </component>
+
+  <!--Converters-->
+  <converter>
+    <converter-id>localDateTimeConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.LocalDateTimeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>localeConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.LocaleConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>markdownConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.MarkdownConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>phoneNumberConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.PhoneNumberConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>prettyDateTimeConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.PrettyDateTimeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>stringConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.StringConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>timezoneConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.TimezoneConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>uriSchemeConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.UriSchemeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>xmlGregorianCalendarConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.XmlGregorianCalendarConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>xmlGregorianCalendarShortConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.XmlGregorianCalendarShortConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>zonedDateTimeConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.ZonedDateTimeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>zoneIdConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.ZoneIdConverter</converter-class>
+  </converter>
+
+  <!--Validators-->
+  <validator>
+    <validator-id>emailValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.EmailValidator</validator-class>
+  </validator>
+  <validator>
+    <validator-id>passwordValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.PasswordValidator</validator-class>
+  </validator>
+  <validator>
+    <validator-id>phoneValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.PhoneValidator</validator-class>
+  </validator>
+  <validator>
+    <validator-id>urlFormatValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.UrlFormatValidator</validator-class>
+  </validator>
+  <validator>
+    <validator-id>urlValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.UrlValidator</validator-class>
+  </validator>
+  <validator>
+    <validator-id>uuidValidator</validator-id>
+    <validator-class>ch.keybridge.faces.validator.UuidValidator</validator-class>
+  </validator>
 
 
 

@@ -16,7 +16,6 @@ import javax.faces.convert.FacesConverter;
  * @since v0.3.0 created 05/20/17 to to develop, simplify and automate the
  * fields.
  */
-@FacesConverter(value = "byteArrayConverter")
 public class ByteArrayConverter implements Converter {
 
   @Override

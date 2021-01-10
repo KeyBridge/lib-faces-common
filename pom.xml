@@ -96,7 +96,7 @@
     v5.0.12 - default nav image library to 'img', add defensive code to wadlbean init
     - remove rewrite-servlet; make optional
     v5.1.0 - rewrite to use as a common application library
-    - configure managed beans in faces-config.xml
+    - configure all in faces-config.xml: managed beans, converters, validators
     - rewrite FileContentBean to use faces context, content must be placed in /resources instead of META-INF
 
 

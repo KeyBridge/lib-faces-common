@@ -73,7 +73,6 @@ import org.ocpsoft.prettytime.PrettyTime;
  * @since v4.0.0 created 01/14/19 to consolidate different pretty converters
  * @see <a href="http://www.ocpsoft.org/prettytime/">prettytime</a>
  */
-@FacesConverter("prettyDateTimeConverter")
 public class PrettyDateTimeConverter extends AbstractConverter {
 
   /**

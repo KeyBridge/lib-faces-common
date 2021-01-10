@@ -13,7 +13,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v0.10.0 added 01/17/18
  */
-@FacesConverter(value = "emailNameConverter")
 public class EmailNameConverter implements Converter {
 
   /**

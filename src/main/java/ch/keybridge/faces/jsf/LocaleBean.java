@@ -61,7 +61,6 @@ import javax.servlet.http.Cookie;
  * @see
  * <a href="https://www.oracle.com/technetwork/java/javase/javase7locales-334809.html">Locales</a>
  */
-//@Named(value = "localeBean")@RequestScoped
 public class LocaleBean implements Serializable {
 
   /**

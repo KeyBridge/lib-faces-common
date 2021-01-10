@@ -34,7 +34,6 @@ import javax.faces.validator.ValidatorException;
  * @author jesse
  * @since v2.8.0 rename 12/13/17 ValidatePassword to PasswordValidator
  */
-@FacesValidator("passwordValidator")
 public class PasswordValidator extends AbstractValidator {
 
   /**

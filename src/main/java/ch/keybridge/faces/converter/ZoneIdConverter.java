@@ -26,7 +26,6 @@ import javax.faces.convert.FacesConverter;
  * @author Key Bridge
  * @since v5.0.0 created 11/29/19 to complete the java.time converter series
  */
-@FacesConverter(value = "zoneIdConverter")
 public class ZoneIdConverter implements Converter {
 
   /**

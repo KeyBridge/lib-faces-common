@@ -24,7 +24,6 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Jesse Caulfield
  */
-@FacesConverter(value = "timezoneConverter")
 public class TimezoneConverter implements Converter {
 
   /**

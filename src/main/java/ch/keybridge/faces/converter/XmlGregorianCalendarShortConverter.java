@@ -40,7 +40,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * @author jesse
  * @since v3.6.1 - rename FacesConverter value
  */
-@FacesConverter(value = "xmlGregorianCalendarShortConverter")
 public class XmlGregorianCalendarShortConverter implements Converter {
 
   /**

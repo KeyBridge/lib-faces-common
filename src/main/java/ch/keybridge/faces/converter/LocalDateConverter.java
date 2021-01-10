@@ -54,7 +54,6 @@ import javax.faces.convert.FacesConverter;
  * <a href="https://stackoverflow.com/questions/34883270/how-to-use-java-time-zoneddatetime-localdatetime-in-pcalendar">Dealing
  * with LocalDateTime in JSF</a>
  */
-@FacesConverter("localDateConverter")
 public class LocalDateConverter extends AbstractConverter {
 
   /**
