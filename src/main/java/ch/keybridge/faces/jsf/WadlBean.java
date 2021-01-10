@@ -18,11 +18,6 @@ import ch.keybridge.faces.converter.MarkdownConverter;
 import ch.keybridge.faces.wadl.AbstractWadlBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
 
 /**
  * WADL label provider bean that searches in the wadl.properties file.
@@ -31,27 +26,30 @@ import javax.inject.Named;
  * @since v0.8.4 added 05/01/17
  * @since v4.0.0 moved from web-app-template 0.2.2 to faces-common
  */
-@Named(value = "wadlBean")
-@RequestScoped
+//@Named(value = "wadlBean")@RequestScoped
 public class WadlBean extends AbstractWadlBean {
 
   private static final Logger LOG = Logger.getLogger(WadlBean.class.getName());
 
   /**
-   * The default context root - localhost.
-   */
-  private static final String CONTEXT_DEFAULT = "http://localhost:8080";
-
-  /**
    * A markdown to HTML text converter.
    */
-  private MarkdownConverter markdownConverter;
+  private final MarkdownConverter markdownConverter;
 
   /**
+   * WadlBean is 'request' scoped in the faces-config.xml file. A new bean is
+   * instantiated from each page view. Load the WADL from the 'api' path. With
+   * the `faces-config` strategy the `@PostConstruct` annotation is not scanned,
+   * so we must initialize the bean in the constructor.
+   * <p>
    * Load the WADL from the 'api' path.
    */
-  @PostConstruct
-  protected void postConstruct() {
+  public WadlBean() {
+    /**
+     * Initialize a MarkdownConverter instance. This is used to convert MD
+     * labels and descriptions.
+     */
+    this.markdownConverter = new MarkdownConverter();
     /**
      * Autoload the WADL file if the rest context is "api", "rest", "resource",
      * "resources", "webresources". Else must directly call
@@ -60,14 +58,9 @@ public class WadlBean extends AbstractWadlBean {
     try {
       this.autoload();
     } catch (Exception e) {
-      LOG.log(Level.INFO, "Error downloading WADL file.");
+      LOG.log(Level.INFO, "WadlBean error loading WADL file.  {0}", e.getMessage());
     }
 //    super.load(buildWadlUrl("rest-context"));  // ONLY if not typical
-    /**
-     * Initialize a MarkdownConverter instance. This is used to convert MD
-     * labels and descriptions.
-     */
-    this.markdownConverter = new MarkdownConverter();
   }
 
   /**
@@ -77,51 +70,40 @@ public class WadlBean extends AbstractWadlBean {
    * "resource", "resources", "webresources"]
    */
   @Override
-  public void autoload() {
+  public final void autoload() {
     /**
-     * Get the current context path (i.e. the application context root). This is
+     * Use the current context path (i.e. the application context root). This is
      * copied from FacesUtil.getContextPath() and excludes common port numbers
      * from the URI when present.
-     */
-    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-    String contextRoot = new StringBuilder()
-      .append(externalContext.getRequestScheme())
-      .append("://")
-      .append(externalContext.getRequestServerName())
-      .append((externalContext.getRequestServerPort() != 80 && externalContext.getRequestServerPort() != 443)
-              ? ":" + externalContext.getRequestServerPort()
-              : "")
-      .append(externalContext.getRequestContextPath())
-      .toString();
-    /**
+     * <p>
      * Try to load the WADL from various commonly used JAXRS contexts. If the
      * application declares a custom context is must be specified. Try to
      * connect to the localhost. If that fails then try the currently declared
      * URL host.
      */
-    for (String context : new String[]{CONTEXT_DEFAULT, contextRoot}) {
-      for (String restContext : new String[]{"api", "rs", "rest", "resource", "resources", "webresources", "api/1", "api/2", "api/3", "api/4"}) {
-        load(buildWadlUrl(context, restContext));
-        if (wadl != null) {
-          break;
-        }
+    String contextPath = FacesUtil.getContextPath();
+    for (String restContext : new String[]{"api", "rs", "rest", "resource", "resources", "webresources", "api/1", "api/2", "api/3", "api/4"}) {
+      load(buildWadlUrl(contextPath, restContext));
+      if (wadl != null) {
+        break;
       }
-      if (wadl == null) {
-        LOG.log(Level.FINE, "Error downloading WADL file.");
-      }
+    }
+    if (wadl == null) {
+      LOG.log(Level.INFO, "WadlBean autoload error downloading WADL file.");
     }
   }
 
   /**
-   * Get the WADL location.
+   * Build a URL to the local WADL file.
    *
+   * @param contextPath the application context path
+   * @param restContext the application REST context
    * @return the WADL location.
    */
-  private String buildWadlUrl(String contextRoot, String restContext) {
-//    return FacesUtil.getContextPath() + "/" + restContext + "/application.wadl"; // legacy strategy - generally works but includes port numbers
+  private String buildWadlUrl(String contextPath, String restContext) {
     return new StringBuilder()
-      .append(contextRoot)
-      .append(contextRoot.endsWith("/") ? "" : "/")
+      .append(contextPath)
+      .append(contextPath.endsWith("/") ? "" : "/")
       .append(restContext)
       .append(restContext.endsWith("/") ? "" : "/")
       .append("application.wadl")

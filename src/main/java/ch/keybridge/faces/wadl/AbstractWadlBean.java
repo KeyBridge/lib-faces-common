@@ -16,6 +16,7 @@
  */
 package ch.keybridge.faces.wadl;
 
+import java.io.Serializable;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -46,7 +47,7 @@ import net.java.dev.wadl.*;
  * @author Key Bridge LLC
  * @since v0.3.0 created 01/10/17 as an alternative to Swagger.io
  */
-public abstract class AbstractWadlBean implements LabelProvider {
+public abstract class AbstractWadlBean implements LabelProvider, Serializable {
 
   private static final Logger LOG = Logger.getLogger(AbstractWadlBean.class.getName());
 
