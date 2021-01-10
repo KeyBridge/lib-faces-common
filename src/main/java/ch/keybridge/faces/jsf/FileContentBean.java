@@ -13,6 +13,7 @@
  */
 package ch.keybridge.faces.jsf;
 
+import ch.keybridge.faces.FacesUtil;
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.gitlab.GitLabExtension;
 import com.vladsch.flexmark.ext.macros.MacrosExtension;
@@ -26,13 +27,12 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 
 /**
  * Request scoped bean to read FIXED content from a project resource file. This
@@ -47,21 +47,35 @@ import javax.inject.Named;
  * @since v0.3.0 created 03/26/17 to support translated page content.
  * @since v3.0.0 moved 01/15/18 to faces-common
  * @since v4.0.0 rewrite to use flexmark markdown parser
+ * @since v5.1.0 rewrite 2021-01-09 to use faces context, content must be placed
+ * in /resources instead of META-INF
  */
-@Named(value = "fileContent")
-@RequestScoped
-public class FileContentBean {
+//@Named(value = "fileContent")@RequestScoped
+public class FileContentBean implements Serializable {
 
   private static final Logger LOGGER = Logger.getLogger(FileContentBean.class.getName());
 
   /**
+   * ".locale" The locale cookie name.
+   */
+  private static final String LOCALE_COOKIE = ".locale";
+
+  /**
    * "META-INF/content/". The content directory.
    */
-  private static final String CONTENT = "META-INF/content/";
+  private static final String CONTENT = "/resources/content/";
   /**
    * ".md". The markdown file extension.
    */
   private static final String MD = ".md";
+  /**
+   * ".json". The JSON file extension.
+   */
+  private static final String JSON = ".json";
+  /**
+   * ".xml". The XML file extension.
+   */
+  private static final String XML = ".xml";
   /**
    * ".txt". Alternate markdown file extension.
    */
@@ -70,25 +84,28 @@ public class FileContentBean {
    * ".xhtml". The HTML file extension.
    */
   private static final String XHTML = ".xhtml";
-  /**
-   * ".xml". The XML file extension.
-   */
-  private static final String XML = ".xml";
-  /**
-   * ".json". The JSON file extension.
-   */
-  private static final String JSON = ".json";
+
   /**
    * "en". The default language.
    */
   private static final String ENGLISH = "en";
 
   /**
-   * The Locale bean. This is used to identify the locale and which language
-   * translation should be loaded.
+   * The preferred render language.
    */
-  @Inject
-  private LocaleBean localeBean;
+  private String language = ENGLISH;
+
+  /**
+   * Initialize the Locale configuration. If there is no requested locale in the
+   * FacesContext then the system default locale is used.
+   */
+  @PostConstruct
+  protected void postConstruct() {
+    Cookie localeCookie = FacesUtil.getCookie(LOCALE_COOKIE);
+    if (localeCookie != null) {
+      language = localeCookie.getValue();
+    }
+  }
 
   /**
    * Read and return the FILE based content.
@@ -107,10 +124,7 @@ public class FileContentBean {
      * always XHTML, and Markdown content is converted.
      */
     try {
-      Path filename = findContentFile(label);
-      return filename.getFileName().toString().endsWith(MD)
-             ? readContentMD(filename)
-             : readContentRaw(filename);
+      return readContentFile(label);
     } catch (IOException | URISyntaxException exception) {
       LOGGER.log(Level.INFO, "Error reading file \"{0}\".  {1}", new Object[]{label, exception.getMessage()});
       return null;
@@ -125,30 +139,28 @@ public class FileContentBean {
    * @param label the file based name without language or extension
    * @return the language translated file name, if it exists.
    */
-  private Path findContentFile(String label) throws URISyntaxException, IOException {
-    String language = localeBean.getLanguage();
+  private String readContentFile(String label) throws URISyntaxException, IOException {
     /**
-     * Search for the language specific file.
+     * Search for a language specific file. If not found then search for a
+     * default file with no language indicator.
      */
-    for (String extension : new String[]{MD, TEXT, XHTML, XML, JSON}) {
-      String path = CONTENT + label + "." + language + extension;
-      if (getClass().getClassLoader().getResource(path) != null) {
-        return Paths.get(getClass().getClassLoader().getResource(path).toURI());
-      }
-    }
-    /**
-     * Search for a default file with no language indicator.
-     */
-    for (String extension : new String[]{MD, TEXT, XHTML, XML, JSON}) {
+    for (String extension : new String[]{MD, JSON, XML, TEXT, XHTML}) {
       String path = CONTENT + label + extension;
-      if (getClass().getClassLoader().getResource(path) != null) {
-        return Paths.get(getClass().getClassLoader().getResource(path).toURI());
+      String pathLocale = CONTENT + label + "." + language + extension;
+      String content = null;
+      if (FacesUtil.getExternalContext().getResource(pathLocale) != null) {
+        content = new BufferedReader(new InputStreamReader(FacesUtil.getExternalContext().getResourceAsStream(pathLocale))).lines().collect(Collectors.joining("\n"));
+      } else if (FacesUtil.getExternalContext().getResource(path) != null) {
+        content = new BufferedReader(new InputStreamReader(FacesUtil.getExternalContext().getResourceAsStream(path))).lines().collect(Collectors.joining("\n"));
+      }
+      if (content != null) {
+        return MD.equals(extension) ? transformMarkdown(content) : content;
       }
     }
     /**
      * FAIL - NO file found.
      */
-    throw new IOException(localeBean.getLanguage().toUpperCase() + " FILE content not found for " + label + ".");
+    throw new IOException(language.toUpperCase() + " file content not found for " + CONTENT + label);
   }
 
   /**
@@ -163,13 +175,13 @@ public class FileContentBean {
   }
 
   /**
-   * Read the content as Markdown, and convert it to XHTML
+   * Transform the content as Markdown, converting it to XHTML
    *
    * @param filename the file base name. The {@code ".md"} extension is added.
    * @return the file content, converted to XHTML
    * @throws IOException if the file cannot be opened or read
    */
-  private String readContentMD(Path filename) throws IOException {
+  private String transformMarkdown(String markdown) throws IOException {
     /**
      * Set extensions.
      * <p>
@@ -210,7 +222,7 @@ public class FileContentBean {
     //      options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");
     Parser parser = Parser.builder(options).build();
     HtmlRenderer renderer = HtmlRenderer.builder(options).build();
-    Node document = parser.parseReader(new FileReader(filename.toFile()));
+    Node document = parser.parse(markdown);
     return renderer.render(document);  // The file rendered to HTML
   }
 
