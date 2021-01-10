@@ -85,11 +85,6 @@ public class FacesUtil {
 
   /**
    * Returns the current external context.
-   * <p>
-   * <i>Note that whenever you absolutely need this method to perform a general
-   * task, you might want to consider to submit a feature request to OmniFaces
-   * in order to add a new utility method which performs exactly this general
-   * task.</i>
    *
    * @return The current external context.
    * @see FacesContext#getExternalContext()
