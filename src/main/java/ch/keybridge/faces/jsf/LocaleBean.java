@@ -17,9 +17,7 @@ import ch.keybridge.faces.FacesUtil;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.servlet.http.Cookie;
 
 /**
@@ -63,8 +61,7 @@ import javax.servlet.http.Cookie;
  * @see
  * <a href="https://www.oracle.com/technetwork/java/javase/javase7locales-334809.html">Locales</a>
  */
-@Named(value = "localeBean")
-@RequestScoped
+//@Named(value = "localeBean")@RequestScoped
 public class LocaleBean implements Serializable {
 
   /**
@@ -86,7 +83,7 @@ public class LocaleBean implements Serializable {
    * the number should be formatted according to the customs and conventions of
    * the user's native country, region, or culture.
    */
-  private Locale locale;
+  private Locale locale = Locale.ENGLISH;
 
   /**
    * Initialize the Locale configuration. If there is no requested locale in the
@@ -119,11 +116,7 @@ public class LocaleBean implements Serializable {
      * Set a new global, long lived, locale cookie if needed.
      */
     if (localeCookie == null) {
-      Cookie cookie = new Cookie(LOCALE_COOKIE, locale.getLanguage());
-      cookie.setPath("/");
-      cookie.setVersion(0);
-      cookie.setMaxAge(-1);
-      FacesUtil.addCookie(cookie);
+      FacesUtil.addCookieGlobal(LOCALE_COOKIE, locale.getLanguage());
     }
   }
 
@@ -135,11 +128,11 @@ public class LocaleBean implements Serializable {
    */
   private Locale fromLanguage(String language) {
     for (Locale availableLocale : Locale.getAvailableLocales()) {
-      if (availableLocale.getLanguage().equals(new Locale(language).getLanguage())) {
+      if (availableLocale.getLanguage().equals(language)) {
         return availableLocale;
       }
     }
-    return null;
+    return new Locale(language);
   }
 
   /**
@@ -148,6 +141,9 @@ public class LocaleBean implements Serializable {
    * @return the current Locale
    */
   public Locale getLocale() {
+    if (locale == null) {
+      postConstruct();
+    }
     return locale;
   }
 
@@ -168,7 +164,7 @@ public class LocaleBean implements Serializable {
    * @return the locale language.
    */
   public String getLanguage() {
-    return locale.getLanguage();
+    return getLocale().getLanguage();
   }
 
   /**
