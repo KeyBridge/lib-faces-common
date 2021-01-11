@@ -26,7 +26,6 @@ import java.util.Locale;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
 
 /**
  * Pretty print a currency amount. This attempts to output a pretty-print label

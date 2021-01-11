@@ -16,7 +16,6 @@ package ch.keybridge.faces.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 
 /**
  * A JSF String converter for string manipulation in JSF components. Provides

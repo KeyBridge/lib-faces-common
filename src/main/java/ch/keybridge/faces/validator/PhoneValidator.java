@@ -20,7 +20,6 @@ package ch.keybridge.faces.validator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**

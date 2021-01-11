@@ -22,7 +22,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**

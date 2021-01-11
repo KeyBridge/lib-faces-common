@@ -22,7 +22,6 @@ import java.net.URI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 
 /**
  * Simple converter to conditionally append an http scheme to a URI. JSF renders

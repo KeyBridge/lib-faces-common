@@ -9,7 +9,7 @@
 
   <groupId>keybridge.faces</groupId>
   <artifactId>faces-common</artifactId>
-  <version>5.1.0</version>
+  <version>5.1.1</version>
   <packaging>jar</packaging>
 
   <name>lib-faces-common</name>
@@ -98,6 +98,7 @@
     v5.1.0 - rewrite to use as a common application library
     - configure all in faces-config.xml: managed beans, converters, validators
     - rewrite FileContentBean to use faces context, content must be placed in /resources instead of META-INF
+    v5.1.1 - fix faces-config xml files; add missing converters
 
 
 

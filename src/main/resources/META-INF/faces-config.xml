@@ -54,6 +54,30 @@ This makes an instance of <code>java.util.Date</code> as current datetime availa
 
   <!--Converters-->
   <converter>
+    <converter-id>byteArrayConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.ByteArrayConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>currencyRateConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.CurrencyRateConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>emailDomainConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.EmailDomainConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>emailMaskConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.EmailMaskConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>emailNameConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.EmailNameConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>localDateConverter</converter-id>
+    <converter-class>ch.keybridge.faces.converter.LocalDateConverter</converter-class>
+  </converter>
+  <converter>
     <converter-id>localDateTimeConverter</converter-id>
     <converter-class>ch.keybridge.faces.converter.LocalDateTimeConverter</converter-class>
   </converter>

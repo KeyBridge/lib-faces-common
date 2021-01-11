@@ -16,7 +16,6 @@ package ch.keybridge.faces.validator;
 import java.util.regex.Pattern;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**
