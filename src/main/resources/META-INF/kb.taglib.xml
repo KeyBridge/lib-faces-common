@@ -1,69 +1,12 @@
-<facelet-taglib version="2.2"
-                xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+                version="2.0">
 
-  <description>Key Bridge common JSF UI components.</description>
-  <namespace>http://keybridge.ch/ui</namespace>
+  <namespace>http://keybridge.ch/kb</namespace>
   <short-name>kb</short-name>
-
-  <tag>
-    <description>
-<![CDATA[
-<p>This <code>&lt;kb:importConstants&gt;</code> tag is forked from OmniFaces v2.2 to provide
-just this useful capability without CDI, beans, and all the other baggage that comes along with it.
-<p>The <code>&lt;kb:importConstants&gt;</code> allows the developer to have a mapping of all constant field values of
-the given type in the request scope. The constant field values are those public static final fields. This works for
-classes, interfaces and enums. For example:
-<pre>
-public class Foo {
-public static final String FOO1 = "foo1";
-public static final String FOO2 = "foo2";
-}
-public interface Bar {
-public static final String BAR1 = "bar1";
-public static final String BAR2 = "bar2";
-}
-public enum Baz {
-BAZ1, BAZ2;
-}
-</pre>
-<p>The constant field values of the above types can be mapped into the request scope as follows:
-<pre>
-&lt;o:importConstants type="com.example.Foo" /&gt;
-&lt;o:importConstants type="com.example.Bar" /&gt;
-&lt;o:importConstants type="com.example.Baz" var="Bazzz" /&gt;
-...
-#{Foo.FOO1}, #{Foo.FOO2}, #{Bar.BAR1}, #{Bar.BAR2}, #{Bazzz.BAZ1}, #{Bazzz.BAZ2}
-</pre>
-<p>The map is by default stored in the request scope by the simple name of the type as variable name. You can override
-this by explicitly specifying the <code>var</code> attribute, as demonstrated for <code>com.example.Baz</code> in
-the above example.
-<p>
-The resolved constants are by reference stored in the cache to improve retrieving performance.
-]]>
-    </description>
-    <tag-name>importConstants</tag-name>
-    <handler-class>ch.keybridge.faces.jsf.util.ImportConstants</handler-class>
-    <attribute>
-      <description>
-<![CDATA[
-The fully qualified name of the class/interface/enum to import the constant field values for.
-]]>
-      </description>
-      <name>type</name>
-      <required>true</required>
-      <type>java.lang.String</type>
-    </attribute>
-    <attribute>
-      <description>
-<![CDATA[
-The name of the request attribute which exposes the mapping of the constants in the request scope.
-]]>
-      </description>
-      <name>var</name>
-      <required>false</required>
-    </attribute>
-  </tag>
+  <description>Key Bridge common JSF UI components.</description>
+ 
 
 </facelet-taglib>
